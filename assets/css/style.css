@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap');
+
+body{
+    background-color: #f2f2f2
+}
+
+/* /*                  /* */
+    /* User login page */
+/* /*                  /* */
+.bgtheme{
+    background-color: #FF4031;
+}
+.hover-btn:hover {
+    background-color: #FF4031;
+    /* Add any other styles you want on hover */
+  }
+.logbtn{
+    background-color: #FF4031;
+    
+}
+.logbtn:hover{
+    background-color: #FF4031;
+}
+.logostyle{
+    position: absolute;
+    /* width: 190px; */
+    /* height: 65px; */
+    /* left: calc(50% - 194px/2); */
+    top: 60px;
+    font-family: 'Lemon';
+    font-style: normal;
+    font-size: 30px;
+    line-height: 5px;
+    letter-spacing: 2.67491px;
+    text-transform: capitalize;
+}
+.kstyle{
+    color: #FF4031;
+    font-size: 80px;
+    font-family: 'Lemon', sans-serif;
+    font-weight: 400;
+}
+#logforgot{
+    color: #FF4031;
+}
+input{
+    width: 100px;
+}
+/* .container {
+  width: 800px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+.alert{
+    width: 100%;
+    height: 30px;
+    background-color: #FF4031;
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    font-weight: 600;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* /*                  /* */
+    /* User login page ENDING*/
+/* /*                  /* */
+
+
+
+/* /*                  /* */
+    /* Login SUCCESSUL MSG*/
+/* /*                  /* */
+.message-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    padding: 10px;
+    z-index: 9999;
+}
+
+.alertes {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+/* home page */
+.logohome{
+    /* color: #FF4031; */
+    /* position: absolute; */
+    /* width: 190px; */
+    /* height: 65px; */
+    /* left: calc(50% - 194px/2); */
+    /* top: 60px; */
+    margin: auto;
+    font-family: 'Lemon';
+    font-style: normal;
+    font-size: 30px;
+    /* line-height: 5px; */
+    letter-spacing: 2.67491px;
+    /* text-transform: capitalize; */
+}
+
+.k{
+    color: #FF4031;
+    font-size: 50px;
+    font-family: 'Lemon', sans-serif;
+    font-weight: 400;
+}
+.drpdown{
+    margin-left: 30px;
+    background-color: #ccc;
+}
+.btn-like{
+    border-radius: 0px;
+    background-color: #494444;
+    border: unset;
+}
+.btn-like:hover{
+    background-color: #FF4031;
+}
+/* OTP */
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}*/
+/* .otp_sheet{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}  */
+.center{
+    text-align: center;
+    /* display: block; */
+    justify-content: center;
+}
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.verification{
+    margin-top: 20px;
+    /* display: none; */
+}
+.otp-input-fields{
+    margin: auto;
+    /* background-color: brown; */
+    box-shadow: 0px 0 8px #02024066;
+    display: flex;
+    max-width: 420px;
+    justify-content: center;
+    gap: 10px;
+    padding: 30px;
+}
+.otp_num{
+    width: 40px;
+    height: 40px;
+    border: 1px solid #02024066;
+    border-radius: 4px;
+    text-align: center;
+    outline: none;
+    font-size: 14px;
+}
+.otp_num::-webkit-inner-spin-button,
+.otp_num::-webkit-outer-spin-button{
+    appearance: none;
+}
+.success,
+.error{
+    display: none;
+    text-align: center;
+}

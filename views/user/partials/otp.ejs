@@ -1,0 +1,338 @@
+<%-include('../layouts/_header')%>
+
+<form action="/verifyOTP" method="post" onsubmit="verifyOTP(); return false;">
+  <div class="container m-4">
+    <h3 class="text-primary center">OTP verification</h3>
+    <div class="row form">
+      
+          <!-- <div class="col-auto">
+              <input type="email" class="form-control email">
+          </div> -->
+          <!-- <div class="col-auto">
+              <button class="btn btn-primary" onclick="sendOTP()">SEND OTP</button>
+          </div> -->
+          <div class="success text-success">
+              OTP verified Successfully
+          </div>
+          <div class="error text-danger">
+              Invalid OTP
+          </div>
+          <!-- Add a new element to display the timer and resend OTP button -->
+          
+    </div>
+    <div class="timer-container" style="display: none;">
+      <p>Resend OTP in <span class="timer">60</span> seconds</p>
+      <button class="btn btn-link" onclick="resendOTP()">Resend OTP</button>
+  </div>  
+    <div class="verification center">
+      <div class="title">
+          <p>An otp has been send to <span class="emailpartial">***vankv@gmail.com</span></p>
+      </div>
+      
+                    <div class="">
+                        <%= locals.message %>
+                    </div>
+               
+      <div class="otp-input-fields">
+          <input type="number" class="otp_num otp_num_1">
+          <input type="number" class="otp_num otp_num_2">
+          <input type="number" class="otp_num otp_num_3">
+          <input type="number" class="otp_num otp_num_4">
+      </div>
+      <br>
+      <button class="btn btn-primary" onsubmit="verifyOTP()">Submit OTP</button>
+      
+    </div>
+  </div>
+  
+</form>
+
+
+ <script>
+  // let verEle = document.querySelector('.verification');
+  // let otp_inputs = document.querySelectorAll('.otp_num');
+  // let emailpartialEle = document.querySelector('.emailpartial');
+  // let timerEle = document.querySelector('.timer');
+  // let timerContainer = document.querySelector('.timer-container');
+  // let countdown;
+  // let otp_check = '';
+
+  // otp_inputs.forEach((ip) => {
+  //   ip.addEventListener('keyup', moveNext);
+  // });
+
+  // function moveNext(event) {
+  //   let current = event.target;
+  //   let index = current.classList[1].slice(-1);
+  //   if (event.keyCode == 8 && index > 1) {
+  //     current.previousElementSibling.focus();
+  //   } else if (index < 4) {
+  //     current.nextElementSibling.focus();
+  //   }
+  //   otp_check = '';
+  //   for (ip of otp_inputs) {
+  //     otp_check += ip.value;
+  //   }
+  //   if (otp_check.length == 4) {
+  //     verifyOTP();
+  //   }
+  // }
+
+
+
+
+  // let email;
+  //     function sendOTP() {
+  //     email = emailEle.value;
+  //     if(regex.test(email)) {
+  //         fetch( 'http://localhost:3000/sendotp', {
+  //             method: "POST",
+  //             body: JSON.stringify({
+  //                 "email": email
+  //             }),
+  //             headers:{'Content-Type':'application/json'}        
+  //         })
+  //             .then(
+  //                 (res) => {
+  //                     if(res.status==200){
+  //                         verEle.style.display='block';
+  //                         emailpartialEle.textContent = email;
+  //                         emailEle.value = '';
+  //                         timerContainer.style.display = 'block';
+  //                         startTimer(); // Start the timer for resend option
+  //                         emailEle.setAttribute('readonly', 'readonly');
+  //                     }
+  //                     console.log(res);
+  //                 }
+  //             ) .catch((error) => {
+  //                 console.log("Error:", error.message);
+  //                 });
+  //             }
+  //             else {
+  //                 errorEle.style.display='block';
+  //                 errorEle.innerHTML = "Enter Invalid Email"
+  //                 successEle.style.display='none';
+  //                 console.log("wrong");
+  //             }
+  //         }
+
+
+
+  // function verifyOTP() {
+  //   fetch('http://localhost:3000/verifyOTP', {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       "otp": `${otp_check}`
+  //     }),
+  //     headers: { 'Content-Type': 'application/json' }
+  //   })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         return res.json(); // Parse response text
+  //       } else {
+  //         throw new Error("Invalid OTP"); // Handle error case with rejected Promise
+  //       }
+  //     })
+  //     .then((responseText) => {
+  //       // Response from server is "verified"
+  //       verEle.style.display = 'block';
+  //       console.log("OTP verified Successfully");
+
+  //       // setTimeout(() => {
+  //       //   window.location.href = "/";
+  //       // }, 1000);
+  //     })
+  //     .catch((error) => {
+  //       // Error occurred or OTP is invalid
+  //       errorEle.innerHTML = error.message;
+  //       console.log("Error:", error.message);
+  //     });
+  // }
+
+  // function startTimer() {
+  //   let timeLeft = 60;
+  //   countdown = setInterval(() => {
+  //     timeLeft--;
+  //     if (timeLeft > 0) {
+  //       timerEle.textContent = timeLeft;
+  //     } else {
+  //       clearInterval(countdown);
+  //       timerContainer.style.display = 'block';
+  //       verEle.style.display = 'block';
+  //       console.log("Time expired. Please resend OTP.");
+  //     }
+  //   }, 1000);
+  // }
+
+  // function resendOTP() {
+  //   clearInterval(countdown);
+  //   timerContainer.style.display = 'block';
+  //   console.log("OTP resend successfully");
+  // } -->
+  
+  let emailEle = document.querySelector('.email');
+        let verEle = document.querySelector('.verification');
+        let successEle = document.querySelector('.success');
+        let errorEle = document.querySelector('.error');
+        let otp_inputs = document.querySelectorAll('.otp_num');
+        let emailpartialEle = document.querySelector('.emailpartial');
+        let timerEle = document.querySelector('.timer');
+        let timerContainer = document.querySelector('.timer-container');
+        let countdown;
+        let email;
+        let otp_check =''
+
+        
+
+        let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}');
+
+        otp_inputs.forEach(
+            (ip) => {
+                ip.addEventListener('keyup', moveNext)
+            }
+        )
+        function moveNext(event) {
+            // otp_num_1
+            let current = event.target;
+            let index = current.classList[1].slice(-1);
+            if(event.keyCode == 8 && index > 1){
+                current.previousElementSibling.focus()
+            }
+            else if(index < 4){
+                current.nextElementSibling.focus()
+            }
+            otp_check ='';
+            for(ip of otp_inputs ){
+                otp_check += ip.value
+            }
+            if(otp_check.length==4){
+                verifyOTP()
+            }
+        }
+
+        function verifyOTP() {
+                fetch('http://localhost:3000/verifyOTP', {
+                    method: "POST",
+                    body: JSON.stringify({
+                    "email": `${email}`,
+                    "otp": `${otp_check}`
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                    return res.text(); // Parse response text
+                    } else {
+                    throw new Error("Invalid OTP"); // Handle error case with rejected Promise
+                    }
+                })
+                .then((responseText) => {
+                    // Response from server is "verified"
+                    verEle.style.display = 'block';
+                    successEle.style.display = 'block';
+                    errorEle.style.display = 'none';
+                    console.log("OTP verified Successfully");
+                    
+                })
+                .catch((error) => {
+                    // Error occurred or OTP is invalid
+                    errorEle.style.display = 'block';
+                    errorEle.innerHTML = error.message; // Show the error message from the rejected Promise
+                    successEle.style.display = 'none';
+                    console.log("Error:", error.message);
+                });
+}
+
+        function sendOTP() {
+            email = emailEle.value;
+            if(regex.test(email)) {
+                fetch( 'http://localhost:3000/sendotp', {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "email":`${email}`
+                    }),
+                    headers:{'Content-Type':'application/json'}        
+                })
+                    .then(
+                        (res) => {
+                            if(res.status==200){
+                                verEle.style.display='block';
+                                emailpartialEle.value="***"+email.slice(3)
+                                emailpartialEle.textContent = email;
+                                emailEle.value = '';
+                                timerContainer.style.display = 'block';
+                                startTimer(); // Start the timer for resend option
+                                emailEle.setAttribute('readonly', 'readonly');
+                            }
+                            console.log(res);
+                        }
+                    ) .catch((error) => {
+                        console.log("Error:", error.message);
+                        });
+                    }
+                    else {
+                        errorEle.style.display='block';
+                        errorEle.innerHTML = "Enter Invalid Email"
+                        successEle.style.display='none';
+                        console.log("wrong");
+                    }
+                }
+
+                // resent otp option
+
+
+                    function startTimer() {
+                    let timeLeft = 60;
+                    countdown = setInterval(() => {
+                        timeLeft--;
+                        if (timeLeft > 0) {
+                        timerEle.textContent = timeLeft;
+                        } else {
+                        clearInterval(countdown);
+                        timerContainer.style.display = 'none';
+                        verEle.style.display = 'none';
+                        successEle.style.display = 'none';
+                        errorEle.style.display = 'none';
+                        // emailEle.removeAttribute('readonly');
+                        verEle.style.display = 'block';
+                        }
+                    }, 1000);
+                    }
+
+                    function resendOTP() {
+                    clearInterval(countdown);
+                    timerContainer.style.display = 'none';
+                    email = emailEle.value;
+                    if (regex.test(email)) {
+                        fetch('http://localhost:3000/resendotp', {
+                        method: "POST",
+                        body: JSON.stringify({ "email": `${email}` }),
+                        headers: { 'Content-Type': 'application/json' }
+                        })
+                        .then((res) => {
+                        if (res.status === 200) {
+                            timerContainer.style.display = 'block';
+                            startTimer();
+                            emailEle.setAttribute('readonly', 'readonly');
+                            console.log("OTP resend successfully");
+                        } else {
+                            throw new Error("Failed to resend OTP");
+                        }
+                        })
+                        .catch((error) => {
+                        console.log("Error:", error.message);
+                        });
+                    } else {
+                        errorEle.style.display = 'block';
+                        errorEle.innerHTML = "Enter Invalid Email";
+                        successEle.style.display = 'none';
+                        console.log("wrong");
+                    }
+                    }
+
+
+
+  
+</script>
+  
+  <%-include('../layouts/_footer')%>
