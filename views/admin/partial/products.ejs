@@ -1,0 +1,97 @@
+<%-include('../layouts/_header')%> <%-include('../layouts/head_links')%>   
+
+
+
+      <!-- Modal -->
+      <%-include('../layouts/addNewPrd')%>
+      <!-- Modal -->
+
+  <style>
+    #dataTable {
+      border-collapse: collapse;
+    }
+    #dataTable td, #dataTable th {
+      border: 1px solid #000;
+    }
+  </style>
+<br>
+
+  <div class="card-body container ">
+    <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Publisher</th>
+          <th>Authors</th>
+          <th>Price ₹</th>
+          <th>Stock</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <% if(products !=null){ %>
+      <tbody>
+        <% products.forEach(function(item,i){ %>
+        <tr>
+            <td><%= item.name %></td>
+            <td class="text-center"><img src="/img/books/<%= item.thumbnail %>" alt=""  height="80px"></td>
+            <td><%= item.category.name %></td>
+            <td><%= item.publisher %></td>
+            <td><%= item.authors %></td>
+            <td><%= item.price %></td>
+            <td><%= item.stock %></td>
+            <td >
+              <div class="text-center d-flex flex-column">
+                <a href="/admin/products/edit?id=<%= item._id %>" onclick="editProduct(event,'<%= item.name %>')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
+              <% if(item.listed==true){ %> 
+              <a href="/admin/products/changeListing?id=<%= item._id %>" onclick="changeListing(event,'<%= item.name %>')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
+            <% }else{ %>
+              <a href="/admin/products/changeListing?id=<%= item._id %>" onclick="changeListing(event,'<%= item.name %>')" class="btn btn-success text-white btn-sm my-1">List</a>
+              <% } %>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+        <% } %>
+    </table>
+  </div>
+
+
+  <!-- scripts -->
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    var fileInput = document.getElementById('images');
+    var selectedFiles = fileInput.files;
+    
+    if (selectedFiles.length !== 3) {
+      event.preventDefault(); // Prevent form submission
+      document.getElementById("imageuploaderror").innerHTML="Upload 3 images"
+    }
+       });
+  
+       let loadFile1 = function(event) {
+                var image = document.getElementById('output1');
+                image.src=URL.createObjectURL(event.target.files[0]);          
+            };  
+        let loadFile2 = function(event) {
+                var image = document.getElementById('output2');
+                image.src=URL.createObjectURL(event.target.files[0]);          
+            }; 
+        let loadFile3 = function(event) {
+          for(i=0;i<3;i++){
+                var image = document.getElementById(`output${i+3}`);
+                image.src=URL.createObjectURL(event.target.files[i]);   }       
+            };
+  </script>
+  
+  
+
+
+ 
+  
+  <%-include('../layouts/_footer')%>
+
+
+    

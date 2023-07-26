@@ -1,5 +1,16 @@
+// <================================home page LOGIN PAGE =================================================>
+
 const bcrypt=require("bcrypt");
 const User=require("../../models/user")
+
+
+exports.loginPage = (req, res) => {
+  try {
+    res.render("user/partials/login", { message: "" });
+  } catch (error) {
+    console.log("Error rendering user signup page: " + error);
+  }
+};
 
 
   exports.loginUser = async (req, res) => {
