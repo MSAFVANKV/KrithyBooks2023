@@ -47,7 +47,7 @@ exports.deleteCategory= async(req,res)=>{
     try{
         const categoryId = req.query.id;
         const deleteUser = await categoryDetails.deleteOne({_id:categoryId});
-        res.redirect("/admin/category");
+        res.redirect("/admin/categories");
     }
     catch(error){
         console.log("Error deleting category: " + error)
@@ -80,6 +80,7 @@ exports.editCategory=async(req,res) =>{
                 session:req.session.admin,
                 errorMessage: "Duplication of categories not allowed",
                 category: currentCategory,
+
             })
 
         }else{

@@ -1,12 +1,13 @@
 <%-include('../layouts/_header')%> <%-include('../layouts/head_links')%> 
 
+
 <div class="container">
   <div class="line-break text-center py-4">
-    <span class="shadow-heading">Edit Author</span>
+    <span class="shadow-heading">Edit Category</span>
   </div>
   <div class="row mb-5 pt-4">
     <p class="text-danger mt-0 pt-4 text-uppercase text-center">
-
+      <%= locals.errorMessage %>
     </p>
     <div class="col-lg-5 mx-auto ">        
       <form action="" method="post" class="d-flex align-items-center flex-column ">
@@ -14,9 +15,9 @@
           <input
             required
             class="form-control my-3 "
-            id="editAuthor"
-            placeholder="Change Author Name"
-            value="<%if(author){%><%=locals.author.name%><%}%>"
+            id="editCategory"
+            placeholder="Change Category Name"
+            value="<%if(category){%><%=locals.category.name%><%}%>"
             name="name"
             style="text-transform: none;"
           />
@@ -27,4 +28,4 @@
   </div>
 </div>
 
-<%- include('../layouts/_footer') %>
+<%- include('../layouts/footer') %>

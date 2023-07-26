@@ -1,0 +1,186 @@
+
+<%-include('../layouts/_header')%> <%-include('../layouts/head_links')%> 
+<div class="mx-auto text-uppercase fw-bold">
+<div class="container btn-danger" style="text-decoration: none">
+<form action="" method="post" enctype="multipart/form-data" class="container row flex-column my-5 mx-auto">
+    <div class="mb-3 col-lg-6 ">
+      <label for="name" class="px-1" style="font-size: 0.75rem;">Book Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        value="<%= product.name %>"
+        name="name"
+        placeholder="Name"
+      />
+    </div>
+    <div class="mb-3 col-lg-6 d-flex flex-column">
+        <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload Thumbnail</label>
+        <img class=" border" src="/img/books/<%=product.thumbnail%>" width="150px"  alt="" id="output1">
+      <input
+        class="form-control"
+        id="thumbnail"
+        name="thumbnail"
+        style="margin-top: 10px;"
+        onchange="loadFile1(event)"
+        type="file"
+      />
+    </div>
+    <div class="mb-3 col-lg-6 d-flex flex-column">
+      <label for="frontImage" class="px-1" style="font-size: 0.75rem;">Upload front image</label>
+      <img class=" border" src="/img/books/<%=product.frontImage%>" width="150px"  alt="" id="output2">
+    <input
+      class="form-control"
+      id="bookTitle"
+      name="bookTitle"
+      style="margin-top: 10px;"
+      onchange="loadFile2(event)"
+      type="file"
+    />
+  </div>
+  <div class="mb-3 col-lg-6 d-flex flex-column">
+    <label for="frontImage" class="px-1" style="font-size: 0.75rem;">Upload images (Only 3)</label>
+    <div class="row">
+      <%product.images.forEach((image,i)=>{%>
+      <img class="col-8 col-lg-4 border" src="/Public/image/products/<%=image%>"
+       width="150px" 
+       alt="" 
+       id="changeimg<%=i%>"
+       >
+       <%})%>
+    </div>
+  <input
+    class="form-control"
+    id="bookTitle"
+    name="images"
+    type="file"
+    style="margin-top: 10px;"
+    onchange="loadFile3(event)"
+    multiple
+  />
+</div>
+    <div class="mb-3 col-lg-6" >
+        <label for="inputState" class=" px-1 text-uppercase" style="font-size: 0.75rem;">Category</label>
+      <select id="inputState" class="form-control" name="category"  required> 
+        <option value="<%=product.category._id%>" class="fw-bold" selected><%=product.category.name%></option>   
+        <%categories.forEach((data)=>{%> 
+          <option value="<%=data._id%>" style="color: rgb(71, 68, 68);"><%=data.name%></option> 
+        <%})%> 
+      </select>
+    </div>
+    <div class="mb-3 col-lg-6" >
+        <label for="inputState" class=" px-1 text-uppercase" style="font-size: 0.75rem;">Authors</label>
+      <select id="author" class="form-control" name="author"  required> 
+        <option value="<%=product.author._id%>" class="fw-bold" selected ><%=product.author.name%></option> 
+        <%authors.forEach((data)=>{%> 
+          <option value="<%=data._id%>" style="color: rgb(71, 68, 68);"><%=data.name%></option> 
+        <%})%> 
+      </select>
+    </div> 
+    <div class="mb-3 col-lg-6">
+        <label for="bookISBN" class="form-label" style="font-size: 0.75rem;">ISBN</label>
+        <input type="text" class="form-control" id="bookISBN" name="bookISBN" value="<%= product.bookISBN %>">
+      </div>
+        <div class="mb-3 col-lg-6">
+              <label for="publishingDate" class="form-label" style="font-size: 0.75rem;">Publishing Date</label>
+              <input type="date" 
+              class="form-control" 
+              id="publishingDate" 
+              name="publishingDate"
+              value="<%= product.publishingDate %>">
+        </div>
+
+        <div class="mb-3 col-lg-6">
+              <label for="publisher" class="form-label" style="font-size: 0.75rem;">Publisher</label>
+              <input type="text" 
+              class="form-control" 
+              id="publisher" 
+              name="publisher"
+              value="<%= product.publisher %>">
+        </div>
+
+        <div class="mb-3 col-lg-6">
+              <label for="numOfPages" class="form-label" style="font-size: 0.75rem;">Number of Pages</label>
+              <input type="number" 
+              class="form-control" 
+              id="numOfPages" 
+              name="numOfPages"
+              value="<%= product.numOfPages %>">
+        </div>
+
+        <div class="mb-3 col-lg-6">
+              <label for="language" class="form-label" style="font-size: 0.75rem;">Language</label>
+              <input type="text" 
+              class="form-control" 
+              id="language" 
+              name="language" 
+              required
+              value="<%= product.language %>">
+        </div>
+    <div class="mb-3 col-lg-6">
+      <label for="Price" class="px-1" style="font-size: 0.75rem;">Price</label>  
+          <input
+            type="number"
+            class="form-control"
+            id="Price"
+            placeholder="Price"
+            name="initialPrice"
+            value="<%= product.initialPrice %>"
+            required
+          />
+        </div>
+    <div class="mb-3 col-lg-6">
+    <label for="Price" class="px-1" style="font-size: 0.75rem;">Offer Price</label>  
+        <input
+          type="number"
+          class="form-control"
+          id="Price"
+          placeholder="Offer Price"
+          name="price"
+          value="<%= product.price %>"
+          required
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+        <label for="Stock" class="px-1" style="font-size: 0.75rem;">Stock</label>  
+            <input
+              type="number"
+              class="form-control"
+              id="Stock"
+              placeholder="Stock"
+              name="stock"
+              value="<%= product.stock %>"
+              required
+            />
+          </div>
+     
+      
+     
+   
+      <div class="float-end mb-5">
+        <a href="/admin/products" onclick="return confirm('Discard Changes ?')" class="btn btn-secondary text-white my-1">Cancel</a>
+        <button type="submit" class="btn btn-success my-1">
+          <span>Save changes</span>
+        </button>
+        </form>
+      </div>
+</div>
+
+<script>
+
+let loadFile3= function(event) {
+        for(i=0;i<event.target.files.length;i++){
+              var image = document.getElementById(`changeimg${i}`);
+              image.src=URL.createObjectURL(event.target.files[i]);   }       
+          };
+let loadFile1= function(event) {      
+              var image = document.getElementById("output1");
+              image.src=URL.createObjectURL(event.target.files[0]);   } 
+let loadFile2= function(event) {      
+              var image = document.getElementById("output2");
+              image.src=URL.createObjectURL(event.target.files[0]);   }      
+         
+
+</script>
+
+  <%- include('../layouts/_footer') %>

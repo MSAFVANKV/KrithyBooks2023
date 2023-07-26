@@ -1,32 +1,36 @@
-
 const mongoose = require("mongoose");
 const categoryDetails = require("./category");
-const authorsDetails = require('./author')
+const authorDetails=require("./author")
 
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
     require,
   },
-  author: {
-    type: mongoose.Types.ObjectId,
-    ref: authorsDetails,
-    require,
-  },
   category: {
     type: mongoose.Types.ObjectId,
-    ref: categoryDetails,
+    ref: 'Category',
     require,
   },
-  numOfPages: {
+  author: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Authors',
+    require,
+  },
+  bookISBN : {
     type: Number,
     require,
   },
+  publishingDate : Date,
   publisher: {
     type: String,
     require,
   },
-  language: {
+  numOfPages : {
+    type: Number,
+    require,
+  },
+  language : {
     type: String,
     require,
   },
@@ -35,7 +39,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     require,
   },
-  
+
   thumbnail: {
     type: String,
     require,
@@ -52,11 +56,7 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "ProductManagerDetails",
     default:null,
-  },
-  createdAt:{
-    type:Date,
-    default:Date.now,
-}
+  }
 });
 
 

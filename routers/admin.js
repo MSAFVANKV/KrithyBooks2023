@@ -30,6 +30,7 @@ router.
         route('/order')
              .get(sessionCheck,orderViewAdmin.orderviewPage)
 
+            //  product Page
 router
         .get('/products', sessionCheck,productsPage.viewProduts)
         .post("/products/add_product",sessionCheck, upload.fields([
@@ -38,6 +39,21 @@ router
                 { name: "images", maxCount: 3 },
               ]),productsPage.addProducts)
 
+router.get("/products/edit",sessionCheck,productsPage.editPage);
+
+router.post("/products/edit",sessionCheck,   
+      upload.fields([
+         { name: "frontImage", maxCount: 1 },
+         { name: "thumbnail", maxCount: 1 },
+         { name: "images", maxCount: 3 },
+]),productsPage.edit)
+
+
+router.get(
+   "/products/changeListing",sessionCheck, 
+   productsPage.changeListing
+ );
+ 
 
 // CategoryMnanagement
 router

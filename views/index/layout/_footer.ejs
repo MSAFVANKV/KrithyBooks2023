@@ -31,6 +31,68 @@
   </footer>
 
 
+  <script>
+    // Get the stars and form elements
+    var stars = document.querySelectorAll('#rating i');
+    var form = document.querySelector('#reviewForm');
+    var reviews = document.querySelector('#reviews');
+
+    // Add click event listener to each star
+    stars.forEach(function(star, index) {
+        star.addEventListener('click', function() {
+            // Change the color of the clicked star and all previous stars to yellow
+            for (var i = 0; i <= index; i++) {
+                stars[i].classList.remove('far');
+                stars[i].classList.add('fas', 'text-warning');
+            }
+            // Change the color of the remaining stars to black
+            for (var i = index + 1; i < stars.length; i++) {
+                stars[i].classList.remove('fas', 'text-warning');
+                stars[i].classList.add('far');
+            }
+        });
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Get the form data
+        var productName = document.querySelector('#productName').value;
+        var reviewTitle = document.querySelector('#reviewTitle').value;
+        var rating = document.querySelectorAll('#rating .fas').length;
+        var message = document.querySelector('#message').value;
+        // Append a new review to the reviews list
+        var review = document.createElement('div');
+        review.innerHTML = `
+            <h5>${productName}</h5>
+            <h6>${reviewTitle}</h6>
+            <div>${'★'.repeat(rating)}</div>
+            <p>${message}</p>
+            <hr>
+        `;
+        reviews.appendChild(review);
+        // Reset the form
+        form.reset();
+        // Reset the stars
+        stars.forEach(function(star) {
+            star.classList.remove('fas', 'text-warning');
+            star.classList.add('far');
+        });
+    });
+
+    // 
+
+//             $("#wishlistButton").click(function() {
+//   if ($(this).hasClass('far')) {
+//     // If the heart is not filled, fill it and change the color to red
+//     $(this).removeClass('far').addClass('fas').css({'color': 'red'})
+//   } else {
+//     // If the heart is filled, make it outlined and change the color to black
+//     $(this).removeClass('fas').addClass('far').css({'color': 'red', 'border': 'none'});
+//   }
+// });
+</script>
+
 
 <!-- boostrap-5 -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

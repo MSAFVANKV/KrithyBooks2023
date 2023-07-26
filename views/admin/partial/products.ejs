@@ -16,7 +16,7 @@
   </style>
 <br>
 
-  <div class="card-body container ">
+  <div class="card-body container">
     <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
       <thead>
         <tr>
@@ -38,10 +38,10 @@
             <td class="text-center"><img src="/img/books/<%= item.thumbnail %>" alt=""  height="80px"></td>
             <td><%= item.category.name %></td>
             <td><%= item.publisher %></td>
-            <td><%= item.authors %></td>
+            <td><%= item.author.name %></td>
             <td><%= item.price %></td>
             <td><%= item.stock %></td>
-            <td >
+            <td > 
               <div class="text-center d-flex flex-column">
                 <a href="/admin/products/edit?id=<%= item._id %>" onclick="editProduct(event,'<%= item.name %>')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
               <% if(item.listed==true){ %> 
