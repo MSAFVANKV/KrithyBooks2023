@@ -127,18 +127,19 @@
         </div> -->
 
         <!-- product view page userSide -->
+        <% if(productDetails !=null){%>
         <div class="container mt-5 ">
             <div class="row d-flex justify-content-center ">           
                         <div class="col-md-2 col-sm-2 mx-3 card mb-2 shadow">
-                            <img class="img-fluid mt-2" src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" alt="">
+                            <img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[0] %>" alt="">
                         </div>
                         <div class="col-1 d-sm-flex mx-3 card mb-2">
-                            <a href=""><img class="img-fluid mt-2" src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" alt=""></a>
-                            <a href=""><img class="img-fluid mt-2" src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" alt=""></a>
+                            <a href=""><img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[0] %>" alt=""></a>
+                            <a href=""><img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[0] %>" alt=""></a>
                         </div>
                         <hr>
                         <div class=" col-lg-11 col-md-10  bg-D9D9D9 border rounded-3">
-                            <h5 class="text-center text-uppercase pt-1">DAIVATHINTE CHARANMAR - YOU COULD BE ONE</h5>
+                            <h5 class="text-center text-uppercase pt-1"><%=productDetails.name%></h5>
                             <hr>
                             <div class="d-md-flex">
                                 <div class="col-md-6 col-sm-12 ">
@@ -152,7 +153,7 @@
                                             <i class="fas fa-star"></i>
                                           </div>
                                           
-                                        <li><small><strong>BY:</strong> <a href="">JOSEPH ANNAMKUTTY JOSE</a></small></li>
+                                        <li><small><strong>BY:</strong> <a href=""><%=productDetails.authors.name%></a></small></li>
                                         <li><small><strong>Book :</strong> DAIVATHINTE CHARANMAR - YOU COULD BE ONE</small></li>
                                         <li><small><strong>Author:</strong> <a href="">JOSEPH ANNAMKUTTY JOSE</a></small></li>
                                         <li><small><strong>Category :</strong> Memoirs, Rush Hours , Autobiography & Biography</small></li>

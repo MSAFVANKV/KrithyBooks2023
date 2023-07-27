@@ -135,11 +135,14 @@
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner mt-2">
     <div class="carousel-item active">
-      <img src="img/sliders/KRITY-BANNER-1.jpg" class="d-block w-100" alt="...">
+      <img src="/img/sliders/krithy-eCommerce-banner-2-2023.webp" class="d-block w-100 img-fluid" style="height: 24rem; " alt="...">
+      <i class="fw-bold text-center fs-1 fw-semibold w-100" style="position: absolute; top: 50%;">Krithy Books</i>
+      <span class="fw-bold text-center bg-white w-100" style="position: absolute; bottom: 0;">Krithy</span>
     </div>
-    <div class="carousel-item">
-      <img src="/img/sliders/KRITHY-BANNER-2.jpg" class="d-block w-100" alt="...">
-    </div>
+    <!-- <div class="carousel-item">
+      <img src="/img/sliders/krithy-eCommerce-banner-2-2023.webp" class="d-block w-100 img-fluid" style="height: 24rem; " alt="...">
+      <span class="fw-bold text-center bg-black w-100" style="position: absolute; bottom: 0;">Kryhy</span>
+    </div> -->
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -154,6 +157,7 @@
 
 
       <!-- books cards === starting page -->
+      
   <div>
     <h1 class="text-center mt-4">
       <u class="color-G">
@@ -165,41 +169,50 @@
   </div>
 
   <!-- books cards -->
-
+  <% if(newArrivals != null){%>
   <form action="">
     <div class="container catogery_prod">
       <div class="row d-flex ">     
         <!-- edit -->
+        <% newArrivals.forEach((product,i)=>{%>
         <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
-          <div class="card shadow-lg prod_card">
+          <div class="card shadow-lg prod_card" style="width: 17rem; ">
               <div class="card card_img">
                 <a href="/productPage">
-                  <img src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" class="card-img-top" alt="Book Image">
+                  <img src="/img/books/<%=product.thumbnail%>" class="card-img-top" alt="Book Image">
                 </a>
                   <!-- <div class="whiashlike">
                     <i class="fas fa-heart whiashlike"></i>
                   </div> -->
               </div>
               <div class="card-body">
-                  <h5 class="card-title text-center">Book Name</h5>
-                  <div class="d-flex">      
-                  <p class="card-text text-success fw-bolder">₹1,499 &nbsp;</p>
-                  <p class="card-text text-warning fw-bold"><del>₹1,999</del>&nbsp;</p>
-                  <p class="card-text">25%off</p> 
-              </div>
+                  <div class="text-center">
+                    <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
+                  </div>
+                  <div class="d-flex">
+                    <div class="m-auto gap-3">
+                      <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
+                      <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                      <span class="card-text">% off</span>
+                  </div>
+                  </div>
               <p class="card-text text-center">Rating: </p>
             </div>
           </div>
         </div>
+        <%})%>
         <!-- adding next card here -->
       </div>    
     </div>
+  
     <!-- view All button -->
     <div class="container d-flex justify-content-center">
       <div class="viewAll text-center d-flex justify-content-center border border-2 border-black rounded-3 align-items-center bg-danger">
-        <a href="/newReleaseProduct" class=" text-black  text-decoration-none fw-bold">VIEW ALL</a>
+        <a href="/categories?category=newReleases" class=" text-black  text-decoration-none fw-bold">VIEW ALL</a>
       </div>
+     
      </div>
+     <%}%>
      <!-- view All button end -->
   
   </form>
@@ -231,9 +244,8 @@
             <div class="card-body">
                   <h5 class="card-title text-center">Book Name</h5>
               <div class="d-flex">      
-                  <p class="card-text text-success fw-bolder">₹1,499 &nbsp;</p>
-                  <p class="card-text text-warning fw-bold"><del>₹1,999</del>&nbsp;</p>
-                  <p class="card-text">25%off</p> 
+                  <span class="card-text text-success fw-bolder"> &nbsp;;</span>
+                 
               </div>
               <p class="card-text text-center">Rating: </p>
             </div>

@@ -37,7 +37,7 @@
                     <!-- Search Bar -->
                     <form class="d-flex ms-3">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                        <button class="btn btn-outline-primary" type="submit" onclick="filter('none')">Search</button>
                     </form>
                 </div>
                 <ul class="navbar-nav ms-auto hamurgerToggle">
@@ -91,6 +91,13 @@
         <!-- nav bar / header == ending -->
 
         <!-- Filter -->
+        <% if(listingName != null){%>
+          <div class="pb-2 d-lg-none  text-center my-3">
+            <span class="shadow-heading" style="font-size: 1.25rem" id="listingname"
+              ><%=listingName%></span
+            >
+          </div>
+          <%}%>
         <div class="mx-5 mt-5">
             <div class="row">
                 <div class="dropdown col-6">
@@ -98,19 +105,20 @@
                       filter
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filter('short Stories')">short Stories</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filter('Noval')">Novals</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="filter('Health')">Healths</a></li>
                     </ul>
                 </div>
+        
                 <div class="dropdown col-6 d-flex justify-content-end">
                     <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       Category
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      <li><a class="dropdown-item" href="" onclick="sortBy('newReleases')" >New releases</a></li>
+                      <li><a class="dropdown-item" href="" onclick="sortBy('ascending')">Price: Low to High</a></li>
+                      <li><a class="dropdown-item" href="" onclick="sortBy('descending')">Price: High to low</a></li>
                     </ul>
                 </div>
             </div>
@@ -126,43 +134,34 @@
               </u>
             </h3>  
           </div>
+
+          <% if(listing != null){ %>
             <div class="container">
                 <div class="row mt-3">
-                  <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-4">
-                    <div class="card shadow" style="width: 16rem;">
-                      <img style="max-height: 300px; object-fit: cover;" class="card-img-top img-fluid" src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" alt="Book image">
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Book Name</h5>
-                        <div class="d-flex justify-content-between">
-                          <p class="card-text text-success fw-bolder">₹1,499</p>
-                          <p class="card-text text-warning fw-bold"><del>₹1,999</del></p>
-                          <p class="card-text">25%off</p>
+                    <% listing.forEach((product, i) => { %>
+                        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-4">
+                            <div class="card shadow" style="width: 16rem;">
+                                <img style="max-height: 300px; object-fit: cover;" class="card-img-top img-fluid" src="/img/books/<%= product.thumbnail %>" alt="Book image">
+                                <div class="card-body">
+                                  <div class="text-center">
+                                    <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 200px;"><%=product.name%></span>
+                                  </div>
+                                    <div class="d-flex">
+                                      <div class="m-auto gap-3">
+                                        <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
+                                        <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                                        <span class="card-text">% off</span>
+                                    </div>
+                                    </div>
+                                    <p class="text-center">Rating: </p>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-center">Rating:</p>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Repeat the above structure for the other two cards. -->
-                  <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-4">
-                    <div class="card shadow" style="width: 16rem;">
-                      <img style="max-height: 300px; object-fit: cover;" class="card-img-top img-fluid"
-                       src="/img/books/basheer/49743355524311-pavapettavarude.jpg" alt="Book image">
-                      <div class="card-body">
-                        <h5 class="card-title text-center">Book Name</h5>
-                        <div class="d-flex justify-content-between">
-                          <p class="card-text text-success fw-bolder">₹1,499</p>
-                          <p class="card-text text-warning fw-bold"><del>₹1,999</del></p>
-                          <p class="card-text">25%off</p>
-                        </div>
-                        <p class="text-center">Rating:</p>
-                      </div>
-                    </div>
-                  </div>
+                    <% }) %>
                 </div>
-              </div>
-              
-        
-    
+            </div>
+        <% } %>
+            
 
 
           <footer class="container-fluid bg-dark">

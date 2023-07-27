@@ -6,8 +6,10 @@ const signlog = require('../controllers/user/signlog')
 const sessionCheck = require('../middlewares/users/sessioncheck')
 const homePage = require('../controllers/index/homepage')
 const newproduct = require('../controllers/index/newReleaseProduct')
-const productPage = require('../controllers/productManager/product')
+// const productPage = require('../controllers/productManager/product')
 const forgotPassword = require('../controllers/user/forgotPassword')
+const objectIdCheck = require('../middlewares/users/objectIdCheck')
+const product = require('../controllers/index/product')
 // const logout = require('../controllers/user/logout')
 
 
@@ -54,12 +56,21 @@ router.post("/changePassword",forgotPassword.updatePassword);
 
 router.
       route('/newReleaseProduct')
-      .get(newproduct.newReleaseProduct)
-router.
-      route('/productPage')
-      .get(productPage.productView);
+      .get(newproduct.ourCollection)
+      .patch(newproduct.filter)
+      .post(newproduct.sortBy)
+      .put(newproduct.search)
+
+
+
+router.get("/categories", newproduct.categories);
+// router.
+//       route('/productPage')
+//       .get(productPage.productView);
            
-          
+router
+      .route("/products/:id")
+      .get(objectIdCheck,product.view)
   
 
 

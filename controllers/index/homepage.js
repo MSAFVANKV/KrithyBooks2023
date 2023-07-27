@@ -23,7 +23,7 @@ exports.viewAll = async (req, res) => {
         const allProducts=await productCollection.find({listed:true})
                                              .populate("category")
                                              .populate("author").sort({_id:-1})
-       let newArrivals = allProducts.slice(0,6)
+       let newArrivals = allProducts.slice(0,5)
        let shortStory=[]
        let noval=[]
        let health=[]
@@ -46,10 +46,10 @@ exports.viewAll = async (req, res) => {
        })
 
 
-       shortStory=shortStory.slice(0,6)
-       noval=noval.slice(0,6)
-       health=health.slice(0,6)
-       memories=memories.slice(0,6)
+       shortStory=shortStory.slice(0,5)
+       noval=noval.slice(0,5)
+       health=health.slice(0,5)
+       memories=memories.slice(0,5)
 
         res.render("index/home", {
           session: req.session.userID,
