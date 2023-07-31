@@ -54,12 +54,12 @@ router.post("/changePassword",forgotPassword.updatePassword);
 // ===================================
 
 
-router.
-      route('/newReleaseProduct')
-      .get(newproduct.ourCollection)
-      .patch(newproduct.filter)
-      .post(newproduct.sortBy)
-      .put(newproduct.search)
+// router.
+//       route('/newReleaseProduct')
+//       .get(newproduct.ourCollection)
+//       .patch(newproduct.filter)
+//       .post(newproduct.sortBy)
+//       .put(newproduct.search)
 
 
 

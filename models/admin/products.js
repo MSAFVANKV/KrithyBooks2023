@@ -35,6 +35,7 @@ const productSchema = new mongoose.Schema({
     require,
   },
   initialPrice:Number,
+  discount:Number,
   price: {
     type: Number,
     require,
@@ -43,7 +44,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     require,
   },
-  frontImage: {
+  bookTitle: {
     type: String,
     require,
   },

@@ -89,13 +89,13 @@ exports.edit = async (req, res) => {
   try {
     if (JSON.stringify(req.files) !== "{}") {
       console.log("req.files", req.files);
-      if (req.files.frontImage) {
-        let frontImage = `${req.body.name}bookTitle${Date.now()}.png`;
-        sharp(req.files.frontImage[0].buffer)
+      if (req.files.bookTitle) {
+        let bookTitle = `${req.body.name}bookTitle${Date.now()}.png`;
+        sharp(req.files.bookTitle[0].buffer)
           .toFormat("png")
           .png({ quality: 80 })
-          .toFile(`assets/img/books/${frontImage}`);
-        req.body.frontImage = frontImage;
+          .toFile(`assets/img/books/${bookTitle}`);
+        req.body.bookTitle = bookTitle;
       }
       if (req.files.thumbnail) {
         let thumbnail = `${req.body.name}_thumbnail_${Date.now()}.png`;

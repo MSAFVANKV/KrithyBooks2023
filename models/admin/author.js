@@ -7,7 +7,7 @@ const  authorSchema= new mongoose.Schema({
         type: String,
         require,
         unique: true,
-      },
+      }
 })
 
 const authorsDetails=mongoose.model("Authors",authorSchema)

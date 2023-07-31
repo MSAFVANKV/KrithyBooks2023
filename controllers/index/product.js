@@ -15,7 +15,7 @@ exports.view=async(req,res)=>{
     try{
         const currentUser= await  userCollection.findById(req.session.userID);
         // const userCart= await cartCollection.findOne({customer:req.session.userID})
-        const productDetails=await productCollection.findById(req.params.id).populate("brand").populate("category");
+        const productDetails=await productCollection.findById(req.params.id).populate("author").populate("category");
         let productsInWishlist=null;
         let percentageOffer=null;
         if(productDetails.initialPrice){
@@ -23,18 +23,13 @@ exports.view=async(req,res)=>{
         }
     const similarProducts= await  productCollection.find({}).sort({_id:1}).limit(10)
        
-        res.render("index/productSowPage", {
+        res.render("index/productShowPage", {
             documentTitle: productDetails.name,
             productDetails,
             session: req.session.userID,
             currentUser,
-            productsInWishlist,
-            reviews,
-            numberOfReviews,
-            moment,
             listing:similarProducts,
             percentageOffer,
-            userCart
 
           });
 

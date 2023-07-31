@@ -12,7 +12,8 @@
 
 const userDTLS = require('../../models/user')
 const productCollection = require('../../models/admin/products')
-
+const authorsDetails = require('../../models/admin/author')
+const categoryDetails = require('../../models/admin/category') 
 exports.viewAll = async (req, res) => {
     try {
         let currentUser
@@ -20,46 +21,38 @@ exports.viewAll = async (req, res) => {
         if(req.session.userID){
             currentUser=await userDTLS.findById(req.session.userID)
         }
+        const allAuthors=await authorsDetails.find();
+        console.log(allAuthors,"check")
         const allProducts=await productCollection.find({listed:true})
                                              .populate("category")
                                              .populate("author").sort({_id:-1})
-       let newArrivals = allProducts.slice(0,5)
-       let shortStory=[]
-       let noval=[]
-       let health=[]
-       let memories=[]
-       let humour=[]
-       allProducts.forEach((product) => {
-        if(product.category.name=="shortStory"){
-            shortStory.push(product)
-        } else if (product.category.name=="noval"){
-            noval.push(product)
-        }
-        else if (product.category.name=="health"){
-            health.push(product)
-        }
-        else if (product.category.name=="memories"){
-            memories.push(product)
-        }else {
-            humour.push(product)
-        }
-       })
+       let newArrivals = allProducts.slice(0,8)
 
+      //  to get unique authors // remove same authors
+      const uniqueAuthorsWithTitles = newArrivals.map(product => 
+        ({author: product.author, bookTitle: product.bookTitle}))
+          .filter((item, index, self) => 
+              index === self.findIndex((a) => (
+              a.author._id.toString() === item.author._id.toString()
+              ))
+          );
 
-       shortStory=shortStory.slice(0,5)
-       noval=noval.slice(0,5)
-       health=health.slice(0,5)
-       memories=memories.slice(0,5)
+          const uniqueCategoriesWithTitles = newArrivals.map(product => 
+            ({category: product.category, thumbnail: product.thumbnail}))
+              .filter((item, index, self) => 
+                  index === self.findIndex((a) => (
+                  a.category._id.toString() === item.category._id.toString()
+                  ))
+              );
 
         res.render("index/home", {
           session: req.session.userID,
           currentUser,
           newArrivals,
-          shortStory,
-          noval,
-          health,
           message:"",
-          session:req.session.userID
+          session:req.session.userID,
+          authors: uniqueAuthorsWithTitles,
+          categories: uniqueCategoriesWithTitles
         });
       
       } catch (error) {
@@ -74,3 +67,18 @@ exports.viewAll = async (req, res) => {
         
     
     }
+
+
+    exports.categoryPage = async (req, res) => {
+      try {
+          const allCategories=await categoryDetails.find();
+          console.log(allCategories,"check")
+          res.render("index/categories", {
+            session: req.session.userID,
+            currentUser,
+            categories: allCategories
+          });
+        } catch (error) {
+          console.log("Error rendering category page: " + error);
+        }
+  };

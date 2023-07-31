@@ -21,10 +21,23 @@
             style="text-transform: none;"
           />
         </div>
+        <div class="mb-3">
+          <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload thumbnail</label>
+        <input
+          class="form-control"
+          id="thumbnail"
+          name="thumbnail"
+          type="file"
+          onchange="loadFile1(event)"
+          value=""
+          required
+        />
+        <p ><img id="output1" width="100" style="margin-top: 10px;"/></p>
+      </div>
         <input type="submit" class="text-center btn btn-primary w-25" value="Save" />
       </form>
     </div>
   </div>
 </div>
-
+<!--  -->
 <%- include('../layouts/_footer') %>

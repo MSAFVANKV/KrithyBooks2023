@@ -19,7 +19,7 @@
           <tr class="text-uppercase">
             <th>No.</th>
             <th>Name</th>
-            <th>images</th>
+            <th>Images</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -30,6 +30,7 @@
             <td><%= i+1 %></td>
             <td><%= item.name %></td>
             <td></td>
+         
             <td class="text-center list-unstyled">
               <a
                 href="/admin/authors/edit?id=<%= item._id%>"
@@ -73,6 +74,18 @@
             style="text-transform: none"
           />
         </div>
+    <!-- images -->
+    <!-- <div class="mb-3">
+      <label for="authorImg" class="form-label">Author Img</label>
+      <input type="file"
+       class="form-control" 
+       id="authorImg" 
+       name="authorImg"
+       onchange="loadFile2(event)"
+       required
+       >
+    </div> -->
+    <!-- images end -->
         <div class="d-flex justify-content-center mb-3">
           <div class=" text-center">
             <input type="submit" class="btn btn-primary text-uppercase" value="Add Author "/>
@@ -83,5 +96,28 @@
     </div>
   </div>
 </div>
+
+
+<!-- <script>
+  document.getElementById('uploadForm').addEventListener('submit', function(event) {
+  var fileInput = document.getElementById('images');
+  var selectedFiles = fileInput.files;
+  
+     });
+      
+     let loadFile1 = function(event) {
+              var image = document.getElementById('output1');
+              image.src=URL.createObjectURL(event.target.files[0]);          
+          };  
+      let loadFile2 = function(event) {
+              var image = document.getElementById('output2');
+              image.src=URL.createObjectURL(event.target.files[0]);          
+          }; 
+      let loadFile3 = function(event) {
+        for(i=0;i<3;i++){
+              var image = document.getElementById(`output${i+3}`);
+              image.src=URL.createObjectURL(event.target.files[i]);   }       
+          };
+</script> -->
 
 <%-include('../layouts/_footer')%>

@@ -256,3 +256,13 @@ input[type=number]::-webkit-outer-spin-button {
     border: 1px solid red;
     width: 140px
 }
+
+/* ZOOMING IMAGES START 
+==========================*/
+  /* ZOOMING IMAGES END
+  ======================= */
+
+  /* .thumbimgSize{
+    max-height: 8rem;
+    max-width: 100%;
+  } */

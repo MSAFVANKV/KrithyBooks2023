@@ -71,7 +71,7 @@
                   </ul>
   
                   <!-- Search Bar -->
-                  <form class="d-flex ms-3">
+                  <form class="d-flex ms-3 justify-content-center">
                       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                       <button class="btn btn-outline-primary" type="submit">Search</button>
                   </form>
@@ -178,7 +178,7 @@
         <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
           <div class="card shadow-lg prod_card" style="width: 17rem; ">
               <div class="card card_img">
-                <a href="/productPage">
+                <a href="/products/<%=product._id%>">
                   <img src="/img/books/<%=product.thumbnail%>" class="card-img-top" alt="Book Image">
                 </a>
                   <!-- <div class="whiashlike">
@@ -193,7 +193,7 @@
                     <div class="m-auto gap-3">
                       <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
                       <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
-                      <span class="card-text">% off</span>
+                      <span class="card-text text-info"><%= product.discount %>% off</span>
                   </div>
                   </div>
               <p class="card-text text-center">Rating: </p>
@@ -229,37 +229,48 @@
   </div>
 
   <!-- Catogory -->
-  <form action="">
-    <div class="container catogery_prod ">
-      <div class="row d-flex ">     
-        <!-- edit -->
-        <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5 ">
-          <div class="card shadow-lg prod_card ">
-              <div class="card card_img">
-                  <img src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" class="card-img-top" alt="Book Image">
-                  <!-- <div class="whiashlike">
-                  <i class="fas fa-heart whiashlike"></i>
-                  </div> -->
-              </div>
-            <div class="card-body">
-                  <h5 class="card-title text-center">Book Name</h5>
-              <div class="d-flex">      
-                  <span class="card-text text-success fw-bolder"> &nbsp;;</span>
-                 
-              </div>
-              <p class="card-text text-center">Rating: </p>
-            </div>
-          </div>
+  <% if(categories != null && categories.length > 0){ %>
+    <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <% for(let i = 0; i < categories.length; i += 4) { %>
+                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                    <div class="container catogery_prod">
+                        <div class="row d-flex">
+                            <% for(let j = i; j < i + 4 && j < categories.length; j++) { %>
+                                <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5">
+                                    <div class="card shadow-lg prod_card" style="width: 12rem;">
+                                        <div class="card card_img">
+                                            <img src="/img/books/<%=categories[j].thumbnail%>" class="card-img-top img-fluid" alt="Book Image">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title text-center text-uppercase fs-6"><%=categories[j].category.name%></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
         </div>
-      </div>    
-    </div>  
-  </form>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+<% } %>
       <!-- view All button -->
-      <div class="container d-flex justify-content-center">
-        <div class="viewAll text-center d-flex justify-content-center border border-2 border-black rounded-3 align-items-center bg-danger">
+       <!-- <div class="viewAll text-center d-flex justify-content-center border border-2 border-black rounded-3 align-items-center bg-danger">
           <a href="" class=" text-black  text-decoration-none fw-bold">VIEW ALL</a>
         </div>
-       </div>
+       </div>   <div class="container d-flex justify-content-center"> -->
+    
        <!-- view All button end -->
 
   <!-- Authors -->
@@ -273,28 +284,49 @@
     </h1>  
   </div>
 
-  <form action="">
-    <div class="container catogery_prod ">
-      <div class="row d-flex ">     
-        <!-- edit -->
-        <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5  shadow">
-          <div class="card shadow-lg prod_card ">
-              <div class="card card_img">
-                  <img src="/img/books/joseph/44476287644115-daivathinte-charan.jpg" class="card-img-top" alt="Book Image">
-                  <!-- <div class="whiashlike">
-                  <i class="fas fa-heart whiashlike"></i>
-                  </div> -->
-              </div>
-            <div class="card-body">
-                  <h5 class="card-title text-center">Authors Name</h5>
-            </div>
-          </div>
+  <% if(authors != null && authors.length > 0){ %>
+    <div id="authorCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <% for(let i = 0; i < authors.length; i += 4) { %>
+                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                    <div class="container catogery_prod">
+                        <div class="row d-flex">
+                            <% for(let j = i; j < i + 4 && j < authors.length; j++) { %>
+                                <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5">
+                                    <div class="card shadow-lg prod_card" style="width: 12rem;">
+                                        <div class="card card_img">
+                                            <img src="/img/books/<%=authors[j].bookTitle%>" class="card-img-top img-fluid" alt="Book Image">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title text-center text-uppercase fs-6"><%=authors[j].author.name%></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
         </div>
-      </div>    
-    </div>
-  </form>
- 
 
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#authorCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#authorCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+<% } %>
+
+
+
+
+
+  
+  
   <!-- footer   =========================   -->
   <footer class="  h-50 bg-dark text-light py-3 ">
     <div class="container text-center footer mt-5">
