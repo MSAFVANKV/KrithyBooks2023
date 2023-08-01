@@ -1,35 +1,48 @@
 <%-include('../layouts/_header')%>
 
-<section class="userPage">
-    <div class="container-fluid pt-5 pb-5"
-        style="background: #fff; width: auto; padding: 20px; border-radius: 20px;">
-        <div class="row justify-content-center">
-            <div class="form-container user-signup">
-                <form action=""  method="post" id="otpverification">
-                
-                            <label for="">Enter Your OTP</label>
-                            <!-- <input style="display: none;" type="text" name="id" value=""> -->
-                            <input type="text" name="otp">
-                            <input type="submit" class="btn btn-success" value="Submit">
-                            <p id="countDown" style="text-align: center; font-size: smaller;"></p>
-                           
-                </form>
-                <span class="text-center py-3" style="font-size: 0.8rem; text-transform: none;color:rgb(172, 166, 166)" id="counter">
-                    Resend OTP in <span id="countdowntimer">--</span> Seconds    
-                </span>
-                <% if(typeof userExist !== 'undefined' && userExist !=null) { %>    
-                    <span class="text-center py-3" style="font-size: 0.8rem; text-transform: none;color:rgb(172, 166, 166)" id="resendotp1">
-                    </span>
-                  <% }else { %>    
-                    <span class="text-center py-3" style="font-size: 0.8rem; text-transform: none;color:rgb(172, 166, 166)" id="resendotp2">
-                    </span><%  } %> 
-                  
+<style>
+  html, body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+</style>
 
-            </div>
-        </div>
-    </div>
+<section class="userPage" style="width: 100%;">
+  <div class="container h-100 d-flex justify-content-center align-items-center">
+      <div class="row justify-content-center">
+          <div class="form-container user-signup">
+              <div class="card shadow">
+                  <div class="card-body">
+                      <h3 class="text-center mb-4">OTP Verification</h3>
+                      <form action="/verifyOTP" method="post" id="otpverification">
+                          <div class="mb-3">
+                              <label for="otp-input" class="form-label">Enter Your OTP</label>
+                              <input type="text" name="otp" id="otp-input" class="form-control">
+                          </div>
+                          <div class="mb-3">
+                              <input type="submit" class="btn btn-success w-100" value="Submit">
+                          </div>
+                          <div id="countDown" class="text-center text-muted"></div>
+                      </form>
+                      <p class="text-center py-3" style="font-size: 0.8rem; text-transform: none;color:rgb(172, 166, 166)" id="counter">
+                          Resend OTP in <span id="countdowntimer">--</span> Seconds    
+                      </p>
+                      <% if(typeof userExist !== 'undefined' && userExist !=null) { %>    
+                          <p class="text-center py-3" style="font-size: 0.8rem; text-transform: none;color:rgb(172, 166, 166)" id="resendotp1">
+                          </p>
+                      <% }else { %>    
+                          <p class="text-center py-3" style="font-size: 0.8rem; text-transform: none;color:rgb(172, 166, 166)" id="resendotp2">
+                          </p><%  } %> 
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </section>
-
 
 <!-- <script>
 
@@ -69,5 +82,41 @@
      }},1000)
     
     </script>
+<!-- <script>
+  var timeleft = localStorage.getItem('counter') || 60;
+  const downloadTimer = setInterval(function(){
+    timeleft--;
+    localStorage.setItem('counter',timeleft)
+
+    document.getElementById("countdowntimer").textContent = timeleft;
+    if(timeleft <= 0){
+      clearInterval(downloadTimer);
+      localStorage.removeItem('counter');
+      $("#counter").prop("hidden", true);
+      $("#resendotp2").html('<a href="/forgotPassword/otpVerification/resend_OTP" >RESEND OTP</a>');
+      $("#resendotp1").html('<a href="/signUp/resend_OTP" >RESEND OTP</a>');
+    }
+  },1000);
+
+  // Clear and restart the countdown after clicking the resend button
+  $("#resendotp2, #resendotp1").click(function() {
+    clearInterval(downloadTimer);
+    localStorage.removeItem('counter');
+    timeleft = 60;
+    $("#counter").prop("hidden", false);
+    downloadTimer = setInterval(function(){
+      timeleft--;
+      localStorage.setItem('counter',timeleft)
+      document.getElementById("countdowntimer").textContent = timeleft;
+      if(timeleft <= 0){
+        clearInterval(downloadTimer);
+        localStorage.removeItem('counter');
+        $("#counter").prop("hidden", true);
+        $("#resendotp2").html('<a href="/forgotPassword/otpVerification/resend_OTP" >RESEND OTP</a>');
+        $("#resendotp1").html('<a href="/signUp/resend_OTP" >RESEND OTP</a>');
+      }
+    },1000);
+  });
+</script> -->
 
   <%-include('../layouts/_footer')%>

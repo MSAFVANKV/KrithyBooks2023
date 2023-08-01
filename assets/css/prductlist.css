@@ -35,6 +35,9 @@
 .color-main{
     color: #FF4031;
 }
+.color-main:hover{
+    background-color: #FF4031;
+}
 .color-G{
     color: #4CAF50;
 }

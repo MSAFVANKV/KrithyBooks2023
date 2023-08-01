@@ -4,6 +4,7 @@ const session = require('express-session');
 const detenv = require('dotenv')
 const bodyParser = require('body-parser');
 const adminRouter = require('./routers/admin')
+const userRouter = require('./routers/user')
 
 
 
@@ -44,8 +45,10 @@ app.use((req, res, next) => {
 
 
 // routing setting
-app.use('/',require('./routers/router'))
-app.use("/admin", adminRouter)
+
+app.use("/admin", adminRouter);
+app.use("/users", userRouter);
+app.use('/',require('./routers/router'));
 
 
 // PORT setting

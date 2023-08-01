@@ -1,9 +1,9 @@
 const sessionCheck = (req, res, next) => {
-    if (req.session.userId) {
+    if (req.session.userID) {
        
         next()
     } else {
-        res.redirect('user/partials/login')
+        res.redirect('/login')
     }
 }
 

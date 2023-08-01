@@ -107,7 +107,6 @@ exports.otpVerification =async (req, res) => {
         res.redirect("/changePassword");
       } else {
         res.render("user/partials/otp", {
-          documentTitle: "Update User Password | SHOE ZONE",
           errorMessage: "Invalid OTP",
           newUserDetails:null
         });
@@ -121,7 +120,6 @@ exports.passwordChangePage=async(req,res)=>{
     try{
         if (req.session.updatePassword && req.session.resetPasswordAuth) {
             res.render("user/partials/changePassword", {
-              documentTitle: "User Password Reset | SHOE ZONE",
             });
           } else {
             res.redirect("/forgotPassword");

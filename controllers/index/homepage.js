@@ -22,7 +22,7 @@ exports.viewAll = async (req, res) => {
             currentUser=await userDTLS.findById(req.session.userID)
         }
         const allAuthors=await authorsDetails.find();
-        console.log(allAuthors,"check")
+        // console.log(allAuthors,"check")
         const allProducts=await productCollection.find({listed:true})
                                              .populate("category")
                                              .populate("author").sort({_id:-1})
