@@ -13,9 +13,15 @@ router
     .route('/profile/manageAddress')
     .get(sessionCheck,profile.addressViewPage)
     .post(sessionCheck,profile.addAddress)
+    .delete(sessionCheck,profile.deleteAddress)
 
+    router
+    .route('/profile/manageAddress/addressDelete')
+    .delete(sessionCheck,profile.deleteAddress)
 
-
+    router
+    .route('/profile/manageAddress/editAddress')
+    .put(sessionCheck,profile.editAddress)
 module.exports = router
 
 

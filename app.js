@@ -4,7 +4,8 @@ const session = require('express-session');
 const detenv = require('dotenv')
 const bodyParser = require('body-parser');
 const adminRouter = require('./routers/admin')
-const userRouter = require('./routers/user')
+const userRouter = require('./routers/user');
+const flash = require('connect-flash');
 
 
 
@@ -26,10 +27,9 @@ app.use(session({
     saveUninitialized: true
   }));
 
-// app.use((req, res, next) => {
-//   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-//   next();
-// });
+  // for flash messages
+  app.use(flash());
+
 
 
 // static items setting

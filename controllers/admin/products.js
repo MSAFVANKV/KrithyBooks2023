@@ -11,7 +11,7 @@ exports.viewProduts = async (req, res) => {
         const allAuthors=await authorsDetails.find();
         const allProducts= await productCollection.find().populate("category").populate("author")
 
-        console.log(allProducts)
+        // console.log(allProducts)
         res.render("admin/partial/products", {
             categories: allCategories, 
             products: allProducts,

@@ -8,7 +8,7 @@
   <div class="row mt-5">
     <%- include('../layouts/profileSearchBar') %>
         
-      <div class="col-lg-8 rounded-3 bg-profile ms-3">
+      <div class="col-lg-8 rounded-3 bg-profile ms-3" style="width: 50rem;"><!-- main div -->
           <div class=" pt-2">
               <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
               <!-- profile add -->
@@ -93,6 +93,8 @@
               id="contactNumber"
               placeholder="contact Number"
               name="contactNumber"
+              pattern="0*[1-9][0-9]{9}"
+              title="Please enter exactly 10 digits and should not start with 0"
               required
             />
           </div>
@@ -106,57 +108,40 @@
     </div>
   </div>
 </div>
+
+
       <!--  -->
       <% if (currentUser) { %>
-        <% currentUser.addresses.forEach(function(address, i){ %>
-            <table class="table table-striped table-bordered mt-4">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Building</th>
-                        <th>Address</th>
-                        <th>Pincode</th>
-                        <th>Country</th>
-                        <th>Contact Number</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><%= address.building %></td>
-                        <td><%= address.address %></td>
-                        <td><%= address.pincode %></td>
-                        <td><%= address.country %></td>
-                        <td><%= address.contactNumber %></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                      <td>
-                          <% if (!address.primary) { %>
-                              <a href="/users/profile/manageAddress/setDefault/<%= i %>" class="btn btn-primary">Set as Default</a>
-                          <% } else { %>
-                              <span class="badge bg-primary">Default Address</span>
-                          <% } %>
-                      </td>
-                      <td colspan="3">
-                          <a href="/users/profile/manageAddress/edit/<%= i %>" class="btn btn-warning">Edit</a>
-                      </td>
-                      <td>
-                          <a href="/users/profile/manageAddress/delete/<%= i %>" class="btn btn-danger">Delete</a>
-                      </td>
-                  </tr>
-              </tfoot>
-          </table>
-      <% }) %>
+        <div class="row d-flex justify-content-center">
+            <% currentUser.addresses.forEach(function(address, i){ %>
+                <div class="col-md-5 m-3 border border-1 border-black p-3 mt-3  shadow rounded-4">
+                    <h5 class="mb-3">Address <%= i + 1 %></h5>
+                    <div class="text-end">
+                        <span class="text-primary edit-btn" style="cursor: pointer;" >Edit</span>
+                        <button class="btn btn-success save-btn" style="display: none;"data-id="<%=address._id.toString()%>">Save</button>
+                        <span class="text-secondary cancel-btn" style="cursor: pointer; display: none;">Cancel</span>
+                        <span class="text-danger delete-btn" data-id="<%=address._id.toString()%>" style="cursor: pointer;">Delete</span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <textarea class="form-control shadow mb-3 " disabled style="height: 10rem;"><%= `${address.building}\n${address.address}\n${address.pincode}\n${address.country}\n${address.contactNumber}` %>
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-check form-switch text-end">
+                        <input class="form-check-input" type="checkbox" id="defaultCheck<%= i %>" <%= address.default ? 'checked' : '' %> disabled>
+                        <label class="form-check-label" for="defaultCheck<%= i %>">Set as default</label>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
     <% } else { %>
         <p>No addresses found.</p>
-    <% } %>
-          
-      
-    </div>
+    <% } %>  
+      </div>
   </div>
   
 </div>
-
 
 
 
