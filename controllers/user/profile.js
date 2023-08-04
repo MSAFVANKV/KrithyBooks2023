@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const userCollection = require('../../models/user')
+const userCollection = require('../../models/user');
+
+
 
 // profile view page
 exports.viewPage = async (req, res) => {
@@ -117,3 +119,32 @@ exports.editAddress = async (req, res) => {
         
     }
 }
+
+exports.upadteUser = async (req, res) => {
+    try {
+        const userID = req.session.userID;
+        const filteredBody = {};
+        if (req.file) {
+            filteredBody.photo = req.file.filename;
+        }
+        await userCollection.findByIdAndUpdate(userID, filteredBody);
+        res.redirect("/users/profile");
+
+    } catch (error) {
+        res.redirect("/users/profile");
+        console.log("error on profile updation:" + error)
+    }
+}
+
+
+// exports.uploadProfileImage = async (req, res) => {
+//     let userID = req.session.userID;
+//     let currentUser = await userCollection.findOne({_id: userID});
+//     if(currentUser){
+//       // Update the user's photo URL
+//       await userCollection.updateOne({_id: userID}, {$set: {photo: req.file.location}});
+//       res.send("Image uploaded successfully");
+//     } else {
+//       res.send("Error: User not found");
+//     }
+//   }
