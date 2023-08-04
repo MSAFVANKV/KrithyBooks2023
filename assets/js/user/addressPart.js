@@ -1,44 +1,39 @@
 document.querySelectorAll('.edit-btn').forEach((editBtn, i) => {
     editBtn.addEventListener('click', () => {
-        // Find the parent 'address' div
-        const addressDiv = editBtn.parentElement.parentElement;
-        // Find the textarea within this address div
-        const textarea = addressDiv.querySelector('textarea');
-        // Enable the textarea
-        textarea.disabled = false;
-
-        // Find the 'set as default' checkbox within this address div
-        const defaultCheck = addressDiv.querySelector('.form-check-input');
-        // Enable the 'set as default' checkbox
-        defaultCheck.disabled = false;
-
-        // Show 'Save' and 'Cancel' buttons, hide 'Edit'
-        editBtn.style.display = 'none';
-        addressDiv.querySelector('.save-btn').style.display = 'inline-block';
-        addressDiv.querySelector('.cancel-btn').style.display = 'inline-block';
+      const addressDiv = editBtn.parentElement.parentElement;
+      const textarea = addressDiv.querySelector('textarea');
+      textarea.disabled = false;
+  
+      const setDefaultBtn = addressDiv.querySelector('.set-default-btn');
+      if(setDefaultBtn){
+        setDefaultBtn.style.pointerEvents = 'none'; 
+        setDefaultBtn.style.opacity = '0.6'; 
+      }
+      
+      editBtn.style.display = 'none';
+      addressDiv.querySelector('.save-btn').style.display = 'inline-block';
+      addressDiv.querySelector('.cancel-btn').style.display = 'inline-block';
     });
-});
-
-document.querySelectorAll('.cancel-btn').forEach((cancelBtn, i) => {
+  });
+  
+  document.querySelectorAll('.cancel-btn').forEach((cancelBtn, i) => {
     cancelBtn.addEventListener('click', () => {
-        // Find the parent 'address' div
-        const addressDiv = cancelBtn.parentElement.parentElement;
-        // Find the textarea within this address div
-        const textarea = addressDiv.querySelector('textarea');
-        // Disable the textarea
-        textarea.disabled = true;
-
-        // Find the 'set as default' checkbox within this address div
-        const defaultCheck = addressDiv.querySelector('.form-check-input');
-        // Disable the 'set as default' checkbox
-        defaultCheck.disabled = true;
-
-        // Show 'Edit' button, hide 'Save' and 'Cancel'
-        cancelBtn.style.display = 'none';
-        cancelBtn.previousElementSibling.style.display = 'none';
-        addressDiv.querySelector('.edit-btn').style.display = 'inline';
+      const addressDiv = cancelBtn.parentElement.parentElement;
+      const textarea = addressDiv.querySelector('textarea');
+      textarea.disabled = true;
+  
+      const setDefaultBtn = addressDiv.querySelector('.set-default-btn');
+      if(setDefaultBtn){
+        setDefaultBtn.style.pointerEvents = 'auto'; 
+        setDefaultBtn.style.opacity = '1'; 
+      }
+  
+      cancelBtn.style.display = 'none';
+      cancelBtn.previousElementSibling.style.display = 'none';
+      addressDiv.querySelector('.edit-btn').style.display = 'inline';
     });
-});
+  });
+  
 
 // ===================================================================================
 // address add successs message============ sweet alert                             //|

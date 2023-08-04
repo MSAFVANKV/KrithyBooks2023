@@ -7,7 +7,7 @@
     <!--  -->
     <%- include('../layouts/profileSearchBar') %>
         <!--  -->
-      <div class="col-lg-8 rounded-3 bg-profile ms-3">
+      <div class="col-md-8 col-10 rounded-3 bg-profile ms-3">
         <% if(currentUser){%>
           <div class=" pt-2">
               <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
@@ -51,7 +51,7 @@
                   </div>
                   <div class="col-md">
                       <div class="form-floating">
-                        <input type="number" name="phone" class="form-control" id="floatingInputGrid" placeholder="" value="<%= currentUser.phone %>">
+                        <input type="number" name="number" class="form-control" id="floatingInputGrid" placeholder="" value="<%= currentUser.number %>">
                         <label for="floatingInputGrid">Phone</label>
                       </div>
                     </div>
@@ -60,77 +60,55 @@
           </div>
           <div class="mb-3">
               <div class="row g-2">
-                  <div class="col-md">
+                  <div class="col-md-6">
                     <div class="form-floating">
                       <input type="email" class="form-control" id="floatingInputGrid" placeholder="" name="email" value="<%= currentUser.email %>">
                       <label for="floatingInputGrid">Email Address</label>
                     </div>
                   </div>
-                  <div class="col-md">
-                      <div class="form-floating">
-                        <input type="date" class="form-control" id="floatingInputGrid" placeholder="" value="">
-                        <label for="floatingInputGrid">Date of Birth</label>
-                      </div>
-                    </div>
-                   
                 </div>
           </div>
           <div class="mb-3">
               <div class="row g-2">
-                  <div class="col-md-3">
+                  <div class="col-md-1">
                     <div class="form-floating">
                       <input type="number" class="form-control" id="floatingInputGrid" placeholder="" name="age" value="">
                       <label for="floatingInputGrid">Age</label>
                     </div>
                   </div>
                   <div class="col-md-5">
-                      <div class="form-floating">
-                        <input type="number" class="form-control" id="floatingInputGrid" name="pinCode" placeholder="" value="<%= currentUser.addresses.pincode %>">
-                        <label for="floatingInputGrid">Pin Code</label>
-                      </div>
-                    </div>
-                   
-                </div>
-          </div>
-          <!--  -->
-          <div class="mb-3">
-            <div class="row g-2">
-                <div class="col-md-3">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="place" value="">
-                    <label for="floatingInputGrid">Place</label>
-                  </div>
-                </div>
-                <div class="col-md-5">
                     <div class="form-floating">
                       <input type="text" class="form-control" id="floatingInputGrid" placeholder="" name="landMark" value="">
                       <label for="floatingInputGrid">Land Mark</label>
                     </div>
                   </div>
-                 
-              </div>
-        </div>
-        <!--  -->
-        <% currentUser.addresses.forEach((address) => { %>
-          <% if(address.default) { %>
-            <!-- Each Address -->
-            <div class="mb-3">
-                <div class="row g-2">
-                    <div class="col-md-8 ">
-                        <div class="form-floating">
-                            <input type="text" class="form-control floatingAddress" id="floatingInputGrid" name="address" value="<%= address.address %>">
-                            <label for="floatingInputGrid" class="">Address</label>
-                        </div>
-                    </div>
                 </div>
-            </div>
+          </div>
+          <!--  -->
+         
+        <!--  -->
+        <% currentUser.addresses.forEach(function(address) { %>
+          <% if(address.primary) { %>
+              <!-- Each Address -->
+              <div class="mb-3">
+                  <div class="row g-2">
+                      <div class="col-md-8 ">
+                          <div class="form-floating">
+                            <textarea class="form-control shadow mb-3 " disabled style="height: 10rem;"><%= `${address.building}\n${address.address}\n${address.pincode}\n${address.country}\n${address.contactNumber}` %>
+                            </textarea>
+                            <label for="floatingInputGrid" class="">Address</label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           <% } %>
       <% }) %>
-      
+            
       <!--  -->
 
       <div class="d-flex mb-3 justify-content-center">
-        <button type="submit" class="btn col-2 logbtn fw-bold text-white">SAVE</button>      </div>
+        <button type="submit" class="btn  logbtn fw-bold text-white">SAVE</button>
+      </div>
       
     </div>
    

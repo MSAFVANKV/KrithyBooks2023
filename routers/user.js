@@ -3,6 +3,7 @@ const router = express.Router();
 const sessionCheck = require('../middlewares/users/sessioncheck')
 const profile = require('../controllers/user/profile')
 const croppedImgupload=require("../utilities/cropedImgUplod")
+const address=require("../controllers/user/address");
 
 const multer = require('multer');
 // const multerS3 = require('multer-s3');
@@ -43,6 +44,7 @@ router
     .route('/profile/manageAddress/editAddress')
     .put(sessionCheck,profile.editAddress)
 
+    router.get("/profile/manageAddress/changeRole", sessionCheck, address.defaultToggler);
 
 //     router
 // .route('/profile/manageAddress/save_image')

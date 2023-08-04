@@ -8,10 +8,15 @@ exports.viewPage = async (req, res) => {
     try {
         let userID = req.session.userID
         let currentUser = await userCollection.findById(userID)
+        let allAddresses=currentUser.addresses;
+        if (allAddresses == "") {
+            allAddresses = null;
+          }
 // console.log(currentUser);
 res.render("user/profile/partials/profile", {
     currentUser,
-    session: req.session.userID
+    session: req.session.userID,
+    allAddresses
 })
     } catch (error) {
         res.redirect('/');
@@ -41,9 +46,11 @@ exports.addAddress = async (req, res) => {
         let userID = req.session.userID;
         let currentUser = await userCollection.findOne({_id: userID});
         if(currentUser){
-            console.log(userID);
-            console.log(currentUser);
-
+            // console.log(userID);
+            // console.log(currentUser);
+            await userCollection.updateOne({ _id: userID , "addresses.primary":true}, {
+                $set:{'addresses.$.primary':false}
+               })
             await userCollection.updateOne({_id: userID},
                 {
                     $push: {
@@ -148,3 +155,4 @@ exports.upadteUser = async (req, res) => {
 //       res.send("Error: User not found");
 //     }
 //   }
+

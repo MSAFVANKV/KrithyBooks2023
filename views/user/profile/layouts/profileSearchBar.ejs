@@ -1,4 +1,112 @@
-<div class="col-lg-3 col-sm-3  text-white py-3 border rounded-4 bg-profile mt-3 settings shadow">
+
+<style>
+  @media (min-width: 992px){
+    #toggle {
+      display: block;
+    }
+  }
+  @media (max-width: 992px) {
+    .firstSettings {
+      display: none;
+    }
+    #toggle {
+      display: none;
+    }
+  }
+
+/* hamburger */
+#toggle
+{
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    background-color: rgb(25, 68, 126);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#toggle::before
+{
+    content: '';
+    position: absolute;
+    top: 26px; /* adjust as needed */
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translatey(-5px);
+    transition: 0.2s;
+}
+#toggle::after
+{
+    content: '';
+    position: absolute;
+    bottom: 26px; /* adjust as needed */
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translatey(5px);
+    transition: 0.2s;
+}
+#toggle.active::before
+{
+    transform:  rotate(-45deg);
+
+}
+#toggle.active::after
+{
+    transform:  rotate(45deg);
+
+}
+
+/* hamburger end */
+#sidebar
+{
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #0c114d;
+    transition: 0.5s;
+    z-index: 99; /* add this line */
+}
+#sidebar.active
+{
+    left: 0;
+}
+#sidebar ul
+{
+    position: relative;
+    margin-top: 50px;
+}
+#sidebar ul li
+{
+    list-style: none;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 10px;
+}
+#sidebar ul li:hover
+{
+    background: #03a9f4;
+}
+#sidebar ul li small a
+{
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+}
+a{
+  color: #fff;
+  
+}
+</style>
+
+<div class="col-lg-3 col-sm-3 firstSettings  text-white py-3 border rounded-4 bg-profile mt-3 settings shadow">
     <div class="border text-center p-2 border-dark-subtle bg-profile ">
         <small><a href="/users/profile" class="text-decoration-none text-black text-uppercase fw-bold ">My Profile</a></small>
     </div>
@@ -19,3 +127,95 @@
         </div>
    
         </div>
+
+        <!-- ============================================================ -->
+        <div id="toggle"></div>
+        <div id="sidebar">
+            <ul>
+                <li><small><a href="/users/profile" class="text-decoration-none text-black text-uppercase fw-bold ">My Profile</a></small></li>
+                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Cart</a></small></li>
+                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Wishlist</a></small></li>
+                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">My Orders</a></small></li>
+                <li><small><a href="/users/profile/manageAddress" class="text-decoration-none text-black text-uppercase fw-bold ">Manage Address</a></small></li>
+                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Change Password</a></small></li>
+            </ul>
+        </div>
+    
+        <!-- <script>
+            // #hamburger btn
+            // ==================
+            const toggle = document.getElementById('toggle');
+            const sidebar = document.getElementById('sidebar');
+    
+    
+            document.onclick = function(e){
+            if(e.target.id !== 'sidebar' && e.target.id !== 'toggle')
+            {
+                toggle.classList.remove('active');
+                sidebar.classList.remove('active')
+            }
+            }
+    
+            toggle.onclick = function(){
+                toggle.classList.toggle('active');
+                sidebar.classList.toggle('active');
+            }
+
+            // 
+// listen for window resize
+window.addEventListener('resize', function() {
+    // update display properties based on window width
+    if(window.innerWidth > 992) {
+        document.querySelector('.firstSettings').style.display = 'block';
+        document.querySelector('#toggle').style.display = 'none';
+    }
+    else {
+        document.querySelector('.firstSettings').style.display = 'none';
+        document.querySelector('#toggle').style.display = 'block';
+    }
+});
+
+
+        </script> -->
+        <script>
+          // get elements
+          const toggle = document.getElementById('toggle');
+          const sidebar = document.getElementById('sidebar');
+          const firstSettings = document.querySelector('.firstSettings');
+          
+          // function to adjust view based on window width
+          function adjustView() {
+              if(window.innerWidth > 992) {
+                  firstSettings.style.display = 'block';
+                  toggle.style.display = 'none';
+                  // deactivate sidebar and toggle if window is resized while sidebar is active
+                  toggle.classList.remove('active');
+                  sidebar.classList.remove('active');
+              } else {
+                  firstSettings.style.display = 'none';
+                  toggle.style.display = 'block';
+              }
+          }
+      
+          // click event
+          document.onclick = function(e) {
+              if(e.target.id !== 'sidebar' && e.target.id !== 'toggle') {
+                  toggle.classList.remove('active');
+                  sidebar.classList.remove('active');
+              }
+          }
+      
+          // toggle onclick event
+          toggle.onclick = function() {
+              toggle.classList.toggle('active');
+              sidebar.classList.toggle('active');
+          }
+        
+          // listen for window resize
+          window.addEventListener('resize', adjustView);
+      
+          // call the function on page load to initialize the correct view
+          adjustView();
+      
+      </script>
+      
