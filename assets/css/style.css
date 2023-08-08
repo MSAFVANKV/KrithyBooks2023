@@ -131,30 +131,7 @@ input{
     background-color: #FF4031;
 }
 /* OTP */
-/* *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}*/
-/* .otp_sheet{
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-}  */
-/* .center{
-    text-align: center;
-   
-    justify-content: center;
-}
-.form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.verification{
-    margin-top: 20px;
-    /* display: none; */
-/* } */
+
 .otp-input-fields{
     margin: auto;
     

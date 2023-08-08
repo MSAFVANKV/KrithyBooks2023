@@ -4,6 +4,8 @@ const sessionCheck = require('../middlewares/users/sessioncheck')
 const profile = require('../controllers/user/profile')
 const croppedImgupload=require("../utilities/cropedImgUplod")
 const address=require("../controllers/user/address");
+const cartPage = require('../controllers/user/cart')
+const wishlist = require('../controllers/user/whishlist')
 
 const multer = require('multer');
 // const multerS3 = require('multer-s3');
@@ -27,7 +29,7 @@ var upload = multer({
 router
     .route('/profile')
     .get(sessionCheck,profile.viewPage)
-    .post(sessionCheck,upload.single("photo"),profile.upadteUser)
+    .post(sessionCheck,upload.single("photo"),profile.updateUser)
 
 
     router
@@ -45,6 +47,17 @@ router
     .put(sessionCheck,profile.editAddress)
 
     router.get("/profile/manageAddress/changeRole", sessionCheck, address.defaultToggler);
+
+    router
+    .route('/profile/cartItems')
+    .get(sessionCheck,cartPage.viewCart)
+    .post(sessionCheck,cartPage.addToCart)
+
+    router
+    .route('/profile/wishlist')
+    .get(sessionCheck,wishlist.viewWishlist)
+    .patch(wishlist.addOrRemove)
+    .delete(wishlist.remove)
 
 //     router
 // .route('/profile/manageAddress/save_image')

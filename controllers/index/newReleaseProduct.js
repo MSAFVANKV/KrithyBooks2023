@@ -43,5 +43,3 @@ exports.categories=async(req,res)=>{
     }
 }
 
-
-

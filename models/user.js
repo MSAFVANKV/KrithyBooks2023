@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "default_userPhoto.jpg",
       },
+      age: {
+        type: String,
+      },
+      landMark: {
+        type: String,
+      },
     access: {
         type: Boolean,
         default: true,

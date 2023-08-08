@@ -63,7 +63,12 @@ router.post("/changePassword",forgotPassword.updatePassword);
 
 
 
-router.get("/categories", newproduct.categories);
+router.get("/categories", newproduct.categories)
+     
+
+// sort
+// router.get("/categories/sort", newproduct.sortByCategory);
+
 // router.
 //       route('/productPage')
 //       .get(productPage.productView);

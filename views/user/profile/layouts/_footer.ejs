@@ -50,7 +50,7 @@
 
     
 
-    <script>
+     <script>
         // the profile uploading part
 var profilePic = document.getElementById('profile-pic');
     var upload = document.getElementById('upload');
@@ -102,7 +102,7 @@ closeButton.addEventListener('click', function () {
         formData.append('photo', blob, `${new Date().getTime()}.jpeg`);
 
         $.ajax({
-            url: '/profile', // Replace with the URL of your server-side script
+            url: '/users/profile', // Replace with the URL of your server-side script
             type: 'POST',
             data: formData,
             processData: false,
@@ -116,7 +116,7 @@ closeButton.addEventListener('click', function () {
             }
         });
     });
-});
+}); 
 
 // Convert base64 to Blob
 function dataURItoBlob(dataURI) {
@@ -308,6 +308,7 @@ function dataURItoBlob(dataURI) {
 
 
 </script>
+<script src="/js/user/wishCart.js"></script>
 
     
 <!-- user profile page footer -->

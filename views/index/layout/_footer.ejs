@@ -92,9 +92,49 @@
 //   }
 // });
 
+function addToWishlist(productId){
+    $.ajax({
+        url:"/users/profile/wishlist",
+        method:"patch",
+        data:{
+            id:productId
+        },
+        success:(res)=>{
+            if (res.data.added === 0) {
+                $("#wishlistHeart").html('<i class="fa fs-5 fa-heart text-black">');
+                Swal.fire({
+                  toast: true,
+                  icon: "error",
+                  position: "top-right",
+                  showConfirmButton: false,
+                  timer: 1000,
+                  timerProgressBar: true,
+                  animation: true,
+                  title: "Removed from wishlist",
+                });
+              } else if (res.data.added === 1) {
+                $("#wishlistHeart").html('<i class="fa fs-4 fa-heart text-danger">');
+                Swal.fire({
+                  toast: true,
+                  icon: "success",
+                  position: "top-right",
+                  showConfirmButton: false,
+                  timer: 1000,
+                  timerProgressBar: true,
+                  animation: true,
+                  title: "Added to wishlist",
+                });
+              } else {
+                window.location.href = "/login";
+              }
+
+        }
+    })
+}
 
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- boostrap-5 -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

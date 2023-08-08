@@ -127,14 +127,25 @@ exports.editAddress = async (req, res) => {
     }
 }
 
-exports.upadteUser = async (req, res) => {
+exports.updateUser = async (req, res) => {
     try {
         const userID = req.session.userID;
-        const filteredBody = {};
+        let filteredBody = {
+            username: req.body.username,
+            age: req.body.age,
+            landMark: req.body.landMark,
+            number: req.body.number
+        };
         if (req.file) {
             filteredBody.photo = req.file.filename;
         }
-        await userCollection.findByIdAndUpdate(userID, filteredBody);
+        // await userCollection.findByIdAndUpdate(userID, filteredBody); if only change number use this line!!!!!!!!
+        // =============
+        // if need change address number with update profile use this 2 line
+        await userCollection.updateOne({_id: userID}, {$set: filteredBody}); // if need change address number with update profile use this 2 line
+        // Update contactNumber in all addresses
+        await userCollection.updateMany({_id: userID, 'addresses.primary': true}, {$set: {'addresses.$.contactNumber': req.body.number}});
+        // ================================
         res.redirect("/users/profile");
 
     } catch (error) {

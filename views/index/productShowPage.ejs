@@ -63,14 +63,14 @@
     
                     <!-- Cart Icon -->
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/users/profile/cartItems">
                             <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
                         </a>
                     </li>
     
                     <!-- Wishlist/Heart Icon -->
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/users/profile/wishlist">
                             <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
                         </a>
                     </li>
@@ -150,13 +150,20 @@
                                     <span class="card-text text-success fw-bolder  fs-3 ps-3">₹<%=productDetails.price%></span>
                                     <span class="card-text text-warning fw-bold ps-2"><del>₹<%=productDetails.initialPrice%></del></span>
                                     <span class="card-text ps-2"><%=productDetails.discount%>%off</span>
+                                    <button class="bg-transparent border-0 float-end pe-3" id="wishlistHeart"
+                                    onclick="addToWishlist('<%=productDetails._id%>')"><i
+                                      class="fa fs-5 fa-heart <%if(productsInWishlist==null){%>text-black<%}else{%>text-danger<%}%> "></i>
+                                    </button>
                                   </div>
                                   <hr>
                                   <div class="ps-3 text-capitalize">
                                     <p><strong>Delivary Status:</strong><small>&nbsp; Free Delivary</small></p>
                                     <p><strong>Stock:</strong><small class="text-success">&nbsp; <%=productDetails.stock%></small></p>
-                                    <a href="" class="border-3 text-black border border-3 btn"><small>add to wishlist</small> </a>
-
+                                    <!-- <a href="" class="border-3 text-black border border-3 btn"><small>add to wishlist</small> </a> -->
+                                    <!-- <button class="bg-transparent border-0" id="wishlistHeart"
+                                    onclick="addToWishlist('<%=productDetails._id%>')"><i
+                                      class="fa fs-5 fa-heart <%if(productsInWishlist==null){%>text-black<%}else{%>text-danger<%}%> "></i>
+                                    </button> -->
                                     <div class=" text-capitalize my-4 gap-4 ">
                                         <a href="" class="btn color-bg-main text-white">add to cart</a>
                                         <a href="" class="btn color-bg-main text-white">buy now</a>

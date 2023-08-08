@@ -72,7 +72,7 @@ exports.viewAll = async (req, res) => {
     exports.categoryPage = async (req, res) => {
       try {
           const allCategories=await categoryDetails.find();
-          console.log(allCategories,"check")
+          // console.log(allCategories,"check")
           res.render("index/categories", {
             session: req.session.userID,
             currentUser,

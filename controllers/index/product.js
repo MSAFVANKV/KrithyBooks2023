@@ -1,5 +1,6 @@
 const userCollection = require('../../models/user')
 const productCollection =require('../../models/admin/products')
+const wishlistCollection = require('../../models/wishlist')
 
 // exports.productView = async (req, res) => {
 //     try {
@@ -21,6 +22,12 @@ exports.view=async(req,res)=>{
         if(productDetails.initialPrice){
           percentageOffer=Math.ceil((productDetails.initialPrice-productDetails.price)*100/productDetails.initialPrice);
         }
+        if(currentUser){
+            productsInWishlist= await wishlistCollection.findOne({
+                customer:currentUser._id,
+                products:req.params.id
+            });
+        }
     const similarProducts= await  productCollection.find({}).sort({_id:1}).limit(10)
        
         res.render("index/productShowPage", {
@@ -30,6 +37,7 @@ exports.view=async(req,res)=>{
             currentUser,
             listing:similarProducts,
             percentageOffer,
+            productsInWishlist
 
           });
 

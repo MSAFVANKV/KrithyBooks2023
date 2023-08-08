@@ -1,0 +1,104 @@
+<%- include('../layouts/_header') %>
+
+<div class="container">
+    <div class="row mt-5">
+        <%- include('../layouts/profileSearchBar') %>
+
+        <div class="col-lg-6">
+            <% if(userCart != null && userCart.products.length != 0) { %> 
+                <% userCart.products.forEach((product, i) => { %>
+                    <div class="row d-flex rounded my-2 p-3" style="border: 1px solid #2b152e;background: linear-gradient(316deg, #20041a 0%, #010f13 74%) !important;">
+                        <div class="col-lg-4 prod-img text-center">
+                            <img src="/img/books/<%=productDetails.thumbnail %>" #20041a alt="" height="150px" />
+                        </div>
+                        <div class="col-lg-8 prod-details d-flex flex-grow-1 flex-column justify-content-between">
+                            <h5><a href="/products/<%= product.name._id %>" style="color: rgb(255, 255, 255) !important;"><%= product.name.name %></a></h5>
+                            <h6 class="text-white"><%= product.name.author.name %></h6>
+                            <span style="text-transform: none; font-size: 0.85rem; font-weight: 700">Price: <%= product.name.price %></span>
+                            <% if(product.name.stock == '0') { %> 
+                                <p class="text-danger" style="font-weight: bold;margin-top: 10px;">OUT OF STOCK</p>
+                                <p id="stockCheck" hidden><%= product.name.stock %></p>
+                            <% } %>
+                            <div class="d-flex justify-content-end mt-2">
+                                <div class="counter d-flex p-1 align-items-center rounded mx-4">
+                                    <button class="btn btn-sm btn-light button-div" id="minusBtn<%= i %>" style="background-color: transparent" onclick='changeCount("<%= product.name._id %>","<%= i %>",-1)'>
+                                        <i class="fa fa-minus" ></i>
+                                    </button>
+                                    <span id="cartCount<%= i %>" class="fw-bold px-2"><%= product.quantity %></span>
+                                    <button class="btn btn-sm btn-light button-div" style="background-color: transparent" onclick='changeCount("<%= product.name._id %>","<%= i %>",1)'>
+                                        <i class="fa fa-plus h-100"></i>
+                                    </button>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <button class="btn button-div btn-sm text-white " style="background-color: rgb(88, 11, 11);">
+                                        <span style="font-size: 0.8rem; letter-spacing: 1px;" onclick="removeFromCart('<%= product.name._id %>')">Remove</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
+  
+
+<script>
+    function addToCart(productID) {
+    $.ajax({
+      url: "/users/profile/cartItems",
+      method: "post",
+      data: {
+        id: productID,
+      },
+      success: (res) => {
+       
+        if (res.success == "countAdded") {
+          Swal.fire({
+            toast: true,
+            icon: "success",
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            animation: true,
+            title: "Count added in cart",
+          });
+          $("#cartCount").load(location.href + " #cartCount");
+        } else if (res.success == "addedToCart") {
+          Swal.fire({
+            toast: true,
+            icon: "success",
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            animation: true,
+            title: "Added to cart",
+          });
+          $("#cartCount").load(location.href + " #cartCount");
+        }else if(res.success === "outofstcok" ){
+          Swal.fire({
+            toast: true,
+            icon: "error",
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            animation: true,
+            title: "Out Of Stock",
+          });
+        }
+         else {
+          window.location.href = "/login";
+        }
+      },
+    });
+  }
+
+</script>
+
+<%- include('../layouts/_footer') %>
