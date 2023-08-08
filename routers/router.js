@@ -62,8 +62,15 @@ router.post("/changePassword",forgotPassword.updatePassword);
 //       .put(newproduct.search)
 
 
+// i dont want like this if i click any page in my web site search want to work
 
 router.get("/categories", newproduct.categories)
+
+router
+.route('/search')
+ .get(newproduct.search)  
+
+
      
 
 // sort
@@ -72,7 +79,8 @@ router.get("/categories", newproduct.categories)
 // router.
 //       route('/productPage')
 //       .get(productPage.productView);
-           
+
+
 router
       .route("/products/:id")
       .get(objectIdCheck,product.view)

@@ -7,17 +7,65 @@
       <!-- Modal -->
 
   <style>
-    #dataTable {
+    /* #dataTable {
       border-collapse: collapse;
     }
     #dataTable td, #dataTable th {
       border: 1px solid #000;
-    }
+    } */
+    html {
+        scroll-behavior: smooth;
+      }
+      #dataTable_paginate,
+      #dataTable_info,
+      #dataTable_length,
+      #dataTable_filter {
+        font-size: 0.75em;
+        margin: 10px 0;
+      }
+      #dataTable > thead {
+        background-color: rgb(13, 4, 94);
+        color: #ece3e3;
+        font-weight: lighter;
+      }
+      #dataTable {
+        width: 100%;
+      }
+      table.dt-rowReorder-float {
+        opacity: 0.8;
+      }
+      div.dt-rowReorder-float-parent {
+        table-layout: fixed;
+        outline: 2px solid #8f8e8e;
+        outline-offset: -2px;
+        z-index: 2001;
+        position: absolute !important;
+        overflow: hidden;
+      }
+      tr.dt-rowReorder-moving {
+        outline: 2px solid #555;
+        outline-offset: -2px;
+      }
+      body.dt-rowReorder-noOverflow {
+        overflow-x: hidden;
+      }
+      table.dataTable td.reorder {
+        text-align: center;
+        cursor: move;
+      }
+      .table-hover>tbody>tr:hover>* {
+    color: #8888a3;
+}
+
+.dataTables_wrapper .dataTables_length select {  
+    background-color: #c0bcbc;
+}
+
   </style>
 <br>
 
-  <div class="card-body container">
-    <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
+  <div class="card-body container ">
+    <table id="dataTable" class="table table-hover cell-border fw-light dt-responsive nowrap">
       <thead>
         <tr>
           <th>Name</th>

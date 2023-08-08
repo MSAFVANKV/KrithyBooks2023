@@ -117,30 +117,38 @@
               required
               value="<%= product.language %>">
         </div>
-    <div class="mb-3 col-lg-6">
-      <label for="Price" class="px-1" style="font-size: 0.75rem;">Price</label>  
-          <input
-            type="number"
-            class="form-control"
-            id="Price"
-            placeholder="Price"
-            name="initialPrice"
-            value="<%= product.initialPrice %>"
-            required
-          />
-        </div>
-    <div class="mb-3 col-lg-6">
-    <label for="Price" class="px-1" style="font-size: 0.75rem;">Offer Price</label>  
+      <!-- #prce part  -->
+      <div class="mb-3 col-lg-6">
+        <label for="initialPrice" class="form-label">Update Your Prices</label>
         <input
           type="number"
           class="form-control"
-          id="Price"
+          id="originalPrice"
+          placeholder="Price"
+          name="initialPrice"
+          value="<%= product.initialPrice %>"
+          required
+        />
+      </div>
+      <div class="mb-3 col-lg-6">
+        <input
+          type="number"
+          class="form-control"
+          id="offerPrice"
           placeholder="Offer Price"
           name="price"
           value="<%= product.price %>"
           required
+          onkeyup="calculateDiscount()"
         />
       </div>
+        <div class="mb-3 col-lg-6">
+          <label for="discount" id="error">Discount %:</label>
+          <input type="number" id="discount" name="discount" class="form-control" 
+           placeholder="Discount will add here" readonly>
+        </div>
+
+      <!--  -->
       <div class="mb-3 col-lg-6">
         <label for="Stock" class="px-1" style="font-size: 0.75rem;">Stock</label>  
             <input
@@ -180,7 +188,24 @@ let loadFile2= function(event) {
               var image = document.getElementById("output2");
               image.src=URL.createObjectURL(event.target.files[0]);   }      
          
+// ===========================================================================
+    function calculateDiscount() {
+        var originalPrice = parseInt(document.getElementById("originalPrice").value);
+        var offerPrice = parseInt(document.getElementById("offerPrice").value);
+        var discountError = document.getElementById("error")
 
+        if(originalPrice > offerPrice){
+          var discount = ((originalPrice - offerPrice) / originalPrice) * 100;
+          document.getElementById("discount").value = Math.round(discount);
+          discountError.innerHTML = ""
+        }else{
+          discountError.innerHTML = "Make the Initial Price graterthan offer"
+          discountError.style.color="red"
+          document.getElementById("discount").value = 0;
+        }
+      
+    }
+   
 </script>
 
   <%- include('../layouts/_footer') %>
