@@ -52,6 +52,9 @@ router
     .route('/profile/cartItems')
     .get(sessionCheck,cartPage.viewCart)
     .post(sessionCheck,cartPage.addToCart)
+    .delete(sessionCheck,cartPage.removeProduct)
+  .put(sessionCheck,cartPage.countChange)
+
 
     router
     .route('/profile/wishlist')

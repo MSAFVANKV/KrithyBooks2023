@@ -87,29 +87,41 @@
             </div>
             <!--  -->
           
-          <!--  -->
-          <% currentUser.addresses.forEach(function(address) { %>
-            <% if(address.primary) { %>
-                <!-- Each Address -->
+          <!--  -->              
+        <!-- 📲 -->
+        <% 
+        let hasPrimaryAddress = false;
+        
+        currentUser.addresses.forEach(function(address) { 
+            if(address.primary) {
+                hasPrimaryAddress = true;
+            }
+        });
+        
+        currentUser.addresses.forEach(function(address) { 
+            if(address.primary) {
+                %>
+                <!-- Displaying the primary address -->
                 <div class="mb-3">
                     <div class="row g-2">
                         <div class="col-md-8 ">
                             <div class="form-floating">
-                              <textarea class="form-control shadow mb-3 " disabled style="height: 10rem;"><%= `${address.building}\n${address.address}\n${address.pincode}\n${address.country}\n${address.contactNumber}` %>
-                              </textarea>
-                              <label for="floatingInputGrid" class="">Address🧳</label>
+                                <textarea class="form-control shadow mb-3" disabled style="height: 10rem;"><%= `${address.building}\n${address.address}\n${address.pincode}\n${address.country}\n${address.contactNumber}` %>
+                                </textarea>
+                                <label for="floatingInputGrid" class="">Address🧳</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <%}else{%>
-                  <p class="fw-bold text-danger" style="text-transform: none;">You have not set any default address. 
-                  </p>
+                <%}});
+        
+        if(!hasPrimaryAddress) {
+            %>
+            <p class="fw-bold text-danger" style="text-transform: none;">You have not set any default address.</p>
+            <%
+        }
+        %>
 
-                  <%}%>
-        <% }) %>
-              
-        <!-- 📲 -->
 
         <div class="d-flex mb-3 justify-content-center">
           <button type="submit" class="btn  logbtn fw-bold text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

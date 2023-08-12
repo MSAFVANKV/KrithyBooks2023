@@ -22,7 +22,7 @@
     right: 20px;
     width: 55px;
     height: 55px;
-    background-color: rgb(25, 68, 126);
+    /* background-color: rgb(25, 68, 126); */
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -91,13 +91,14 @@
 }
 #sidebar ul li:hover
 {
-    background: #03a9f4;
+    /* background: #03a9f4; */
+    background: #FF4031;
 }
 #sidebar ul li small a
 {
     color: #fff;
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.1em;
     letter-spacing: 2px;
 }
 a{
@@ -111,7 +112,7 @@ a{
         <small><a href="/users/profile" class="text-decoration-none text-black text-uppercase fw-bold ">My Profile</a></small>
     </div>
     <div class="border text-center p-2 border-dark-subtle bg-profile">
-        <small><a href="/users//profile/cartItems" class="text-decoration-none text-black text-uppercase fw-bold ">Cart</a></small>
+        <small><a href="/users/profile/cartItems" class="text-decoration-none text-black text-uppercase fw-bold ">Cart</a></small>
     </div>
     <div class="border text-center p-2 border-dark-subtle bg-profile">
         <small><a href="/users/profile/wishlist" class="text-decoration-none text-black text-uppercase fw-bold ">Wishlist</a></small>            
@@ -129,15 +130,24 @@ a{
         </div>
 
         <!-- ============================================================ -->
-        <div id="toggle"></div>
-        <div id="sidebar">
+        <div id="toggle" class="bgtheme"></div>
+        <div id="sidebar" class="bgtheme">
             <ul>
-                <li><small><a href="/users/profile" class="text-decoration-none text-black text-uppercase fw-bold ">My Profile</a></small></li>
-                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Cart</a></small></li>
-                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Wishlist</a></small></li>
-                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">My Orders</a></small></li>
-                <li><small><a href="/users/profile/manageAddress" class="text-decoration-none text-black text-uppercase fw-bold ">Manage Address</a></small></li>
-                <li><small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Change Password</a></small></li>
+                <li><small><a href="/users/profile" class="text-decoration-none text-white text-uppercase fw-bold ">My Profile</a></small></li>
+                <li><small><a href="/users/profile/cartItems" class="text-decoration-none text-white text-uppercase fw-bold ">Cart</a></small></li>
+                <li><small><a href="/users/profile/wishlist" class="text-decoration-none text-white text-uppercase fw-bold ">Wishlist</a></small></li>
+                <li><small><a href="" class="text-decoration-none text-white text-uppercase fw-bold ">My Orders</a></small></li>
+                <li><small><a href="/users/profile/manageAddress" class="text-decoration-none text-white text-uppercase fw-bold ">Manage Address</a></small></li>
+                <li><small><a href="" class="text-decoration-none text-white text-uppercase fw-bold ">Change Password</a></small></li>
+                <% if (session) { %>
+                    <div class="d-flex pe-3 align-items-center ps-2">
+                        <div class="logout">
+                            <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
+                                <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
+                            </button>
+                        </div>
+                    </div>
+                    <%}%>
             </ul>
         </div>
     
@@ -194,6 +204,7 @@ window.addEventListener('resize', function() {
               } else {
                   firstSettings.style.display = 'none';
                   toggle.style.display = 'block';
+
               }
           }
       

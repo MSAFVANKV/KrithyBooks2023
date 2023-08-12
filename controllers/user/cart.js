@@ -2,13 +2,18 @@ const cartCollection = require('../../models/cart');
 const productCollection = require('../../models/admin/products')
 const wishlistCollection = require('../../models/wishlist');
 const { default: mongoose } = require("mongoose");
+const userCollection =require('../../models/user')
 
 exports.viewCart = async (req, res) => {
     try {
+      userID = req.session.userID
+      let currentUser = await userCollection.findById(userID)
+
       const userCart = await cartCollection.findOne({ customer: req.session.userID }).populate({ path: "products.name", populate: { path: "author" } });
       res.render("user/profile/partials/cart", {
         userCart,
         session:req.session.userID,
+        currentUser
       });
     } catch (error) {
       console.log("error rendering cart page:" + error)
@@ -76,3 +81,83 @@ exports.viewCart = async (req, res) => {
     }
   }
   
+
+  exports.removeProduct = async (req, res) => {
+    try {
+      const productId = req.query.id;
+      const userID = req.session.userID;
+      let cartProduct = await cartCollection.aggregate([{
+        $match: {
+          customer: new mongoose.Types.ObjectId(req.session.userID)
+        }
+      }, {
+        $unwind: "$products",
+      }, {
+        $match: {
+          "products.name": new mongoose.Types.ObjectId(req.query.id),
+        },
+      },]);
+      const cartID = cartProduct[0]._id;
+      cartProduct = cartProduct[0].products;
+      await cartCollection.findByIdAndUpdate(cartID, {
+        $pull: {
+          products: {
+            name: req.query.id,
+          },
+        },
+        $inc: {
+          totalPrice: -cartProduct.price,
+          totalQuantity: -cartProduct.quantity,
+        },
+      })
+      res.json({
+        success: "removed",
+      });
+    } catch (error) {
+      res.redirect('/');
+      console.log("error on remoing the product:" + error)
+    }
+  }
+  
+  exports.countChange = async (req, res) => {
+    try {
+      const productID = req.body.id;
+      const count = Number(req.body.count);
+      const product = await productCollection.findById(productID);
+      await cartCollection.findOneAndUpdate({
+        customer: req.session.userID,
+        products: { $elemMatch: { name: new mongoose.Types.ObjectId(req.body.id) } }
+      }, {
+        $inc: {
+          "products.$.quantity": count,
+          totalPrice: count * product.price,
+          "products.$.price": count * product.price,
+          totalQuantity: count
+        }
+      })
+      const userCart = await cartCollection.findOne({ customer: req.session.userID });
+      const allProducts = userCart.products;
+  
+      const currentProduct = allProducts.find((product) => {
+        return product.name.valueOf() == req.body.id
+      });
+      if (currentProduct.quantity === 0) {
+        await cartCollection.updateOne({ customer: req.session.userID },
+          {
+           $pull:{products: {
+            name: productID,
+          },}
+          })
+      }
+      res.json({
+        data: {
+          currentProduct,
+          userCart,
+        },
+      })
+  
+  
+    } catch (error) {
+      console.log("error on chamging count :" + error)
+    }
+  }

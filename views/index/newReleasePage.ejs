@@ -74,28 +74,7 @@
                     
                 </div>
                 <ul class="navbar-nav ms-auto hamurgerToggle">
-                                         <!-- logout button -->
-          <% if (session) { %>
-            <li class="nav-item">
-              <div class="logout">
-                <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
-                </button>
-              </div>
-            </li>
-        <% }else{%>
-            <!-- login button -->
-          <li class="nav-item">
-            <form action="/login" method="post">
-              <div class="login ">
-                <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="login" class="text-decoration-none text-white">LOGIN</a>
-                </button>
-              </div>
-          </form>
-          </li>
-          <%}%>
-<!-- login button -->
+       
     
                     <!-- Cart Icon -->
                     <li class="nav-item me-2">
@@ -117,6 +96,29 @@
                           <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
                       </a>
                   </li>
+
+                                                    <!-- logout button -->
+          <% if (session) { %>
+            <li class="nav-item">
+              <div class="logout">
+                <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
+                  <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
+                </button>
+              </div>
+            </li>
+        <% }else{%>
+            <!-- login button -->
+          <li class="nav-item">
+            <form action="/login" method="post">
+              <div class="login ">
+                <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
+                  <a href="login" class="text-decoration-none text-white">LOGIN</a>
+                </button>
+              </div>
+          </form>
+          </li>
+          <%}%>
+<!-- login button -->
                 </ul>
             </div>
         </div>
@@ -124,13 +126,20 @@
         <!-- nav bar / header == ending -->
 
         <!-- Filter -->
-        <% if(listingName != null){%>
-          <div class="pb-2 d-lg-none  text-center my-3">
-            <span class="shadow-heading" style="font-size: 1.25rem" id="listingname"
-              ><%=listingName%></span
-            >
+        
+          
+          <% if(listingName != null){%>
+          <div>
+            <h3 class="text-center mt-4 d-lg-none">
+              <u class="color-G">
+                <span class="text-black text-uppercase">
+                  <%=listingName%>
+                </span>
+              </u>
+            </h3>  
           </div>
           <%}%>
+
         <div class="mx-5 mt-5">
             <div class="row">
                <!-- Filter dropdown -->
@@ -183,7 +192,7 @@
 
         <!-- new release -->
         <div>
-            <h3 class="text-center mt-4 ">
+            <h3 class="text-center mt-4 d-lg-block d-none">
               <u class="color-G">
                 <span class="text-black text-uppercase">
                   New Releases

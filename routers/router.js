@@ -10,6 +10,7 @@ const newproduct = require('../controllers/index/newReleaseProduct')
 const forgotPassword = require('../controllers/user/forgotPassword')
 const objectIdCheck = require('../middlewares/users/objectIdCheck')
 const product = require('../controllers/index/product')
+const categoriesByNovel = require('../controllers/index/category')
 // const logout = require('../controllers/user/logout')
 
 
@@ -24,11 +25,11 @@ router.
 
   
 router.
-      route('/verifyOTP')
+      route('/verifyOTP')     
       .get(signlog.otpPage)
       .post(signlog.verifyOTP)
 
-// router.get("/signUp/resend_OTP",signlog.otpSend)
+router.get("/signUp/resend_OTP",signlog.verifyOTP)
 
 
 router.
@@ -54,17 +55,10 @@ router.post("/changePassword",forgotPassword.updatePassword);
 // ===================================
 
 
-// router.
-//       route('/newReleaseProduct')
-//       .get(newproduct.ourCollection)
-//       .patch(newproduct.filter)
-//       .post(newproduct.sortBy)
-//       .put(newproduct.search)
-
-
-// i dont want like this if i click any page in my web site search want to work
-
 router.get("/categories", newproduct.categories)
+
+router.get("/categoriesBy", homePage.categoryPage)
+
 
 router
 .route('/search')
@@ -73,12 +67,6 @@ router
 
      
 
-// sort
-// router.get("/categories/sort", newproduct.sortByCategory);
-
-// router.
-//       route('/productPage')
-//       .get(productPage.productView);
 
 
 router

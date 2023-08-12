@@ -254,44 +254,46 @@
     </h1>  
   </div>
 
-  <!-- Catogory -->
-  <% if(categories != null && categories.length > 0){ %>
-    <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <% for(let i = 0; i < categories.length; i += 4) { %>
-                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
-                    <div class="container catogery_prod">
-                        <div class="row d-flex">
-                            <% for(let j = i; j < i + 4 && j < categories.length; j++) { %>
-                                <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5">
-                                    <div class="card shadow-lg prod_card" style="width: 12rem;">
-                                        <div class="card card_img">
-                                            <img src="/img/books/<%=categories[j].thumbnail%>" class="card-img-top img-fluid" alt="Book Image">
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title text-center text-uppercase fs-6"><%=categories[j].category.name%></h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-            <% } %>
-        </div>
+<!-- Catogory -->
+<% if(categories != null && categories.length > 0){ %>
+  <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+          <% for(let i = 0; i < categories.length; i += 4) { %>
+              <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                  <div class="container catogery_prod">
+                      <div class="row d-flex">
+                          <% for(let j = i; j < i + 4 && j < categories.length; j++) { %>
+                              <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5">
+                                  <a href="/categoriesBy?category=<%=categories[j].category._id%>">
+                                      <div class="card shadow-lg prod_card" style="width: 12rem;">
+                                          <div class="card card_img">
+                                              <img src="/img/books/<%=categories[j].thumbnail%>" class="card-img-top img-fluid" alt="Book Image">
+                                          </div>
+                                          <div class="card-body">
+                                              <h5 class="card-title text-center text-uppercase fs-6"><%=categories[j].category.name%></h5>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                          <% } %>
+                      </div>
+                  </div>
+              </div>
+          <% } %>
+      </div>
 
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+      </button>
+  </div>
 <% } %>
-      <!-- view All button -->
+    <!-- view All button -->
        <!-- <div class="viewAll text-center d-flex justify-content-center border border-2 border-black rounded-3 align-items-center bg-danger">
           <a href="" class=" text-black  text-decoration-none fw-bold">VIEW ALL</a>
         </div>
@@ -368,8 +370,8 @@
             <span class="color-main fw-bold">LINKS</span>
             <div class="">
               <a href="" class="">Authors</a>
-              <a href="">Wishlist</a>
-              <a href="">Cart</a>
+              <a href="/users/profile/wishlist">Wishlist</a>
+              <a href="/users/profile/cartItems">Cart</a>
               <a href="">Shopping</a>
             </div>
           </div>

@@ -5,7 +5,7 @@
 <div class="container">
   <!--main logo -->
   <div class="logo d-flex justify-content-center align-items-center">
-      <p id="logo" class="logostyle"><span class="kstyle">K</span>rithy</p>
+      <p id="logo" class="logostyle "><span class="kstyle">K</span>rithy</p>
   </div>
   <!--main logo -->
   
@@ -13,7 +13,7 @@
       <div class="col-lg-4 col-md-6 col-sm-8">
           <form action="/signup" method="post">
               <!--main logo -->
-              <div class="loginimg  d-flex justify-content-center align-items-center lock_icone">
+              <div class="loginimg  d-flex justify-content-center align-items-center lock_icone mt-3 mb-3">
                   <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="45.4953" height="45.4953" rx="22.7477" fill="#BDBDBD"/>
                       <path d="M29.5718 17.0607H28.4344V14.7859C28.4344 11.6467 25.8867 9.099 22.7475 9.099C19.6083 9.099 17.0606 11.6467 17.0606 14.7859V17.0607H15.9232C14.6721 17.0607 13.6484 18.0843 13.6484 19.3354V30.7093C13.6484 31.9604 14.6721 32.984 15.9232 32.984H29.5718C30.8229 32.984 31.8466 31.9604 31.8466 30.7093V19.3354C31.8466 18.0843 30.8229 17.0607 29.5718 17.0607ZM19.3354 14.7859C19.3354 12.8979 20.8594 11.3738 22.7475 11.3738C24.6356 11.3738 26.1596 12.8979 26.1596 14.7859V17.0607H19.3354V14.7859ZM29.5718 30.7093H15.9232V19.3354H29.5718V30.7093ZM22.7475 27.2971C23.9986 27.2971 25.0223 26.2735 25.0223 25.0224C25.0223 23.7712 23.9986 22.7476 22.7475 22.7476C21.4964 22.7476 20.4727 23.7712 20.4727 25.0224C20.4727 26.2735 21.4964 27.2971 22.7475 27.2971Z" fill="black"/>
@@ -31,21 +31,46 @@
                 <label for="username" class="form-label">Username</label>
                 <input name="username" type="username" class="form-control" id="username" placeholder="Enter username" required>
             </div>
+            <!-- ============ -->
             <div class="mb-3">
                 <label for="number" class="form-label">Phone Number</label>
-                <input name="number" type="number" class="form-control" id="number" placeholder="Enter phone number" required>
+                <input name="number" 
+                type="number"
+                class="form-control" 
+                id="inputNumber" 
+                placeholder="Enter phone number"
+                onkeyup="numberValidator()" 
+                required>
+                <span id="numberInvalid" class="rounded"
+              style=" text-transform: none;color: rgb(201, 79, 79);"></span>
             </div>
+            <!-- ==== -->
               <div class="mb-3">
                   <label for="email" class="form-label">Email address</label>
-                  <input name="email" type="" class="form-control" id="emailInput" placeholder="Enter email" required>
+                  <input name="email" 
+                  type="email" 
+                  class="form-control" 
+                  id="emailInput" 
+                  placeholder="Enter email"
+                  onkeyup="mailValidator()" 
+                  required>
+                  <span id="mailInvalid" class=" rounded fs-3"
+              style=" text-transform: none;color: rgb(201, 79, 79);"></span>
               </div>
+              <!-- ========= -->
               <div class="mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                  <input name="password" type="password" class="form-control" id="inputPassword"
+                   placeholder="Password" 
+                   required
+                   onkeyup="passwordValidator()"
+                   >
+                   <span id="passwordInvalid" class="rounded fs-6"
+              style=" text-transform: none;color: rgb(201, 79, 79);"></span>
               </div>
               
               <div class="mt-4 col-12 text-center ">
-                  <button type="submit" class="btn w-100 logbtn">Create Account</button>
+                  <button type="submit" class="btn btn-secondary w-100 logbtn" id="submitButton">Create Account</button>
               </div>
           </form>
           <div class="password fw-light col-12 text-center m"><p>Already have an account? <a href="/login" id="logforgot">Login</a> </p>
@@ -53,44 +78,5 @@
       </div>
   </div>
 </div>
-
-<script>
-    // let email;
-    //   function sendOTP() {
-    //   email = emailEle.value;
-    //   if(regex.test(email)) {
-    //       fetch( 'http://localhost:3000/sendotp', {
-    //           method: "POST",
-    //           body: JSON.stringify({
-    //               "email": email
-    //           }),
-    //           headers:{'Content-Type':'application/json'}        
-    //       })
-    //           .then(
-    //               (res) => {
-    //                   if(res.status==200){
-    //                       verEle.style.display='block';
-    //                       emailpartialEle.textContent = email;
-    //                       emailEle.value = '';
-    //                       timerContainer.style.display = 'block';
-    //                       startTimer(); // Start the timer for resend option
-    //                       emailEle.setAttribute('readonly', 'readonly');
-    //                   }
-    //                   console.log(res);
-    //               }
-    //           ) .catch((error) => {
-    //               console.log("Error:", error.message);
-    //               });
-    //           }
-    //           else {
-    //               errorEle.style.display='block';
-    //               errorEle.innerHTML = "Enter Invalid Email"
-    //               successEle.style.display='none';
-    //               console.log("wrong");
-    //           }
-    //       }
-
-
-</script>
     
 <%-include('../layouts/_footer')%>

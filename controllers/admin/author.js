@@ -18,12 +18,6 @@ exports.list= async(req,res)=>{
 exports.addAuthor = async(req,res)=>{
 
     try{    
-        let authorImg = `${req.body.name}_authorImg_${Date.now()}.png`;
-        sharp(req.files.authorImg[0].buffer)
-          .toFormat("png")
-          .png({quality:80})
-          .toFile(`assets/img/authors/${authorImg}`);
-        req.body.authorImg=authorImg;
         let inputAuthor=req.body.author
         inputAuthor=inputAuthor.toLowerCase();
         const authors= await authorsDetails.find({});
@@ -33,10 +27,10 @@ exports.addAuthor = async(req,res)=>{
                 details: authors,
               });
         }else{
-            const newBrand= new authorsDetails({
+            const newAuthor= new authorsDetails({
                 name:inputAuthor
             })
-            await newBrand.save();
+            await newAuthor.save();
         res.redirect("/admin/authors");
         }
 

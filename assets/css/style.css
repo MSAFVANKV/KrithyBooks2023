@@ -59,11 +59,11 @@ input{
 
 .alert{
     width: 100%;
-    height: 30px;
-    background-color: #FF4031;
+    height: 40px;
+    background-color: #BDBDBD;
     display: flex;
     align-items: center;
-    color: #ccc;
+    color: #FF4031;
     font-weight: 600;
     justify-content: center;
     margin: 0 auto;

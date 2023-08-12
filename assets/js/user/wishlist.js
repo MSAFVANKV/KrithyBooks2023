@@ -27,7 +27,7 @@ function removeFromWishlist(id) {
 
   function addToCartFromWishlist(productID) {
     $.ajax({
-      url: "/users/cart",
+      url: "/users/profile/cartItems",
       method: "post",
       data: {
         id: productID,
@@ -63,3 +63,8 @@ function removeFromWishlist(id) {
       },
     });
   }
+
+
+
+
+// 

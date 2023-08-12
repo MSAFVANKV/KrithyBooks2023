@@ -108,21 +108,6 @@ exports.categories = async(req, res) => {
 };
 
 
-// exports.search = async (req, res) => {
-//   const searchInput = req.query.searchInput;
-//   try {
-//     let products = await productCollection.find({ 
-//       name: { $regex: new RegExp(searchInput, "i") }, // "i" makes it case insensitive
-//       listed: true,
-//     });
-//     res.json({ products });
-//   } catch(err) {
-//     console.log(err);
-//     res.status(500).json({ error: 'An error occurred while searching products' });
-//   }
-// };
-
-
 exports.search = async (req, res) => {
   const searchInput = req.query.searchInput;
   try {

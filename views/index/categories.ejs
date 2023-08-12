@@ -1,5 +1,160 @@
 <%- include('./layout/_header') %>
 
+<style>
+    .zoom {
+    transition: transform .2s; /* Animation */
+}
+
+.zoom:hover {
+    transform: scale(1.1); 
+}
+.shado{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.shado:hover{
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+  </style>
+
+    <!-- new product showing pages -->
+
+    <!-- nav bar / header -->
+
+    <nav class="navbar navbar-expand-lg d-flex shadow">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand logohome mx-auto" href="/">
+                <span class="k">K</span>rithy
+            </a>
+    
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler shadow" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Navbar Collapse -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="container d-flex justify-content-center">
+    
+                    <!-- Search Bar -->
+                    <!-- <form class="d-flex ms-3 justify-content-center" action="/search" method="get">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                      <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </form> -->
+                    <div class="container " >
+
+                      <div class="input-group flex-nowrap my-2 " style="width: 250px">
+                          <input type="text" class="form-control" placeholder="Search" id="searchInput" />
+                          <button type="button" class="btn btn-primary" style="height: fit-content;"
+                              onclick="search()">
+                              <i class="fas fa-search"></i>
+                          </button>
+                      </div>
+
+                  </div>
+                    
+                    
+                    
+                    
+                </div>
+                <ul class="navbar-nav ms-auto hamurgerToggle">
+                                         <!-- logout button -->
+          <% if (session) { %>
+            <li class="nav-item">
+              <div class="logout">
+                <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
+                  <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
+                </button>
+              </div>
+            </li>
+        <% }else{%>
+            <!-- login button -->
+          <li class="nav-item">
+            <form action="/login" method="post">
+              <div class="login ">
+                <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
+                  <a href="login" class="text-decoration-none text-white">LOGIN</a>
+                </button>
+              </div>
+          </form>
+          </li>
+          <%}%>
+<!-- login button -->
+    
+                    <!-- Cart Icon -->
+                    <li class="nav-item me-2">
+                      <a class="nav-link" href="/users/profile/cartItems">
+                          <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                      </a>
+                  </li>
+  
+                  <!-- Wishlist/Heart Icon -->
+                  <li class="nav-item me-2">
+                      <a class="nav-link" href="/users/profile/wishlist">
+                          <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+                      </a>
+                  </li>
+  
+                  <!-- User/Contact Icon -->
+                  <li class="nav-item me-2">
+                      <a class="nav-link" href="/users/profile">
+                          <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
+                      </a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+        <!-- nav bar / header == ending -->
+
+ 
+            <% if(listingName){%>
+            <div>
+                <h3 class="text-center mt-4 ">
+                  <u class="color-G">
+                    <span class="text-black text-uppercase">
+                        <%=listingName%>
+                    </span>
+                  </u>
+                </h3>  
+              </div>
+            <%}%>
+
+
+
+        <% if(products && products.length > 0){%>
+            <div class="container mt-5">
+                <div class="row d-flex">
+                    <% products.forEach(product => { %>
+                    <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
+                        <div class="card shadow-lg prod_card" style="width: 17rem;">
+                            <div class="card card_img">
+                                <a href="/products/<%= product._id %>">
+                                    <img src="/img/books/<%= product.thumbnail %>" class="card-img-top" alt="Book Image">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%= product.name %></h5>
+                                <div class="d-flex">
+                                    <div class="m-auto gap-3">
+                                        <span class="card-text text-success fw-bolder fs-3">₹<%= product.price %></span>
+                                        <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                                        <span class="card-text text-info"><%= product.discount %>% off</span>
+                                    </div>
+                                </div>
+                                <p class="card-text text-center">Rating: </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            <% } else { %>
+            <p class="text-center">No products found for this category.</p>
+            <% } %>
+                <!-- pagination -->
+    <!-- your existing html code ... -->
 
 
 <%- include('./layout/_footer') %>

@@ -13,7 +13,9 @@
 const userDTLS = require('../../models/user')
 const productCollection = require('../../models/admin/products')
 const authorsDetails = require('../../models/admin/author')
-const categoryDetails = require('../../models/admin/category') 
+const categoryDetails = require('../../models/admin/category');
+
+
 exports.viewAll = async (req, res) => {
     try {
         let currentUser
@@ -29,13 +31,14 @@ exports.viewAll = async (req, res) => {
        let newArrivals = allProducts.slice(0,8)
 
       //  to get unique authors // remove same authors
-      const uniqueAuthorsWithTitles = newArrivals.map(product => 
-        ({author: product.author, bookTitle: product.bookTitle}))
-          .filter((item, index, self) => 
-              index === self.findIndex((a) => (
-              a.author._id.toString() === item.author._id.toString()
-              ))
-          );
+      const uniqueAuthorsWithTitles = allAuthors.map(author => {
+        const relatedProduct = allProducts.find(product => product.author._id.toString() === author._id.toString());
+        return {
+            author: author,
+            bookTitle: relatedProduct ? relatedProduct.bookTitle : "default_title"
+        };
+    });
+    
 
           const uniqueCategoriesWithTitles = newArrivals.map(product => 
             ({category: product.category, thumbnail: product.thumbnail}))
@@ -71,14 +74,73 @@ exports.viewAll = async (req, res) => {
 
     exports.categoryPage = async (req, res) => {
       try {
-          const allCategories=await categoryDetails.find();
-          // console.log(allCategories,"check")
-          res.render("index/categories", {
-            session: req.session.userID,
-            currentUser,
-            categories: allCategories
-          });
-        } catch (error) {
-          console.log("Error rendering category page: " + error);
+          const categoryId = req.query.category;
+          console.log(`Searching for products in category: ${categoryId}`);
+          let products = [];
+
+          const categoryObj = await categoryDetails.findById(categoryId);
+          const listingName = categoryObj ? categoryObj.name : "Default Listing Name";
+
+        
+          if (categoryId) {
+            products = await productCollection.find({ category: categoryId, listed:true })
+                                             .populate("category")
+                                             .populate("author");
         }
-  };
+         else {
+              console.log("No categoryId provided in the request.");
+          }
+    
+          res.render("index/categories", {
+              session: req.session.userID,
+              products: products,
+              listingName: listingName
+              
+          });
+      } catch (error) {
+          console.log("Error rendering category page: " + error);
+      }
+    };
+      
+//   exports.categoryPage = async (req, res) => {
+//     try {
+//         let category = req.query.category;
+//         let products = [];
+//         let page = parseInt(req.query.page) || 1;  
+//         let itemsPerPage = 12;
+//         let offset = (page - 1) * itemsPerPage;
+//         let sortBy = {};
+//         let listing;
+
+
+//         // Fetch all categories
+//         let categories = await categoryCollection.find({});
+
+//         let categoryObject = categories.find(cat => cat.name === category);
+
+//         if (categoryObject) {
+//             products = await productCollection.find({ category: categoryObject._id })
+//             .populate("category")
+//             .populate("author")
+//             .skip(offset)
+//             .limit(itemsPerPage)
+//             .sort(sortBy);
+//         }
+//         listing = await productCollection.find({ listed: true })
+//                                       .skip(offset)
+//                                       .limit(itemsPerPage)
+//                                       .sort(sortBy);
+
+//         res.render("index/categories", {
+//             session: req.session.userID,
+//             products: products,
+//             categories,
+//             page,
+//             itemsPerPage,
+//             listing: listing,
+
+//         });
+//     } catch (error) {
+//         console.log("Error rendering category page: " + error);
+//     }
+// };
