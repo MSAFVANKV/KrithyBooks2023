@@ -40,13 +40,25 @@ exports.viewAll = async (req, res) => {
     });
     
 
-          const uniqueCategoriesWithTitles = newArrivals.map(product => 
-            ({category: product.category, thumbnail: product.thumbnail}))
-              .filter((item, index, self) => 
-                  index === self.findIndex((a) => (
-                  a.category._id.toString() === item.category._id.toString()
-                  ))
-              );
+    const uniqueCategoriesWithTitles = allProducts.map(product => 
+      ({
+          category: product.category, 
+          thumbnail: product.thumbnail
+      })
+  )
+  .filter((item, index, self) => 
+      index === self.findIndex((a) => (
+          a.category._id.toString() === item.category._id.toString()
+      ))
+  );
+  
+          // const uniqueCategoriesWithTitles = newArrivals.map(product => 
+          //   ({category: product.category, thumbnail: product.thumbnail}))
+          //     .filter((item, index, self) => 
+          //         index === self.findIndex((a) => (
+          //         a.category._id.toString() === item.category._id.toString()
+          //         ))
+          //     );
 
         res.render("index/home", {
           session: req.session.userID,
@@ -79,6 +91,8 @@ exports.viewAll = async (req, res) => {
           let products = [];
 
           const categoryObj = await categoryDetails.findById(categoryId);
+          const allCategories = await categoryDetails.find();
+
           const listingName = categoryObj ? categoryObj.name : "Default Listing Name";
 
         
@@ -94,7 +108,8 @@ exports.viewAll = async (req, res) => {
           res.render("index/categories", {
               session: req.session.userID,
               products: products,
-              listingName: listingName
+              listingName: listingName,
+              categories: allCategories
               
           });
       } catch (error) {
@@ -102,6 +117,9 @@ exports.viewAll = async (req, res) => {
       }
     };
       
+
+
+
 //   exports.categoryPage = async (req, res) => {
 //     try {
 //         let category = req.query.category;

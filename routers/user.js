@@ -50,7 +50,7 @@ router
 
     router
     .route('/profile/cartItems')
-    .get(sessionCheck,cartPage.viewCart)
+    .get(sessionCheck,cartPage.viewCart, cartPage.getCartCount)
     .post(sessionCheck,cartPage.addToCart)
     .delete(sessionCheck,cartPage.removeProduct)
   .put(sessionCheck,cartPage.countChange)

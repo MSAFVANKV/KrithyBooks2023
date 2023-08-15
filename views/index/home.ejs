@@ -30,12 +30,24 @@
       max-width: 1200px; /* Adjust the maximum width as needed */
       overflow-x: hidden;
 }
-/* #productListContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; 
-} */
-
+.image-wrapper {
+    background-size: 100% 100%;  
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding-top: 100%;  
+    position: relative;
+}
+.card.card_img {
+    overflow: hidden;  /* this ensures that the image does not spill out of the card */
+}
+.badge {
+    position: absolute;
+    padding: 5px 7px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
   </style>
   
             
@@ -122,10 +134,12 @@
                 <!--  -->
                   <!-- Cart Icon -->
                   <li class="nav-item me-2">
-                      <a class="nav-link" href="/users/profile/cartItems">
-                          <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
-                      </a>
-                  </li>
+                    <a class="nav-link" href="/users/profile/cartItems">
+                        <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                        <span id="cartCount" class="badge bg-danger"></span> <!-- This will show the cart count -->
+                    </a>
+                </li>
+                
   
                   <!-- Wishlist/Heart Icon -->
                   <li class="nav-item me-2">
@@ -204,8 +218,8 @@
           <div class="card shadow-lg prod_card" style="width: 17rem; ">
               <div class="card card_img">
                 <a href="/products/<%=product._id%>">
-                  <img src="/img/books/<%=product.thumbnail%>" class="card-img-top" alt="Book Image">
-                </a>
+                  <div class="image-wrapper" style="background-image: url('/img/books/<%=product.thumbnail%>')"></div>
+               </a>               
                 <!--  -->
                 <!-- <div class="whiashlike">
                   <i id="wishlistButton" class="far fa-heart"></i>
@@ -266,9 +280,12 @@
                               <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5">
                                   <a href="/categoriesBy?category=<%=categories[j].category._id%>">
                                       <div class="card shadow-lg prod_card" style="width: 12rem;">
-                                          <div class="card card_img">
-                                              <img src="/img/books/<%=categories[j].thumbnail%>" class="card-img-top img-fluid" alt="Book Image">
-                                          </div>
+                                        <div class="card card_img">
+                                          <div class="image-wrapper" style="background-image: url('/img/books/<%=categories[j].thumbnail%>')" ></div>              
+                                      </div>
+                                          <!-- <div class="card card_img">
+                                              <img src="/img/books/<%=categories[j].thumbnail%>" class="card-img-top img-fluid " alt="Book Image">
+                                          </div> -->
                                           <div class="card-body">
                                               <h5 class="card-title text-center text-uppercase fs-6"><%=categories[j].category.name%></h5>
                                           </div>
@@ -322,9 +339,12 @@
                             <% for(let j = i; j < i + 4 && j < authors.length; j++) { %>
                                 <div class="d-flex justify-content-center col-lg-3 col-md-6 col-sm-6 mb-5">
                                     <div class="card shadow-lg prod_card" style="width: 12rem;">
-                                        <div class="card card_img">
+                                        <!-- <div class="card card_img">
                                             <img src="/img/books/<%=authors[j].bookTitle%>" class="card-img-top img-fluid" alt="Book Image">
-                                        </div>
+                                        </div> -->
+                                        <div class="card card_img">
+                                          <div class="image-wrapper" style="background-image: url('/img/books/<%=authors[j].bookTitle%>')" ></div>              
+                                      </div>
                                         <div class="card-body">
                                             <h5 class="card-title text-center text-uppercase fs-6"><%=authors[j].author.name%></h5>
                                         </div>
@@ -352,9 +372,6 @@
 <!-- search appearence div  -->
 </div>
 <!-- search appearence div  -->
-
-
-  
   
   <!-- footer   =========================   -->
   <footer class="  h-50 bg-dark text-light py-3 ">
@@ -417,17 +434,18 @@
   }
 });
 // 
-// $(document).ready(function() {
-//     $('#wishlistButton').click(function() {
-//         if($(this).hasClass('far')) {
-//             $(this).removeClass('far').addClass('fas');
-//             swal("Added to Wishlist", "", "success");
-//         } else {
-//             $(this).removeClass('fas').addClass('far');
-//             swal("Removed from Wishlist", "", "error");
-//         }
-//     });
-// });
+
+$(document).ready(function() {
+    // Assume you have an API endpoint that returns the cart count.
+    // This is just a mock, you may need to adjust according to your server's logic.
+    $.ajax({
+        url: "/users/profile/cartItems",
+        method: "get",
+        success: (res) => {
+            $("#cartCount").text(res.count || 0);
+        }
+    });
+});
 
   </script>
 
@@ -438,5 +456,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/index.js"></script>
     <script src="/js/search.js"></script>
+    <script src="/js/pageUpBtn.js"></script>
+    
 </body>
 </html>

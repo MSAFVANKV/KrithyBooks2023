@@ -1,4 +1,22 @@
-<%- include('./layout/_header') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<!-- sweet alet -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/prductlist.css">
+
+  </head>
+<body>
 
 <style>
     .zoom {
@@ -120,41 +138,66 @@
                 </h3>  
               </div>
             <%}%>
+<!-- filter -->
+<div class="dropdown col-6 ms-5">
+  <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      Filter
+  </button>
+  <ul class="dropdown-menu fs-6 text-uppercase" aria-labelledby="dropdownMenuButton1">
+      <% categories.forEach(category => { %>
+        <li><a class="dropdown-item" href="/categoriesBy?category=<%=category._id%>"><%= category.name %></a></li>
+        <% }); %>
+  </ul>
+</div>
 
 
-
-        <% if(products && products.length > 0){%>
-            <div class="container mt-5">
-                <div class="row d-flex">
-                    <% products.forEach(product => { %>
-                    <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
-                        <div class="card shadow-lg prod_card" style="width: 17rem;">
-                            <div class="card card_img">
-                                <a href="/products/<%= product._id %>">
-                                    <img src="/img/books/<%= product.thumbnail %>" class="card-img-top" alt="Book Image">
-                                </a>
+<!--  -->
+    <% if(products && products.length > 0){ %>
+      <div class="container mb-5">
+          <div class="row mt-3" id="productListContainer">
+              <% products.forEach(product => { %>
+                  <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-4">
+                    <a href="/products/<%=product._id%>" class="text-decoration-none">
+                      <div class="card shado zoom " style="width: 16rem;">
+                        <div class="card card_img">
+                          <div class="image-wrapper" style="background-image: url('/img/books/<%= product.thumbnail %>')" ></div>              
+                      </div>
+                        <!-- <div class="">
+                          <img style="max-height: 270px; " class="card-img-top img-fluid" src="/img/books/<%= product.thumbnail %>" alt="Book image">
+                        </div> -->
+                          <div class="card-body">
+                            <div class="text-center">
+                              <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 200px;"><%=product.name%></span>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%= product.name %></h5>
-                                <div class="d-flex">
-                                    <div class="m-auto gap-3">
-                                        <span class="card-text text-success fw-bolder fs-3">₹<%= product.price %></span>
-                                        <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
-                                        <span class="card-text text-info"><%= product.discount %>% off</span>
-                                    </div>
-                                </div>
-                                <p class="card-text text-center">Rating: </p>
-                            </div>
-                        </div>
-                    </div>
-                    <% }) %>
-                </div>
-            </div>
-            <% } else { %>
-            <p class="text-center">No products found for this category.</p>
-            <% } %>
-                <!-- pagination -->
-    <!-- your existing html code ... -->
+                              <div class="d-flex">
+                                <div class="m-auto gap-3">
+                                  <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
+                                  <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                                  <span class="card-text">% off</span>
+                              </div>
+                              </div>
+                              <p class="text-center">Rating: </p>
+                          </div>
+                      </div>
+                    </a>
+                  </div>
+              <% }) %>
+          </div>
+      </div>
+  <% } else { %>
+    <p class="text-center">No products found for this category.</p>
+    <% } %>
 
 
-<%- include('./layout/_footer') %>
+    <%- include('./layout/foot') %>
+      <!-- boostrap-5 -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+      <!-- boostrap-5 -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="/js/index.js"></script>
+      <script src="/js/search.js"></script>
+      <script src="/js/pageUpBtn.js"></script>
+      
+  </body>
+  </html>

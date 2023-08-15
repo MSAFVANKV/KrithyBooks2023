@@ -243,3 +243,17 @@ input[type=number]::-webkit-outer-spin-button {
     max-height: 8rem;
     max-width: 100%;
   } */
+/* all cards making same */
+.image-wrapper {
+    background-size: 100% 100%;  /* This will stretch the image to fit the container's width and height */
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    padding-top: 100%;  
+    position: relative;
+}
+  
+
+.card.card_img {
+    overflow: hidden;  /* this ensures that the image does not spill out of the card */
+}

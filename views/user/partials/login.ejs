@@ -1,52 +1,60 @@
 <title>Login page</title>
 <%-include('../layouts/_header')%>
 <div class="container">
-  <!--main logo -->
-  <div class="logo d-flex justify-content-center align-items-center mb-4">
-      <p id="logo" class="logostyle"><span class="kstyle">K</span>rithy</p>
-  </div>
-  <!--main logo -->
-  
-  <div class="row justify-content-center align-items-center vh-100">
-      <div class="col-lg-4 col-md-6 col-sm-8">
-          <form action="/login" method="post" id="loginform">
-              <!--main logo -->
-              <div class="loginimg  d-flex justify-content-center align-items-center mt-5">
-                  <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="45.4953" height="45.4953" rx="22.7477" fill="#BDBDBD"/>
-                      <path d="M29.5718 17.0607H28.4344V14.7859C28.4344 11.6467 25.8867 9.099 22.7475 9.099C19.6083 9.099 17.0606 11.6467 17.0606 14.7859V17.0607H15.9232C14.6721 17.0607 13.6484 18.0843 13.6484 19.3354V30.7093C13.6484 31.9604 14.6721 32.984 15.9232 32.984H29.5718C30.8229 32.984 31.8466 31.9604 31.8466 30.7093V19.3354C31.8466 18.0843 30.8229 17.0607 29.5718 17.0607ZM19.3354 14.7859C19.3354 12.8979 20.8594 11.3738 22.7475 11.3738C24.6356 11.3738 26.1596 12.8979 26.1596 14.7859V17.0607H19.3354V14.7859ZM29.5718 30.7093H15.9232V19.3354H29.5718V30.7093ZM22.7475 27.2971C23.9986 27.2971 25.0223 26.2735 25.0223 25.0224C25.0223 23.7712 23.9986 22.7476 22.7475 22.7476C21.4964 22.7476 20.4727 23.7712 20.4727 25.0224C20.4727 26.2735 21.4964 27.2971 22.7475 27.2971Z" fill="black"/>
-                      </svg>                            
-              </div>
-              <!--main logo -->
-              
-              <h1 class="text-center fw-bold fs-4 mt-3">Login</h1>
-              <% if (message) { %>
-                <div id="alertMessage" class="alert mt-4 mb-3">
-                  <%= message %>
-                </div>
-              <% } %>
-       
-              <div class="mb-3">
-                  <label for="email" class="form-label">Email address</label>
-                  <input name="email" type="email" class="form-control" id="emailInput" placeholder="Enter email" onkeyup="mailValidator()">
-                  <span id="mailInvalid" class=" rounded fs-3"
-                  style=" text-transform: none;color: rgb(201, 79, 79);"></span>
-              </div>
-              <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password" onkeyup="passwordValidator()">
-                  <span id="passwordInvalid" class="rounded fs-6"
-                  style=" text-transform: none;color: rgb(201, 79, 79);"></span>
-              </div>
-              
-              <div class="mt-4 col-12 text-center ">
-                  <button type="submit" class="btn w-100 logbtn btn-secondary" id="submitButton">Log in</button>
-              </div>
-          </form>
-          <div class="password fw-light col-12 text-center m"><p>Don't have an account? <a href="/signup" id="logforgot">Signup</a> </p>
-            <div class="password"><p>Forgot password? <a href="/forgotPassword" id="logforgot">reset password</a> </p></div>
+  <div class="row vh-100">
+    
+           <!--main logo -->
+           
+            <div class="logo d-flex justify-content-center">
+              <p id="logo" class="logostyle">
+                <a href="/" class="text-decoration-none text-black">
+                <span class="kstyle">K</span>rithy</p></a>
           </div>
-      </div>
+           
+        
+        <!--main logo -->
+      <form class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 m-auto border border-1 shadow p-3 p-sm-5" action="/login" method="post" id="loginform">
+
+          <!-- Title -->
+          <h3 class="text-center">Sign In</h3>
+
+          <!-- Alert Message -->
+          <% if (message) { %>
+              <div class="alert alert-danger" role="alert">
+                  <%= message %>
+              </div>
+          <% } %>
+
+          <!-- Email Input -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input name="email" type="email" class="form-control" id="emailInput" placeholder="Enter email" onkeyup="mailValidator()">
+            <span id="mailInvalid" class=" rounded fs-3"
+            style=" text-transform: none;color: rgb(201, 79, 79);"></span>
+        </div>
+
+          <!-- Password Input -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password" onkeyup="passwordValidator()">
+            <span id="passwordInvalid" class="rounded fs-6"
+            style=" text-transform: none;color: rgb(201, 79, 79);"></span>
+        </div>
+
+          <!-- Submit Button -->
+          <div class="mt-4 col-12 text-center ">
+            <button type="submit" class="btn w-100 logbtn btn-secondary" id="submitButton">Log in</button>
+        </div>
+
+          <!-- Registration and Forgot Password -->
+          <div class="mt-2 mt-sm-4 d-flex justify-content-center">
+              <small class="d-flex"><span class="d-none d-sm-block">Don't have an account? &nbsp;</span><a href="/signup" class="textg fw-bold" id="logforgot">Sign up here</a></small>
+          </div>
+          <div class="d-flex justify-content-center">
+              <small class="d-flex"><span class="d-none d-sm-block ">Forgot password? &nbsp;</span><a href="/forgotPassword" class="textg fw-bold" id="logforgot">Recover password here</a></small>
+          </div> 
+
+      </form>
   </div>
 </div>
 

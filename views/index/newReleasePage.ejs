@@ -145,9 +145,9 @@
                <!-- Filter dropdown -->
                     <div class="dropdown col-6">
                       <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                          filter
+                          Filter
                       </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <ul class="dropdown-menu fs-6 text-uppercase" aria-labelledby="dropdownMenuButton1">
                           <% categories.forEach(category => { %>
                               <li><a class="dropdown-item" href="/categories?category=<%= category.name %>"><%= category.name %></a></li>
                           <% }); %>
@@ -157,7 +157,7 @@
 
                 <div class="dropdown col-6 d-flex justify-content-end">
                     <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Category
+                      Sorted By
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                
