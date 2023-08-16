@@ -13,13 +13,24 @@ const multer = require('multer');
 
 
 
-var upload = multer({
+// var upload = multer({
+//     storage: multer.diskStorage({
+//         destination: function (req, file, cb) {
+//             cb(null, 'assets/img/users');
+//         },
+//         filename: function (req, file, cb) {
+//             cb(null, `${req.session.userID}_${Date.now()}.jpeg`);
+//         }
+//     })
+// });
+
+var uploadCropped = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, 'assets/img/users');
         },
         filename: function (req, file, cb) {
-            cb(null, `${req.session.userID}_${Date.now()}.jpeg`);
+            cb(null, `${req.session.userID}_cropped.jpeg`);
         }
     })
 });
@@ -28,8 +39,14 @@ var upload = multer({
 
 router
     .route('/profile')
-    .get(sessionCheck,profile.viewPage)
-    .post(sessionCheck,upload.single("photo"),profile.updateUser)
+    .get(sessionCheck, profile.viewPage)
+    .post(sessionCheck, profile.updateUser);
+
+router
+    .route('/profile/uploadCroppedImage')
+    .get(sessionCheck, profile.cropedImage)
+    .post( sessionCheck, uploadCropped.single('photo'), profile.uploadCroppedImage);
+
 
 
     router
@@ -50,7 +67,7 @@ router
 
     router
     .route('/profile/cartItems')
-    .get(sessionCheck,cartPage.viewCart, cartPage.getCartCount)
+    .get(sessionCheck,cartPage.viewCart)
     .post(sessionCheck,cartPage.addToCart)
     .delete(sessionCheck,cartPage.removeProduct)
   .put(sessionCheck,cartPage.countChange)
@@ -68,10 +85,6 @@ router
 
 
     // router.post('/save_image', sessionCheck, upload.single('image'), profile.uploadProfileImage);
-
-
-
-
 
 module.exports = router
 

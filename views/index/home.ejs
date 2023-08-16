@@ -41,13 +41,7 @@
 .card.card_img {
     overflow: hidden;  /* this ensures that the image does not spill out of the card */
 }
-.badge {
-    position: absolute;
-    padding: 5px 7px;
-    border-radius: 50%;
-    background-color: red;
-    color: white;
-}
+
   </style>
   
             
@@ -80,7 +74,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
           
                   <!-- Category Dropdown -->
-                  <ul class="navbar-nav" id="categoryToggle">
+                  <!-- <ul class="navbar-nav" id="categoryToggle">
                       <li class="nav-item dropdown ">
                           <a class="drpdown nav-link dropdown-toggle border border-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Category
@@ -90,7 +84,7 @@
                               <li><a class="dropdown-item" href="#">Non-Fiction</a></li>
                           </ul>
                       </li>
-                  </ul>
+                  </ul> -->
   
                   <!-- Search Bar -->
                   <!-- <form class="d-flex ms-3 justify-content-center">
@@ -118,6 +112,38 @@
                 </button>
               </div>
             </li>
+            <li class="nav-item me-2">
+              <a class="nav-link" href="/users/profile/cartItems">
+                  <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                  <span id="cartCount" class="badge bg-danger"></span>
+                   <span id="badge"><%=locals.userCart.totalQuantity%></span>  <!-- This will show the cart count -->
+              </a>
+          </li>
+          
+
+            <!-- Wishlist/Heart Icon -->
+            <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/wishlist">
+                    <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+                </a>
+            </li>
+
+            <!-- User/Contact Icon -->
+            <li class="nav-item me-2">
+              <% if (locals.currentUser.photo) { %>
+                <!-- If photo exists, show the photo -->
+                <div class="profile" style="background-image: url('/img/users/<%=locals.currentUser.photo%>');">
+                  <a class="nav-link" href="/users/profile"></a>
+                </div>
+              <% } else { %>
+                <!-- If photo doesn't exist, show the icon -->
+                <a class="nav-link" href="/users/profile">
+                  <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
+              
+                </a>
+              <% } %>
+            </li>
+
         <% }else{%> 
             <!-- login button -->
           <li class="nav-item">
@@ -129,31 +155,25 @@
               </div>
           </form>
           </li>
+          <li class="nav-item me-2">
+            <a class="nav-link" href="/users/profile/cartItems">
+                <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                <span id="cartCount" class="badge bg-danger"></span>
+            </a>
+        </li>
+        
+
+          <!-- Wishlist/Heart Icon -->
+          <li class="nav-item me-2">
+              <a class="nav-link" href="/users/profile/wishlist">
+                  <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+              </a>
+          </li>
+
           <%}%>
 <!-- login button -->
                 <!--  -->
                   <!-- Cart Icon -->
-                  <li class="nav-item me-2">
-                    <a class="nav-link" href="/users/profile/cartItems">
-                        <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
-                        <span id="cartCount" class="badge bg-danger"></span> <!-- This will show the cart count -->
-                    </a>
-                </li>
-                
-  
-                  <!-- Wishlist/Heart Icon -->
-                  <li class="nav-item me-2">
-                      <a class="nav-link" href="/users/profile/wishlist">
-                          <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
-                      </a>
-                  </li>
-  
-                  <!-- User/Contact Icon -->
-                  <li class="nav-item me-2">
-                      <a class="nav-link" href="/users/profile">
-                          <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
-                      </a>
-                  </li>
               </ul>
           </div>
       </div>
@@ -435,17 +455,17 @@
 });
 // 
 
-$(document).ready(function() {
-    // Assume you have an API endpoint that returns the cart count.
-    // This is just a mock, you may need to adjust according to your server's logic.
-    $.ajax({
-        url: "/users/profile/cartItems",
-        method: "get",
-        success: (res) => {
-            $("#cartCount").text(res.count || 0);
-        }
-    });
-});
+// $(document).ready(function() {
+//     // Assume you have an API endpoint that returns the cart count.
+//     // This is just a mock, you may need to adjust according to your server's logic.
+//     $.ajax({
+//         url: "/users/profile/cartItems",
+//         method: "get",
+//         success: (res) => {
+//             $("#cartCount").text(res.count || 0);
+//         }
+//     });
+// });
 
   </script>
 

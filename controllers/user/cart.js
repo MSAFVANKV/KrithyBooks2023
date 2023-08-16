@@ -162,15 +162,15 @@ exports.viewCart = async (req, res) => {
     }
   }
 
-  exports.getCartCount = async (req, res) => {
-    try {
-        const userCart = await cartCollection.findOne({ customer: req.session.userID });
-        res.json({
-            count: userCart ? userCart.totalQuantity : 0
-        });
-    } catch (error) {
-        res.status(500).json({
-            error: "There was an error fetching cart count."
-        });
-    }
-};
+//   exports.getCartCount = async (req, res) => {
+//     try {
+//         const userCart = await cartCollection.findOne({ customer: req.session.userID });
+//         res.json({
+//             count: userCart ? userCart.totalQuantity : 0
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             error: "There was an error fetching cart count."
+//         });
+//     }
+// };

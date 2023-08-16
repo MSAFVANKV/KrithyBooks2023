@@ -60,3 +60,4 @@ $(function () {
         $('.zoom').zoom({ url: newImageSrc }); // add new zoom with the new image
     });
 });
+

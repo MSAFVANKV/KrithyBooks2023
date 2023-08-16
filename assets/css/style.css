@@ -132,35 +132,6 @@ input{
 }
 /* OTP */
 
-.otp-input-fields{
-    margin: auto;
-    
-    box-shadow: 0px 0 8px #02024066;
-    display: flex;
-    max-width: 420px;
-    justify-content: center;
-    gap: 10px;
-    padding: 30px;
-}
-.otp_num{
-    width: 40px;
-    height: 40px;
-    border: 1px solid #02024066;
-    border-radius: 4px;
-    text-align: center;
-    outline: none;
-    font-size: 14px;
-}
-.otp_num::-webkit-inner-spin-button,
-.otp_num::-webkit-outer-spin-button{
-    appearance: none;
-}
-.success,
-.error{
-    display: none;
-    text-align: center;
-} */
-
 /* ===================================
 =================================
 otp page
@@ -257,3 +228,43 @@ input[type=number]::-webkit-outer-spin-button {
 .card.card_img {
     overflow: hidden;  /* this ensures that the image does not spill out of the card */
 }
+
+/* cart count in icons
+======================= */
+.nav-item {
+    position: relative; /* Add this line to make sure the badge is positioned relative to the cart icon */
+}
+
+#badge {
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: red;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+    transform: translate(20%, -10%);  /* Use translate to move the badge to top right corner of cart icon */
+    color: white;
+}
+/* cart count in icons End
+======================= */
+
+/* profile img
+=============== */
+.profile{
+    width: 30px;
+    height: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .profilePage{
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }

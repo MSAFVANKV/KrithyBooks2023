@@ -49,7 +49,7 @@ function addToWishlist(productId){
       },
       success: (res) => {
        
-        if (res.success == "countAdded" || res.success == "addedToCart") {
+        if (res.success == "countAdded") {
           Swal.fire({
             toast: true,
             icon: "success",

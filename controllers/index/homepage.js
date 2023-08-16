@@ -1,27 +1,19 @@
-// const userDTLS = require('../../models/user')
-
-// exports.viewAll = async (req, res) => {
-//     try {
-//         let currentUser
-//        currentUser=await userDTLS.findById(req.session.userID)
-//         res.render('index/home', { message: "" , session:req.session.userID});
-//     } catch (error) {
-//         console.log("Error Occured"+error);
-//     }
-// }
-
 const userDTLS = require('../../models/user')
 const productCollection = require('../../models/admin/products')
 const authorsDetails = require('../../models/admin/author')
 const categoryDetails = require('../../models/admin/category');
+const cartCollection = require('../../models/cart')
 
 
 exports.viewAll = async (req, res) => {
     try {
         let currentUser
+        let  userCart
 
         if(req.session.userID){
             currentUser=await userDTLS.findById(req.session.userID)
+            userCart= await cartCollection.findOne({customer:req.session.userID})
+
         }
         const allAuthors=await authorsDetails.find();
         // console.log(allAuthors,"check")
@@ -66,6 +58,7 @@ exports.viewAll = async (req, res) => {
           newArrivals,
           message:"",
           session:req.session.userID,
+          userCart,
           authors: uniqueAuthorsWithTitles,
           categories: uniqueCategoriesWithTitles
         });
