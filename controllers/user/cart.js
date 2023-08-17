@@ -54,6 +54,7 @@ exports.viewCart = async (req, res) => {
             totalPrice: product.price,
             totalQuantity: 1,
             "products.$.price": product.price,
+            initialPrice:product.initialPrice
           }
         });
         res.json({

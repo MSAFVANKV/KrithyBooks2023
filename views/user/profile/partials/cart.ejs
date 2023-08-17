@@ -8,14 +8,12 @@
           <div class=" pt-2">
               <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
               <!-- profile add -->
-              <div class="float-end col-1">
-                  <img src="<%= currentUser.photo ? '/img/users/' + currentUser.photo : '/img/users/Frame 36.png' %>" id="profile-pic" class="img-fluid" alt="" style="cursor: pointer;">
-                  <input type="file" id="upload" style="display: none;">
-                  <button id="crop" style="display: none;">Crop</button>
-                  <div id="preview"></div>
+              <div class="float-end col-1 mt-2">
+                <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
+                </div>     
               </div>
           </div>
-          <small class="fw-bold">Your wishlist will showup here</small>
+          <small class="fw-bold">Your Cart items will showup here</small>
           <hr>
     
           <div class="d-flex justify-content-between"> 
@@ -30,10 +28,17 @@
                               <div class="col-lg-8 prod-details d-flex flex-grow-1 flex-column justify-content-between">
                                   <h5><a href="/products/<%= product.name._id %>" style="color: rgb(255, 255, 255) !important;"><%= product.name.name %></a></h5>
                                   <h6 class="text-white"><%= product.name.author.name %></h6>
-                                  <span style="text-transform: none; font-size: 0.85rem; font-weight: 700">Price: <%= product.name.price %></span>
+                                  <div class="d-flex gap-3">
+                                    <span style="text-transform: none; font-size: 0.85rem; font-weight: 700">Price:
+                                    <span class="text-success fs-5"> ₹<%= product.name.price %></span>
+                                    </span>
+                                    <span style="text-transform: none; font-size: 0.85rem; font-weight: 700" class="text-warning fs-5">
+                                        <del> ₹<%= product.name.initialPrice %></del>
+                                    </span>  
+                                  </div>
                                   <% if(product.name.stock == '0') { %> 
                                       <p class="text-danger" style="font-weight: bold;margin-top: 10px;">OUT OF STOCK</p>
-                                      <p id="stockCheck" hidden><%= product.name.stock %></p>
+                                      <p id="stockCheck" ><%= product.name.stock %></p>
                                   <% } %>
                                   <div class="d-flex justify-content-end mt-2">
                                       <div class="counter d-flex p-1 align-items-center rounded mx-4">
@@ -71,10 +76,6 @@
                           <span>Price:</span>
                           <span id="totalPrice">₹ <%=userCart.totalPrice%></span>
                       </div>
-                      <div class="d-flex justify-content-between p-1">
-                        <span>Discount:</span>
-                        <span id="totalPrice">₹ <%=userCart.discount%></span>
-                    </div>
                   </div>
                   <div class="order-summary rounded p-3 my-3 d-flex flex-column" style="border: 1px solid #2b152e; font-size: 0.9rem;background: linear-gradient(316deg, #20041a 0%, #010f13 74%)">
                       <a onclick="checkOut()" type="submit" class="text-white btn btn-sm button-div" style="background-color: rgb(18, 82, 9);">Checkout</a>

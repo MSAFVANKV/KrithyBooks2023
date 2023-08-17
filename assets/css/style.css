@@ -254,11 +254,13 @@ input[type=number]::-webkit-outer-spin-button {
 /* profile img
 =============== */
 .profile{
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 50%;
+    border: 1px solid #494444;
   }
   .profilePage{
     width: 50px;
@@ -267,4 +269,9 @@ input[type=number]::-webkit-outer-spin-button {
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
+    z-index: 999;
+    position: absolute;
   }
+  .no-cursor {
+    cursor: not-allowed !important;
+}

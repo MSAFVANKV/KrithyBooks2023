@@ -1,25 +1,19 @@
 <%- include('../layouts/_header') %>
 
-
-
-
   
 <div class="container">
   <div class="row mt-5">
     <%- include('../layouts/profileSearchBar') %>
         
       <div class="col-lg-8 rounded-3 bg-profile ms-3" style="width: 50rem;"><!-- main div -->
-          <div class=" pt-2">
+            <div class=" pt-2">
               <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
               <!-- profile add -->
-              <div class="float-end col-1">
-                <img src="/img/users/<%= currentUser.photo %>" id="profile-pic" class="img-fluid" alt="" style="cursor: pointer;">
-                <input type="file" id="upload" style="display: none;">
-                <button id="crop" style="display: none;">Crop</button>
-                <div id="preview"></div>
-            </div>  
-            <!--  -->    
-          </div>
+              <div class="float-end col-1 mt-2">
+                <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
+                </div>     
+              </div>
+            </div>
           <!--  -->  
           <small><span class="fw-bold">Manage Your Address</span></small>
           <hr>

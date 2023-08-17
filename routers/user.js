@@ -6,10 +6,11 @@ const croppedImgupload=require("../utilities/cropedImgUplod")
 const address=require("../controllers/user/address");
 const cartPage = require('../controllers/user/cart')
 const wishlist = require('../controllers/user/whishlist')
+const checkOut = require('../controllers/user/checkout');
+const singleCheckOut = require('../controllers/user/singleCheckout')
 
 const multer = require('multer');
-// const multerS3 = require('multer-s3');
-// const aws = require('aws-sdk');
+
 
 
 
@@ -44,11 +45,10 @@ router
 
 router
     .route('/profile/uploadCroppedImage')
-    .get(sessionCheck, profile.cropedImage)
     .post( sessionCheck, uploadCropped.single('photo'), profile.uploadCroppedImage);
 
 
-
+// Address Page
     router
     .route('/profile/manageAddress')
     .get(sessionCheck,profile.addressViewPage)
@@ -65,6 +65,7 @@ router
 
     router.get("/profile/manageAddress/changeRole", sessionCheck, address.defaultToggler);
 
+    // Cart ====
     router
     .route('/profile/cartItems')
     .get(sessionCheck,cartPage.viewCart)
@@ -73,18 +74,30 @@ router
   .put(sessionCheck,cartPage.countChange)
 
 
+//   wishList
     router
     .route('/profile/wishlist')
     .get(sessionCheck,wishlist.viewWishlist)
     .patch(wishlist.addOrRemove)
     .delete(wishlist.remove)
 
-//     router
-// .route('/profile/manageAddress/save_image')
-// .post(sessionCheck,upload.single('profileImage'),profile.uploadProfileImage);
+    // Checkout
+
+    router
+    .route('/cart/checkout')
+    .get(sessionCheck,checkOut.viewPage)
+ 
+router.post("/cart/checkout/changeDefaultAddress",sessionCheck,checkOut.defaultAddress)
 
 
-    // router.post('/save_image', sessionCheck, upload.single('image'), profile.uploadProfileImage);
+    router
+    .route('/directCheckout')
+     .get(sessionCheck, singleCheckOut.directCheckout)
+    .post(sessionCheck, singleCheckOut.defaultAddress)
+
+    // router
+    // .route('/directCheckout/s')
+
 
 module.exports = router
 

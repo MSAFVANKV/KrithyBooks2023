@@ -28,6 +28,7 @@
     justify-content: center;
     align-items: center;
 }
+
 #toggle::before
 {
     content: '';
@@ -116,18 +117,17 @@ a{
     </div>
     <div class="border text-center p-2 border-dark-subtle bg-profile">
         <small><a href="/users/profile/wishlist" class="text-decoration-none text-black text-uppercase fw-bold ">Wishlist</a></small>            
-      </div>
+    </div>
     <div class="border text-center p-2 border-dark-subtle bg-profile">
         <small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">My Orders</a></small>            
-      </div>
-      <div class="border text-center p-2 border-dark-subtle bg-profile">
+    </div>
+    <div class="border text-center p-2 border-dark-subtle bg-profile">
           <small><a href="/users/profile/manageAddress" class="text-decoration-none text-black text-uppercase fw-bold ">Manage Address</a></small>            
-        </div>
-        <div class="border text-center p-2 border-dark-subtle bg-profile">
+    </div>
+    <div class="border text-center p-2 border-dark-subtle bg-profile">
           <small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Change Password</a></small>            
-        </div>
-   
-        </div>
+    </div>
+</div>
 
         <!-- ============================================================ -->
         <div id="toggle" class="bgtheme"></div>
@@ -151,42 +151,6 @@ a{
             </ul>
         </div>
     
-        <!-- <script>
-            // #hamburger btn
-            // ==================
-            const toggle = document.getElementById('toggle');
-            const sidebar = document.getElementById('sidebar');
-    
-    
-            document.onclick = function(e){
-            if(e.target.id !== 'sidebar' && e.target.id !== 'toggle')
-            {
-                toggle.classList.remove('active');
-                sidebar.classList.remove('active')
-            }
-            }
-    
-            toggle.onclick = function(){
-                toggle.classList.toggle('active');
-                sidebar.classList.toggle('active');
-            }
-
-            // 
-// listen for window resize
-window.addEventListener('resize', function() {
-    // update display properties based on window width
-    if(window.innerWidth > 992) {
-        document.querySelector('.firstSettings').style.display = 'block';
-        document.querySelector('#toggle').style.display = 'none';
-    }
-    else {
-        document.querySelector('.firstSettings').style.display = 'none';
-        document.querySelector('#toggle').style.display = 'block';
-    }
-});
-
-
-        </script> -->
         <script>
           // get elements
           const toggle = document.getElementById('toggle');

@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const cropButton = document.getElementById('crop');
     const preview = document.getElementById('preview');
     const modalFooter = document.getElementById('modal-footer');
+    // for + icon in html 
+    const addIcon = document.querySelector('.add-icon'); 
     let cropper;
+    // for + icon in html 
+    // if (profilePic.style.backgroundImage !== 'none') {
+    //     addIcon.style.display = 'none';
+    // }
+    // for + icon in html 
 
     // Event Handlers
     profilePic.addEventListener('click', triggerFileUpload);

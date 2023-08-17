@@ -53,6 +53,8 @@ function removeFromCart(productID) {
              $(`#cartCount${i}`).html(res.data.currentProduct.quantity);
             $(`#totalItems`).html(res.data.userCart.totalQuantity);
             $(`#totalPrice`).html("₹ " + res.data.userCart.totalPrice);
+            $(`#intialPrice`).html("₹ " + res.data.userCart.intialPrice);
+
             }
             
             
@@ -111,3 +113,10 @@ function removeFromCart(productID) {
       window.location= "/users/cart/checkout"
     }
   }
+
+  // function singlecheckOut(count,productId){
+  //   $.ajax({
+  //     url:``,
+  //     method:'get'
+  //   })
+  //  }

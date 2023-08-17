@@ -7,6 +7,7 @@ const cartSchema = new mongoose.Schema({
   },
   totalPrice: Number,
   totalQuantity: Number,
+
   products: [
     {
       name: {
@@ -16,6 +17,7 @@ const cartSchema = new mongoose.Schema({
       quantity: { type: Number, default: 1, min: 1 },
       price: Number,
     },
+
   ],
 });
 

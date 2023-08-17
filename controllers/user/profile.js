@@ -160,22 +160,20 @@ exports.updateUser = async (req, res) => {
         const userID = req.session.userID;
         const currentUser = await userCollection.findById(userID);
 
-        // Other user details update
-        currentUser.username = req.body.username;
-        currentUser.age = req.body.age;
-        currentUser.landMark = req.body.landMark;
-        currentUser.number = req.body.number;
-
-        await currentUser.save();
-
-        // If you update the contact number, update it in all addresses as well
+        if (req.body.username) currentUser.username = req.body.username;
+        if (req.body.age) currentUser.age = req.body.age;
+        if (req.body.landMark) currentUser.landMark = req.body.landMark;
         if (req.body.number) {
+            currentUser.number = req.body.number;
+            
+            // Update contactNumber in the primary address when the main contact is changed
             await userCollection.updateMany(
                 { _id: userID, 'addresses.primary': true },
                 { $set: { 'addresses.$.contactNumber': req.body.number } }
             );
         }
 
+        await currentUser.save();
         res.redirect("/users/profile");
 
     } catch (error) {
@@ -190,12 +188,11 @@ exports.updateUser = async (req, res) => {
 exports.uploadCroppedImage = async (req, res) => {
     try {
         const userID = req.session.userID;
-        const currentUser = await userCollection.findById(userID);
-        if (currentUser && req.file) {
+        if (req.file) {
             await userCollection.updateOne({_id: userID}, {$set: {photo: req.file.filename}});
             res.json({ imageUrl: '/img/users/' + req.file.filename });
         } else {
-            res.status(400).send("Error: User not found or image not provided");
+            res.status(400).send("Error: Image not provided");
         }
     } catch (error) {
         console.log("Error while saving cropped image:", error);
@@ -203,18 +200,19 @@ exports.uploadCroppedImage = async (req, res) => {
     }
 };
 
-exports.cropedImage = async (req, res) => {
-    try {
-        let userID = req.session.userID
-        let currentUser = await userCollection.findById(userID)
-        // console.log(currentUser);
-    res.render("user/profile/partials/cropedImage", {
-    currentUser,
-    session: req.session.userID,
-})
-    } catch (error) {
-        res.redirect('/');
-        console.log("error on rendering profile page:" + error)
-    }
-}
+
+// exports.cropedImage = async (req, res) => {
+//     try {
+//         let userID = req.session.userID
+//         let currentUser = await userCollection.findById(userID)
+//         // console.log(currentUser);
+//     res.render("user/profile/partials/cropedImage", {
+//     currentUser,
+//     session: req.session.userID,
+// })
+//     } catch (error) {
+//         res.redirect('/');
+//         console.log("error on rendering profile page:" + error)
+//     }
+// }
 

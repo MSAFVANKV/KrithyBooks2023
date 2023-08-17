@@ -50,7 +50,9 @@ exports.loginPage = (req, res) => {
      
     //   req.session.userId= user._id
     } catch (error) {
-      res.render('user/partials/login', { message: 'An error occurred' });
+      res.render('user/partials/login', { 
+        message: 'An error occurred' , 
+      });
     }
   };
   

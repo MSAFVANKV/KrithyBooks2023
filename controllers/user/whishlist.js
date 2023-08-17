@@ -1,15 +1,20 @@
 const wishlistCollection = require("../../models/wishlist");
 const productCollection = require("../../models/admin/products")
+const userCollection = require('../../models/user')
 
 exports.viewWishlist = async (req, res) => {
     try {
+        userID = req.session.userID
+        let currentUser = await userCollection.findById(userID)
+
         const userWishlist = await wishlistCollection
             .findOne({ customer: req.session.userID })
             .populate({ path: "products", populate: { path: "author" } })
 
         res.render("user/profile/partials/wishlist", {
             userWishlist,
-            session: req.session.userID
+            session: req.session.userID,
+            currentUser
         });
     } catch (error) {
         res.redirect('/users/profile');

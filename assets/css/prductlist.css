@@ -47,6 +47,13 @@
 .color-bg-main:hover{
     background-color: #FF4031;
 }
+.bg-profile{
+    background-color: #D9D9D9;
+}
+.checkotBg{
+    background-color: #706565;
+    
+}
 /* color */
 @media (max-width: 991px) {
     /* #categoryToggle{
