@@ -93,10 +93,15 @@ router.post("/cart/checkout/changeDefaultAddress",sessionCheck,checkOut.defaultA
     router
     .route('/directCheckout')
      .get(sessionCheck, singleCheckOut.directCheckout)
+
+router
+    .route("/directCheckout/changeDefaultAddress")
     .post(sessionCheck, singleCheckOut.defaultAddress)
 
+
     // router
-    // .route('/directCheckout/s')
+    // .route('/singleCheckout')
+    // .get(sessionCheck, singleCheckOut.singleCheckout)
 
 
 module.exports = router

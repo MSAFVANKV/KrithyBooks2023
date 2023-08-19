@@ -49,13 +49,11 @@
         <% }else{%> 
             <!-- login button -->
           <li class="nav-item">
-            <form action="/login" method="post">
               <div class="login ">
                 <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="login" class="text-decoration-none text-white">LOGIN</a>
+                  <a href="/login" class="text-decoration-none text-white">LOGIN</a>
                 </button>
               </div>
-          </form>
           </li>
           <%}%>
 <!-- login button -->
@@ -158,7 +156,13 @@
                                   <hr>
                                   <div class="ps-3 text-capitalize">
                                     <p><strong>Delivary Status:</strong><small>&nbsp; Free Delivary</small></p>
-                                    <p id="stockCheck"><strong>Stock:</strong><small class="text-success">&nbsp; <%=productDetails.stock%></small></p>
+                                    <!-- <p id="stockCheck"><strong>Stock:</strong><small class="text-success">&nbsp; <%=productDetails.stock%></small></p> -->
+                                    <% if(productDetails.stock == '0') { %> 
+                                        <p class="text-danger" style="font-weight: bold;margin-top: 10px;">OUT OF STOCK</p>
+                                        <p id="singleStockCheck" hidden><%= productDetails.stock %></p>
+                                    <% }else{ %>
+                                      <p><span class="fw-bold">Stock</span>:<%= productDetails.stock %></p>
+                                      <% } %>
                                     
                                     <!-- <a href="" class="border-3 text-black border border-3 btn"><small>add to wishlist</small> </a> -->
                                     <!-- <button class="bg-transparent border-0" id="wishlistHeart"
@@ -172,11 +176,8 @@
                                         onclick="addToCart('<%=productDetails._id%>')">
                                         <span style="font-size: 0.8rem;">Add to cart</span>
                                       </div>
-                                        <a href="/users/directCheckout?stock=<%=productDetails.stock%>&&id=<%=productDetails._id%>"  class="btn color-bg-main text-white">buy now</a>
-                                        <!-- <form action="/users/directCheckout" method="post">
-                                            <input type="hidden" name="id" value="<%= productDetails._id %>">
-                                            <button type="submit" class="btn color-bg-main text-white">Buy Now</button>
-                                        </form> -->
+                                        <!-- <a href="/users/directCheckout?stock=<%=productDetails.stock%>&&id=<%=productDetails._id%>"  class="btn color-bg-main text-white">buy now</a> -->
+                                        <a onclick="singlecheckOut()" type="submit" class="btn color-bg-main text-white" >Buy Now</a>
                                       </div>
                                   </div>
                                 

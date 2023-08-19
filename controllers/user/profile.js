@@ -17,7 +17,8 @@ exports.viewPage = async (req, res) => {
 res.render("user/profile/partials/profile", {
     currentUser,
     session: req.session.userID,
-    allAddresses
+    allAddresses,
+    currentUrl: req.originalUrl
 })
     } catch (error) {
         res.redirect('/');
@@ -34,6 +35,7 @@ exports.addressViewPage = async (req, res) => {
     res.render("user/profile/partials/addAddress", {
     currentUser,
     session: req.session.userID,
+    currentUrl: req.originalUrl
 })
     } catch (error) {
         res.redirect('/');

@@ -1,50 +1,61 @@
 <%- include('../layouts/_header') %>
 
-<div class="container">    <!-- main div1 -->
-    <div class="row mt-5">   <!-- main div2 -->
-        <%- include('../layouts/profileSearchBar') %>
-<!-- ========================================================= -->
-    <div class="col-lg-8 rounded-3 bg-profile ms-3 d-flex flex-wrap d-flex justify-content-center" id="wishlist">  <!-- items div -->
-        <% if(userWishlist!= null && userWishlist.products.length !=0){%> <%
-            userWishlist.products.forEach((product) => {%>
-                <div class="mt-3 col-lg-3 col-md-3 col-sm-6 mb-5 d-flex justify-content-center" style="width: 15rem;">
-                    <div class="card shadow-lg prod_card" >
-                        <div class="card card_img">
-                            <a href="/products/<%=product._id%>">
-                                <img src="/img/books/<%=product.thumbnail%>" class="card-img-top" alt="Book Image">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center">
-                                <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
-                            </div>
-                            <div class="d-flex">
-                                <div class="m-auto gap-3">
-                                    <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
-                                    <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
-                                    <span class="card-text text-info"><%= product.discount %>%off</span>
+    <div class="container"> <!-- main div1 -->
+        <div class="row mt-5"> <!-- main div2 -->
+            <%- include('../layouts/profileSearchBar') %>
+                <!-- ========================================================= -->
+                <div class="col-lg-8 rounded-3 bg-profile ms-3 d-flex flex-wrap d-flex justify-content-center"
+                    id="wishlist"> <!-- items div -->
+                    <% if(userWishlist!=null && userWishlist.products.length !=0){%>
+                        <% userWishlist.products.forEach((product)=> {%>
+                            <div class="mt-3 col-lg-3 col-md-3 col-sm-6 mb-5 d-flex justify-content-center"
+                                style="width: 15rem;">
+                                <div class="card shadow-lg prod_card">
+                                    <div class="card card_img">
+                                        <a href="/products/<%=product._id%>">
+                                            <img src="/img/books/<%=product.thumbnail%>" class="card-img-top"
+                                                alt="Book Image">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <span
+                                                class="card-title text-center fs-6 fw-bold text-truncate d-inline-block"
+                                                style="max-width: 170px;">
+                                                <%=product.name%>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="m-auto gap-3">
+                                                <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%>
+                                                        </span>
+                                                <span class="card-text text-warning fw-bold"><del>₹<%=
+                                                            product.initialPrice %></del></span>
+                                                <span class="card-text text-info">
+                                                    <%= product.discount %>%off
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <button class="btn btn-primary add-to-cart me-2">Add to Cart</button>
+                                            <button href="/users/" class="btn btn-danger remove-from-wishlist"
+                                                onclick="removeFromWishlist('<%=product._id%>')">Remove</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex">
-                                <button class="btn btn-primary add-to-cart me-2">Add to Cart</button>
-                                <button href="/users/" class="btn btn-danger remove-from-wishlist" 
-                                onclick="removeFromWishlist('<%=product._id%>')">Remove</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <%})%> <%}else{%>
-                <h5 class="text-center my-4 fw-light">
-                    No products on your wishlist yet.
-                </h5>
-                <div class="text-center my-4 fw-bold">
-                    <a href="/" class="fst-italic"
-                        >Continue shopping <i class="fa fa-arrow-right"></i
-                    ></a>
-                </div>
-        <%}%>
-    </div><!-- items div -->
-<!-- ========================================================= -->
-    </div> <!-- main div1 -->
-</div> <!-- main div2 -->
-        <%- include('../layouts/_footer') %>
+                            <%})%>
+                                <%}else{%>
+                                    <h5 class="text-center my-4 fw-light">
+                                        No products on your wishlist yet.
+                                    </h5>
+                                    <div class="text-center my-4 fw-bold">
+                                        <a href="/" class="fst-italic">Continue shopping <i
+                                                class="fa fa-arrow-right"></i></a>
+                                    </div>
+                                    <%}%>
+                </div><!-- items div -->
+                <!-- ========================================================= -->
+        </div> <!-- main div1 -->
+    </div> <!-- main div2 -->
+    <%- include('../layouts/_footer') %>

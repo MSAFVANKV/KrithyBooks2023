@@ -1,31 +1,27 @@
+
 <%- include('../layouts/_header') %>
 
-<div class="container">
-  <div class="row mt-5">
-      <%- include('../layouts/profileSearchBar') %>
-
-      <div class="col-lg-8 rounded-3 bg-profile ms-3" style="width: 50rem;">
-          <div class=" pt-2">
-              <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
+<%- include('../layouts/profileSearchBar') %>
+          <div class="pt-2">
+            <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
               <!-- profile add -->
-              <div class="float-end col-1 mt-2">
-                <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
-                </div>     
-              </div>
+            <div class="float-end col-1">
+             <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
+             </div>     
+            </div>
           </div>
           <small class="fw-bold">Your Cart items will showup here</small>
           <hr>
     
-          <div class="d-flex justify-content-between"> 
               
-              <div class="d-flex flex-column col-lg-8"> 
+              <div class="col-12"> 
                   <% if(userCart != null && userCart.products.length != 0) { %> 
                       <% userCart.products.forEach((product, i) => { %>
-                          <div class="row d-flex bg-black rounded my-2 p-3 col-lg-12 bg-info cartbox" style="border: 1px solid #beb2c0;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important;">
-                              <div class="col-lg-4 prod-img text-center">
-                                  <img src="/img/books/<%=product.name.thumbnail%>" alt="" height="150px" />
+                          <div class="row d-flex bg-black rounded my-2 p-3 bg-info cartbox" style="border: 1px solid #beb2c0;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important;">
+                              <div class="col-4 col-md-2 prod-img text-center " style="">
+                                  <img src="/img/books/<%=product.name.thumbnail%>" class="img-fluid" alt=""  />
                               </div>
-                              <div class="col-lg-8 prod-details d-flex flex-grow-1 flex-column justify-content-between">
+                              <div class="col-lg-8 prod-details flex-grow-1 flex-column justify-content-between">
                                   <h5><a href="/products/<%= product.name._id %>" style="color: rgb(255, 255, 255) !important;"><%= product.name.name %></a></h5>
                                   <h6 class="text-white"><%= product.name.author.name %></h6>
                                   <div class="d-flex gap-3">
@@ -61,35 +57,35 @@
                       <% }) %>
                   
               </div>
-
-              <div class="col-lg-4 my-3"> 
-                  <div class="order-summary rounded p-3 my-3 d-flex flex-column text-white" style="border: 1px solid #2b152e; font-size: 0.9rem;background: linear-gradient(316deg, #20041a 0%, #010f13 74%)">
-                      <div class="d-flex justify-content-between p-1 text-white">
+            <div class="d-flex justify-content-center position-sticky sticky-bottom">
+            <div class="col-9 my-3 sticky-checkout  "> 
+                <div class="order-summary rounded-top-2 p-3 d-flex flex-column text-white" style="border: 1px solid #2b152e; font-size: 0.9rem;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important;">
+                    <div class="d-flex justify-content-between p-1 text-white">
                           <span>Total items:</span>
                           <span id="totalItems"><%=userCart.totalQuantity%></span>
-                      </div>
-                      <div class="d-flex justify-content-between p-1">
+                    </div>
+                    <div class="d-flex justify-content-between p-1">
                           <span>Products:</span>
                           <span id="totalProducts"><%=userCart.products.length%></span>
-                      </div>
-                      <div class="d-flex justify-content-between p-1">
+                    </div>
+                    <div class="d-flex justify-content-between p-1">
                           <span>Price:</span>
                           <span id="totalPrice">₹ <%=userCart.totalPrice%></span>
-                      </div>
-                  </div>
-                  <div class="order-summary rounded p-3 my-3 d-flex flex-column" style="border: 1px solid #2b152e; font-size: 0.9rem;background: linear-gradient(316deg, #20041a 0%, #010f13 74%)">
-                      <a onclick="checkOut()" type="submit" class="text-white btn btn-sm button-div" style="background-color: rgb(18, 82, 9);">Checkout</a>
-                  </div>
-                  <% } else { %>
-                    <h5 class="text-center my-4 fw-light">No products on your cart yet.</h5>
-                    <div class="text-center my-4 fw-bold">
-                        <a href="/categories?category=newReleases" class="fst-italic">Continue shopping <i class="fa fa-arrow-right"></i></a>
                     </div>
+                </div>
+                <div class="order-summary rounded-bottom-2 p-3 d-flex bg-white justify-content-center" style="border: 1px solid #2b152e; font-size: 0.9rem;">
+                      <a onclick="checkOut()" type="submit" class="text-white btn color-bg-main w-25 ">Checkout</a>
+                </div>
+                  <% } else { %>
+                <h5 class="text-center my-4 fw-light">No products on your cart yet.</h5>
+                <div class="text-center my-4 fw-bold">
+                    <a href="/categories?category=newReleases" class="fst-italic">Continue shopping <i class="fa fa-arrow-right"></i></a>
+                </div>
                 <% } %>
-              </div>
-            
-          </div>
-      </div>
+            </div>
+            </div>
+      
+    </div>
 
   </div>
 </div>

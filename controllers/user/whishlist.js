@@ -14,7 +14,8 @@ exports.viewWishlist = async (req, res) => {
         res.render("user/profile/partials/wishlist", {
             userWishlist,
             session: req.session.userID,
-            currentUser
+            currentUser,
+            currentUrl: req.originalUrl
         });
     } catch (error) {
         res.redirect('/users/profile');

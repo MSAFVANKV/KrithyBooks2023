@@ -1,0 +1,108 @@
+@media (min-width: 992px){
+    #toggle {
+      display: block;
+    }
+  }
+  @media (max-width: 992px) {
+    .firstSettings {
+      display: none;
+    }
+    #toggle {
+      display: none;
+    }
+  }
+
+/* hamburger */
+#toggle
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 55px;
+    height: 55px;
+    /* background-color: rgb(25, 68, 126); */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#toggle::before
+{
+    content: '';
+    position: absolute;
+    top: 26px; /* adjust as needed */
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translatey(-5px);
+    transition: 0.2s;
+}
+#toggle::after
+{
+    content: '';
+    position: absolute;
+    bottom: 26px; /* adjust as needed */
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translatey(5px);
+    transition: 0.2s;
+}
+#toggle.active::before
+{
+    transform:  rotate(-45deg);
+
+}
+#toggle.active::after
+{
+    transform:  rotate(45deg);
+
+}
+
+/* hamburger end */
+#sidebar
+{
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #0c114d;
+    transition: 0.5s;
+    z-index: 9999; /* add this line */
+    overflow: scroll;
+}
+#sidebar.active
+{
+    left: 0;
+}
+#sidebar ul
+{
+    position: relative;
+    margin-top: 50px;
+}
+#sidebar ul li
+{
+    list-style: none;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 10px;
+}
+#sidebar ul li:hover
+{
+    /* background: #03a9f4; */
+    background: #FF4031;
+}
+#sidebar ul li small a
+{
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    letter-spacing: 2px;
+}
+a{
+  color: #fff;
+  
+}

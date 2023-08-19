@@ -1,148 +1,115 @@
+
 <%- include('../layouts/_header') %>
 
-  
-<div class="container">
-  <div class="row mt-5">
-    <%- include('../layouts/profileSearchBar') %>
-        
-      <div class="col-lg-8 rounded-3 bg-profile ms-3" style="width: 50rem;"><!-- main div -->
-            <div class=" pt-2">
-              <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
+<%- include('../layouts/profileSearchBar') %>
+          <div class="pt-2">
+            <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
               <!-- profile add -->
-              <div class="float-end col-1 mt-2">
-                <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
-                </div>     
-              </div>
+            <div class="float-end col-1">
+             <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
+             </div>     
             </div>
-          <!--  -->  
-          <small><span class="fw-bold">Manage Your Address</span></small>
+          </div>
+          <small class="fw-bold">Manage Your Address here</small>
           <hr>
-          
-        <!--  -->
-        <!-- Button trigger modal -->
-<button type="button" class="btn logbtn text-light fw-bold shadow justify-content-center m-auto d-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Add your Address here <span class="fw-bold">+</span> 
-</button>
 
-<!-- Modal -->
-<form action="/users/profile/manageAddress" method="post">
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add Your Address</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <!-- ------ -->
-      <div class="modal-body">
-        <div class="mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="building"
-            placeholder="building"
-            name="building"
-            required
-          />
+          <!--  -->
+          <!-- Button trigger modal -->
+          <button type="button" class="btn logbtn text-light fw-bold shadow justify-content-center m-auto d-block"
+            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Add your Address here <span class="fw-bold">+</span>
+          </button>
+
+          <!-- Modal -->
+          <form action="/users/profile/manageAddress" method="post">
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add Your Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <!-- ------ -->
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <input type="text" class="form-control" id="building" placeholder="building" name="building"
+                        required />
+                    </div>
+                    <!--  -->
+                    <div class="mb-3">
+                      <input type="text" class="form-control" id="address" placeholder="address" name="address"
+                        required />
+                    </div>
+                    <!--  -->
+                    <div class="mb-3">
+                      <input type="number" class="form-control" id="pincode" placeholder="pincode" name="pincode"
+                        required />
+                    </div>
+                    <!--  -->
+                    <div class="mb-3">
+                      <input type="text" class="form-control" id="country" placeholder="country" name="country"
+                        required />
+                    </div>
+                    <!--  -->
+                    <div class="mb-3">
+                      <input type="text" class="form-control" id="contactNumber" placeholder="contact Number"
+                        name="contactNumber" pattern="0*[1-9][0-9]{9}"
+                        title="Please enter exactly 10 digits and should not start with 0" required />
+                    </div>
+                    <!--  -->
+
+                    <!-- ----- -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">SAVE</button>
+                  </div>
+          </form>
         </div>
-        <!--  -->
-          <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="address"
-              placeholder="address"
-              name="address"
-              required
-            />
-          </div>
-          <!--  -->
-          <div class="mb-3">
-            <input
-              type="number"
-              class="form-control"
-              id="pincode"
-              placeholder="pincode"
-              name="pincode"
-              required
-            />
-          </div>
-          <!--  -->
-          <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="country"
-              placeholder="country"
-              name="country"
-              required
-            />
-          </div>
-          <!--  -->
-          <div class="mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="contactNumber"
-              placeholder="contact Number"
-              name="contactNumber"
-              pattern="0*[1-9][0-9]{9}"
-              title="Please enter exactly 10 digits and should not start with 0"
-              required
-            />
-          </div>
-          <!--  -->
-    
-        <!-- ----- -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">SAVE</button>
-      </div>
-    </form>
     </div>
   </div>
-</div>
 
 
-      <!--  -->
-      <% if (currentUser) { %>
-        <div class="row d-flex justify-content-center">
-            <% currentUser.addresses.forEach(function(address, i){ %>
-                <div class="col-md-5 m-3 border border-1 border-black p-3 mt-3  shadow rounded-4">
-                    <h5 class="mb-3">Address <%= i + 1 %></h5>
-                    <div class="text-end">
-                        <span class="text-primary edit-btn" style="cursor: pointer;" >Edit</span>
-                        <button class="btn btn-success save-btn" style="display: none;"data-id="<%=address._id.toString()%>">Save</button>
-                        <span class="text-secondary cancel-btn" style="cursor: pointer; display: none;">Cancel</span>
-                        <span class="text-danger delete-btn" data-id="<%=address._id.toString()%>" style="cursor: pointer;">Delete</span>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <textarea class="form-control shadow mb-3 " disabled style="height: 10rem;"><%= `${address.building}\n${address.address}\n${address.pincode}\n${address.country}\n${address.contactNumber}` %>
+  <!--  -->
+  <% if (currentUser) { %>
+    <div class="row d-flex justify-content-center">
+      <% currentUser.addresses.forEach(function(address, i){ %>
+        <div class="col-md-5 m-3 border border-1 border-black p-3 mt-3  shadow rounded-4">
+          <h5 class="mb-3">Address <%= i + 1 %>
+          </h5>
+          <div class="text-end">
+            <span class="text-primary edit-btn" style="cursor: pointer;">Edit</span>
+            <button class="btn btn-success save-btn" style="display: none;"
+              data-id="<%=address._id.toString()%>">Save</button>
+            <span class="text-secondary cancel-btn" style="cursor: pointer; display: none;">Cancel</span>
+            <span class="text-danger delete-btn" data-id="<%=address._id.toString()%>"
+              style="cursor: pointer;">Delete</span>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+              <textarea class="form-control shadow mb-3 " disabled style="height: 10rem;"><%= `${address.building}\n${address.address}\n${address.pincode}\n${address.country}\n${address.contactNumber}` %>
                             </textarea>
-                        </div>
-                    </div>
-                    <div class="form-check form-switch text-end">
-                      <% if(!address.primary){%>
-                        <a type="Button" href="/users/profile/manageAddress/changeRole?addressID=<%=address._id%> " class="btn btn-sm px-3 mx-2 text-white logbtn shadow">Set as default</a>
-                      <%}%>                         
-                      <label class="form-check-label" for="defaultCheck<%= i %>">Set as default</label>
-                    </div>
-                </div>
-            <% }) %>
+            </div>
+          </div>
+          <div class="form-check form-switch text-end">
+            <% if(!address.primary){%>
+              <a type="Button" href="/users/profile/manageAddress/changeRole?addressID=<%=address._id%> "
+                class="btn btn-sm px-3 mx-2 text-white logbtn shadow">Set as default</a>
+              <%}%>
+                <!-- <label class="form-check-label" for="defaultCheck<%= i %>">Set as default</label> -->
+          </div>
         </div>
+        <% }) %>
+    </div>
     <% } else { %>
-        <p>No addresses found.</p>
-    <% } %>        
-  </div>
-  </div>
-  
-</div>
+      <p>No addresses found.</p>
+      <% } %>
+        </div>
+        </div>
+
+        </div>
 
 
 
-<%- include('../layouts/_footer') %>
-
-
- 
+        <%- include('../layouts/_footer') %>

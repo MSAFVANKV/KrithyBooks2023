@@ -13,7 +13,8 @@ exports.viewCart = async (req, res) => {
       res.render("user/profile/partials/cart", {
         userCart,
         session:req.session.userID,
-        currentUser
+        currentUser,
+        currentUrl: req.originalUrl
       });
     } catch (error) {
       console.log("error rendering cart page:" + error)

@@ -34,7 +34,8 @@ exports.viewPage=async(req,res)=>{
             allAddresses,
             coupons,
             documentTitle: "Krithy Books ",
-            session:req.session.userID
+            session:req.session.userID,
+            currentUrl: req.originalUrl
           });}else {
             res.redirect("/users/cart");
           }

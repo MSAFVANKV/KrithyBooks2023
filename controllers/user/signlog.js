@@ -100,7 +100,6 @@ exports.verifyOTP = async (req, res) => {
     // console.log(otp)
     if (!savedOTP) {
       // Invalid OTP, render the OTP verification page with an error message
-      // return res.render("user/partials/otp", { message: 'Invalid OTP'});
       return res.redirect("/verifyOTP")
     }
 
@@ -140,8 +139,7 @@ exports.verifyOTP = async (req, res) => {
 
     // Respond with a success message
      res.redirect('/login')
-    // return res.redirect('/login')
-    // res.render('user/partials/login'); 
+     
 
   } catch (error) {
     console.log("Error verifying OTP or saving user:", error);

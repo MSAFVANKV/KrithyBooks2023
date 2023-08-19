@@ -1,133 +1,64 @@
 
 <style>
-  @media (min-width: 992px){
-    #toggle {
-      display: block;
-    }
-  }
-  @media (max-width: 992px) {
-    .firstSettings {
-      display: none;
-    }
-    #toggle {
-      display: none;
-    }
-  }
 
-/* hamburger */
-#toggle
-{
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    width: 55px;
-    height: 55px;
-    /* background-color: rgb(25, 68, 126); */
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#toggle::before
-{
-    content: '';
-    position: absolute;
-    top: 26px; /* adjust as needed */
-    width: 28px;
-    height: 2px;
-    background-color: #fff;
-    transform: translatey(-5px);
-    transition: 0.2s;
-}
-#toggle::after
-{
-    content: '';
-    position: absolute;
-    bottom: 26px; /* adjust as needed */
-    width: 28px;
-    height: 2px;
-    background-color: #fff;
-    transform: translatey(5px);
-    transition: 0.2s;
-}
-#toggle.active::before
-{
-    transform:  rotate(-45deg);
-
-}
-#toggle.active::after
-{
-    transform:  rotate(45deg);
-
-}
-
-/* hamburger end */
-#sidebar
-{
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 300px;
-    height: 100vh;
-    background-color: #0c114d;
-    transition: 0.5s;
-    z-index: 99; /* add this line */
-}
-#sidebar.active
-{
-    left: 0;
-}
-#sidebar ul
-{
-    position: relative;
-    margin-top: 50px;
-}
-#sidebar ul li
-{
-    list-style: none;
-    display: inline-block;
-    width: 100%;
-    padding: 10px 10px;
-}
-#sidebar ul li:hover
-{
-    /* background: #03a9f4; */
-    background: #FF4031;
-}
-#sidebar ul li small a
-{
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1em;
-    letter-spacing: 2px;
-}
-a{
-  color: #fff;
-  
-}
 </style>
 
-<div class="col-lg-3 col-sm-3 firstSettings  text-white py-3 border rounded-4 bg-profile mt-3 settings shadow">
-    <div class="border text-center p-2 border-dark-subtle bg-profile ">
+<!-- <div class="col-lg-3 ms-3 text-start col-sm-3 firstSettings  text-white py-3 border rounded-4 bg-profile settings shadow">
+    <div class="border  p-2 border-dark-subtle bg-profile ">
         <small><a href="/users/profile" class="text-decoration-none text-black text-uppercase fw-bold ">My Profile</a></small>
     </div>
-    <div class="border text-center p-2 border-dark-subtle bg-profile">
+    <div class="border p-2 border-dark-subtle bg-profile">
         <small><a href="/users/profile/cartItems" class="text-decoration-none text-black text-uppercase fw-bold ">Cart</a></small>
     </div>
-    <div class="border text-center p-2 border-dark-subtle bg-profile">
+    <div class="border p-2 border-dark-subtle bg-profile">
         <small><a href="/users/profile/wishlist" class="text-decoration-none text-black text-uppercase fw-bold ">Wishlist</a></small>            
     </div>
-    <div class="border text-center p-2 border-dark-subtle bg-profile">
+    <div class="border p-2 border-dark-subtle bg-profile">
         <small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">My Orders</a></small>            
     </div>
-    <div class="border text-center p-2 border-dark-subtle bg-profile">
+    <div class="border p-2 border-dark-subtle bg-profile">
           <small><a href="/users/profile/manageAddress" class="text-decoration-none text-black text-uppercase fw-bold ">Manage Address</a></small>            
     </div>
-    <div class="border text-center p-2 border-dark-subtle bg-profile">
+    <div class="border p-2 border-dark-subtle bg-profile">
           <small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Change Password</a></small>            
     </div>
-</div>
+</div> -->
+
+    <div class="container-fluid " id="searchInput">
+        <div class="row mt-5 ">
+            <div class="col-3 ">
+                    <!--  -->
+                <div class="rounded-3 shadow border p-3 firstSettings bg-profile border border-1 border-black">
+                    <div class="   ">
+                        <small><a href="/users/profile" class="text-decoration-none text-black text-uppercase fw-bold ">My Profile</a></small>
+                    </div>
+                    <hr>
+                    <div class=" ">
+                        <small><a href="/users/profile/cartItems" class="text-decoration-none text-black text-uppercase fw-bold ">Cart</a></small>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <small><a href="/users/profile/wishlist" class="text-decoration-none text-black text-uppercase fw-bold ">Wishlist</a></small>            
+                    </div>
+                    <hr>
+                    <div class=" ">
+                        <small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">My Orders</a></small>            
+                    </div>
+                    <hr>
+                    <div class=" ">
+                        <small><a href="/users/profile/manageAddress" class="text-decoration-none text-black text-uppercase fw-bold ">Manage Address</a></small>            
+                    </div>
+                    <hr>
+                    <div class=" ">
+                        <small><a href="" class="text-decoration-none text-black text-uppercase fw-bold ">Change Password</a></small>            
+                    </div>
+                </div>
+                    <!--  -->
+            </div>
+            <!--  -->
+            <div class="col-lg-8 col-12 rounded-3 mx-2 bg-profile shadow ">
+                
+   
 
         <!-- ============================================================ -->
         <div id="toggle" class="bgtheme"></div>
@@ -159,7 +90,7 @@ a{
           
           // function to adjust view based on window width
           function adjustView() {
-              if(window.innerWidth > 992) {
+              if(window.innerWidth > 976) {
                   firstSettings.style.display = 'block';
                   toggle.style.display = 'none';
                   // deactivate sidebar and toggle if window is resized while sidebar is active
