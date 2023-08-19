@@ -91,3 +91,19 @@ function addToWishlist(productId){
       },
     });
   }
+  function cartLimit(){
+    const stock= $('#cartLimitCheck').val()
+    if(stock==0){
+      Swal.fire({  
+        icon: "error",     
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        animation: true,
+        title: "Cart Item is out of stockk",
+      })
+  
+    }else{
+      window.location= "/users/directCheckout"
+    }
+   }

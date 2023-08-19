@@ -7,19 +7,31 @@
       <span class="shadow-heading fw-bold fs-2" style="color: #F6EA41;">Order Summary</span>
     </div>
     <div class="col-lg-8">
+      <% let canOrder = true; %>
+
       <div class="all-products rounded p-3 bg-profile">
-        <h6 class=" pb-2" >Products</h6>
-        <% if(products != null){ %>
-          <%products.forEach((product,i)=> {%>
-        <div class="product-details d-flex justify-content-between pb-1 px-5" style="border-bottom: 1px solid #635d5d" >
-          <span class="col-1"><%=i+1%>.</span>
-          <span class="flex-grow-1 mx-3 col-6"><%=product.name.name%></span>
-          <span class="col-2"><span style="text-transform: none;">x</span> <%=product.quantity%></span>
-          <span class="mx-5 col-3">₹ <%=product.price%></span>
-        </div>
-        <%})%>
-        <%}%>
+          <h6 class=" pb-2" >Products</h6>
+          <% if(products != null){ %>
+              <%products.forEach((product,i)=> {%>
+      
+                  <!-- Checking if the quantity exceeds the stock -->
+                  <% if(product.quantity > product.name.stock) { %>
+                      <% canOrder = false; %>
+                      <div class="alert alert-danger my-2">
+                          Sorry, you can't order <%= product.quantity %> units of <%= product.name.name %>. Only <%= product.name.stock %> in stock.
+                      </div>
+                  <% } %>
+      
+                  <div class="product-details d-flex justify-content-between pb-1 px-5" style="border-bottom: 1px solid #635d5d" >
+                      <span class="col-1"><%=i+1%>.</span>
+                      <span class="flex-grow-1 mx-3 col-6"><%=product.name.name%></span>
+                      <span class="col-2"><span style="text-transform: none;">x</span> <%=product.quantity%>(nos)</span>
+                      <span class="mx-5 col-3">₹ <%=product.price%></span>
+                  </div>
+              <%})%>
+          <%}%>
       </div>
+      
       <!-- shipping Address -->
       <div class="addresses rounded-top-3 p-3 mt-3 bg-profile">
         <h6 class=" pb-2">Shipping address</h6>
@@ -36,7 +48,7 @@
           Change Address
           </button>
         </div>
-        <form action="/users/cart/checkout" method="post" id="formID">
+    <form action="/users/cart/checkout" method="post" id="formID">
         <input type="text" name="addressID" value="<%=defaultAddress._id%>" hidden>
         <%}else{%>
           <h6 class="text-danger mt-3" style="text-transform: none;">You have not added any addresses.</h6>
@@ -124,7 +136,7 @@
         <input type="number" name="finalPrice" value="<%= userCart.totalPrice%>" id="inputFinalPrice" hidden>
       </div>
       <div class="order-summary  rounded-bottom-3 p-3 d-flex flex-column bg-profile" style=" font-size: 0.9rem;">
-        <button type="submit" onclick="return payment(event)" style="background-color: #FF4031;" class="text-white btn btn-sm" <% if(defaultAddress == 0){%>style="background-color:blue;" disabled<%}%>>Place Order</button>
+        <button type="submit" onclick="return payment(event)" <% if(!canOrder || defaultAddress == "0"){ %>disabled<% } %> style="background-color: #FF4031;" class="text-white btn btn-sm">Place Order</button>
       </div>
       <!--  -->
     </form>
@@ -138,6 +150,7 @@
           <h1 class="modal-title fs-5" id="staticBackdropLabel">Change default Address</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <!--  -->
         <div class="modal-body" >
           <%if(allAddresses!=null){%>
             <form action="/users/cart/checkout/changeDefaultAddress" method="post">
@@ -161,6 +174,7 @@
           <button type="submit" class="btn btn-sm btn-primary text-white" >Set as default</button>
           </div>
         </form>
+        <!--  -->
         <%}%>
         </div>
       </div>

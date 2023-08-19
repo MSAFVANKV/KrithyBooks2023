@@ -86,6 +86,15 @@ router
     router
     .route('/cart/checkout')
     .get(sessionCheck,checkOut.viewPage)
+    .post(sessionCheck,checkOut.checkout)
+
+router.get("/cart/checkout/:id",  checkOut.result);
+router.post("/cart/checkout/:id",async(req,res)=>{
+    const transactionID=req.params.id;
+    console.log(transactionID)
+    res.redirect(`/users/cart/checkout/${transactionID}`)
+})
+
  
 router.post("/cart/checkout/changeDefaultAddress",sessionCheck,checkOut.defaultAddress)
 

@@ -25,7 +25,7 @@ function removeFromCart(productID) {
   }
   
 
-  function changeCount(productID, i,count) {
+  function changeCount(productID, i,count, stock) {
     let proQty= $(`#cartCount${i}`).html();
     console.log(proQty);
     console.log(count);
