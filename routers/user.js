@@ -7,7 +7,8 @@ const address=require("../controllers/user/address");
 const cartPage = require('../controllers/user/cart')
 const wishlist = require('../controllers/user/whishlist')
 const checkOut = require('../controllers/user/checkout');
-const singleCheckOut = require('../controllers/user/singleCheckout')
+const singleCheckOut = require('../controllers/user/singleCheckout');
+const orders = require('../controllers/user/order')
 
 const multer = require('multer');
 
@@ -86,6 +87,7 @@ router
     router
     .route('/cart/checkout')
     .get(sessionCheck,checkOut.viewPage)
+    .put(sessionCheck,checkOut.couponCheck)
     .post(sessionCheck,checkOut.checkout)
 
 router.get("/cart/checkout/:id",  checkOut.result);
@@ -95,18 +97,25 @@ router.post("/cart/checkout/:id",async(req,res)=>{
     res.redirect(`/users/cart/checkout/${transactionID}`)
 })
 
+//Order
+router
+   .route("/profile/orders")
+   .get(orders.viewPage)
  
-router.post("/cart/checkout/changeDefaultAddress",sessionCheck,checkOut.defaultAddress)
+router.post("/cart/checkout/changeDefaultAddress",sessionCheck,checkOut.defaultAddress);
 
+  // offer
+  router.get("/cart/checkout/offer/:id",checkOut.offer);
 
     router
     .route('/directCheckout')
-     .get(sessionCheck, singleCheckOut.directCheckout)
+     .get(sessionCheck, singleCheckOut.directCheckout);
 
 router
     .route("/directCheckout/changeDefaultAddress")
     .post(sessionCheck, singleCheckOut.defaultAddress)
 
+  
 
     // router
     // .route('/singleCheckout')

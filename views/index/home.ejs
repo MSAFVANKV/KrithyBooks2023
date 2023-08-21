@@ -101,7 +101,7 @@
                 </div>
                 
              
-              <ul class="navbar-nav ms-auto hamurgerToggle">
+              <ul class="navbar-nav m-auto hamurgerToggle">
                 <!--  -->
                           <!-- logout button -->
           <% if (session) { %>
@@ -145,14 +145,8 @@
 
         <% }else{%> 
             <!-- login button -->
-          <li class="nav-item">
-            <form action="/login" method="post">
-              <div class="login ">
-                <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="login" class="text-decoration-none text-white">LOGIN</a>
-                </button>
-              </div>
-          </form>
+          <li class="nav-item m-auto">
+                  <a href="login" class="text-decoration-none color-1">LOGIN</a>
           </li>
           <li class="nav-item me-2">
             <a class="nav-link" href="/users/profile/cartItems">
@@ -171,8 +165,6 @@
 
           <%}%>
 <!-- login button -->
-                <!--  -->
-                  <!-- Cart Icon -->
               </ul>
           </div>
       </div>
@@ -214,7 +206,7 @@
   <!-- search appearence div  -->
 
   <div>
-    <h1 class="text-center mt-4">
+    <h1 class="text-center mt-1">
       <u class="color-G">
         <span class="text-black">
           New Releases
@@ -233,7 +225,7 @@
       <div class="row d-flex " >     
         <!-- edit -->
         <% newArrivals.forEach((product,i)=>{%>
-        <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
+        <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-1">
           <div class="card shadow-lg prod_card" style="width: 17rem; ">
               <div class="card card_img">
                 <a href="/products/<%=product._id%>">

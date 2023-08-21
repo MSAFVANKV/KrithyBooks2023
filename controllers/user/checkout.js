@@ -5,7 +5,10 @@ const couponCollection=require("../../models/admin/coupons");
 const productCollection = require('../../models/admin/products')
 const orderCollection = require('../../models/order')
 const nodemailer = require("nodemailer")
-
+const paypal=require("paypal-rest-sdk");
+const Razorpay=require("razorpay")
+// const stripe = require('stripe')(process.env.Secret_key);
+// const { Secret_key,Publishable_key } = process.env;
 
 exports.viewPage=async(req,res)=>{
     try{
@@ -37,7 +40,8 @@ exports.viewPage=async(req,res)=>{
             coupons,
             documentTitle: "Krithy Books ",
             session:req.session.userID,
-            currentUrl: req.originalUrl
+            currentUrl: req.originalUrl,
+            // Publishable_key:process.env.Publishable_key
           });}else {
             res.redirect("/users/cart");
           }
@@ -71,90 +75,90 @@ exports.defaultAddress=async(req,res)=>{
     }
 }
 
-// exports.couponCheck=async(req,res)=>{
-//   try{
-//     const couponCode=req.body.couponCode;
-//     const userCart= await cartCollection.findOne({
-//       customer:req.session.userID
-//     });
-//     const cartPrice= userCart.totalPrice;
-//     if(couponCode==''){
+exports.couponCheck=async(req,res)=>{
+  try{
+    const couponCode=req.body.couponCode;
+    const userCart= await cartCollection.findOne({
+      customer:req.session.userID
+    });
+    const cartPrice= userCart.totalPrice;
+    if(couponCode==''){
 
-//       res.json({
-//         data: {
-//           couponCheck: null,
-//           discountPrice: 0,
-//           discountPercentage: 0,
-//           finalPrice: userCart.totalPrice,
-//         },
-//       });
-//     }else{
-//        const coupon=await couponCollection.findOne({code:couponCode});
-//        let discountPercentage = 0;
-//       let discountPrice = 0;
-//       let finalPrice = cartPrice;
-//       if(coupon){
-//         const alreadyUsedCoupon= await userCollection.findOne({
-//           _id: req.session.userID,
-//           couponsUsed: coupon._id,
-//         });
-//       if(coupon.qty !== 0){
-//         if(!alreadyUsedCoupon){
-//           if (coupon.active == true) {
-//             const currentTime=new Date().toJSON();
-//             if(currentTime > coupon.startingDate.toJSON()){
-//               if(currentTime < coupon.expiryDate.toJSON()){
-//                 discountPercentage = coupon.discount;
-//                 discountPrice = (discountPercentage / 100) * cartPrice;
-//                 discountPrice = Math.floor(discountPrice)
-//                 finalPrice = cartPrice - discountPrice;
+      res.json({
+        data: {
+          couponCheck: null,
+          discountPrice: 0,
+          discountPercentage: 0,
+          finalPrice: userCart.totalPrice,
+        },
+      });
+    }else{
+       const coupon=await couponCollection.findOne({code:couponCode});
+       let discountPercentage = 0;
+      let discountPrice = 0;
+      let finalPrice = cartPrice;
+      if(coupon){
+        const alreadyUsedCoupon= await userCollection.findOne({
+          _id: req.session.userID,
+          couponsUsed: coupon._id,
+        });
+      if(coupon.qty !== 0){
+        if(!alreadyUsedCoupon){
+          if (coupon.active == true) {
+            const currentTime=new Date().toJSON();
+            if(currentTime > coupon.startingDate.toJSON()){
+              if(currentTime < coupon.expiryDate.toJSON()){
+                discountPercentage = coupon.discount;
+                discountPrice = (discountPercentage / 100) * cartPrice;
+                discountPrice = Math.floor(discountPrice)
+                finalPrice = cartPrice - discountPrice;
 
-//                 couponCheck =
-//                   '<b>Coupon Applied <i class="fa fa-check text-success" aria-hidden="true"></i></b></br>' +
-//                   coupon.name;
+                couponCheck =
+                  '<b>Coupon Applied <i class="fa fa-check text-success" aria-hidden="true"></i></b></br>' +
+                  coupon.name;
 
-//               }else{
-//                 couponCheck= "<b style='font-size:0.75rem; color: red'>Coupon expired<i class='fa fa-stopwatch'></i></b>";
-//               }
+              }else{
+                couponCheck= "<b style='font-size:0.75rem; color: red'>Coupon expired<i class='fa fa-stopwatch'></i></b>";
+              }
 
-//             }else{
-//               couponCheck = `<b style='font-size:0.75rem; color: green'>Coupon starts on </b><br/><p style="font-size:0.75rem;">${coupon.startingDate}</p>`;
-//             }
+            }else{
+              couponCheck = `<b style='font-size:0.75rem; color: green'>Coupon starts on </b><br/><p style="font-size:0.75rem;">${coupon.startingDate}</p>`;
+            }
 
-//           }else{
-//             couponCheck = "<b style='font-size:0.75rem;color: red'>Invalid Coupon !</b>";
-//           }
+          }else{
+            couponCheck = "<b style='font-size:0.75rem;color: red'>Invalid Coupon !</b>";
+          }
 
-//         }else{
-//           couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon already used !</b>";
-//         } }else{
-//           couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon Finished !</b>"
-//         }
+        }else{
+          couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon already used !</b>";
+        } }else{
+          couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon Finished !</b>"
+        }
 
-//       }else{
-//         couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon not found</b>";
-//       }
-//       res.json({
-//         data: {
-//           couponCheck,
-//           discountPrice,
-//           discountPercentage,
-//           finalPrice,
-//         },
-//       });
-//     }
+      }else{
+        couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon not found</b>";
+      }
+      res.json({
+        data: {
+          couponCheck,
+          discountPrice,
+          discountPercentage,
+          finalPrice,
+        },
+      });
+    }
 
-//     }catch(error){
+    }catch(error){
       
-//       console.log("error on coupon check :"+error)
-//   }
+      console.log("error on coupon check :"+error)
+  }
 
-//   }
+  }
 
 
 exports.checkout = async (req, res) => {
   try {
-    console.log("adhhsdcnakjahinjkczm");
+    // console.log("adhhsdcnakjahinjkczm");
     let shippingAddress= await userCollection.aggregate([
       {
         $match:{_id: new mongoose.Types.ObjectId(req.session.userID)}
@@ -203,7 +207,7 @@ exports.checkout = async (req, res) => {
       summary:orderSummery,
       totalQuantity: userCart.totalQuantity,
       price: userCart.totalPrice,
-      finalPrice: req.body.finalPrice,
+      finalPrice: finalPrice,
       discountPrice: req.body.couponDiscount,
     };
     console.log(orderDetails)
@@ -217,6 +221,57 @@ exports.checkout = async (req, res) => {
     if(req.body.paymentMethod==='COD'){
       res.redirect("/users/cart/checkout/" + transactionID);
     }
+    else if(req.body.paymentMethod === "RazorPay"){
+      console.log("here")
+
+      const razorpay = new Razorpay({
+        key_id: process.env.Rezorpay_Key_Id,
+        key_secret: process.env.Rezorpay_Secret_key
+    });
+    const options = {
+      amount: orderDetails.finalPrice*100,
+      currency: 'INR',
+
+  }
+  razorpay.orders.create(options,(err,order)=>{
+    order.transactionID=transactionID;
+    order.key=process.env.Rezorpay_Key_Id;
+    res.json(order)
+
+  })
+    }
+
+  //   else if(req.body.paymentMethod === 'stripe') {
+  //     // Create a PaymentIntent 
+  //     stripe.customers.create({
+  //       email:req.body.stripeEmail,
+  //       source:req.body.stripeToken,
+  //       name:'Krithy Books ',
+  //       address:{
+  //         building: shippingAddress.building,
+  //         address: shippingAddress.address,
+  //         pincode: shippingAddress.pincode,
+  //         country: shippingAddress.country,
+  //         contactNumber: shippingAddress.contactNumber,
+  //       }
+
+  //     })
+  //     .then((customer) => {
+  //       return stripe.charges.create({
+  //         amount:orderDetails.finalPrice*100,
+  //         currency:'USD',
+  //         customer:customer.id
+  //       })
+  //     })
+  //     .then((charge) => {
+  //       console.log(charge)
+  //       res.json({ clientSecret: paymentIntent.client_secret }); 
+
+  //     }).catch((error) => {
+  //       console.log('Error creating srtipe PaymentIntent:', error);
+  //       res.status(500).send({ error: 'Failed to create PaymentIntent' });
+  //     });
+  // } 
 
   } catch (error) {
     console.log("checkout" + error)
@@ -295,7 +350,6 @@ const mailOptions = {
       <ul>
       ${req.session.orderDetails.summary.map(product => `
           <li>
-          <img src="/img/books/${product.thumbnail}" alt="${product.product}" width="100"><br>
               <strong>${product.product}</strong><br>
               Quantity: ${product.quantity}<br>
               Price: $${product.totalPrice}
@@ -327,7 +381,8 @@ const mailOptions = {
       documentTitle: orderResult,
       orderID: orderDetails._id,
       currentUrl: req.originalUrl,
-      session:req.session.userID
+      session:req.session.userID,
+
     });
 
 
@@ -337,5 +392,46 @@ const mailOptions = {
 
   }catch(error){
     console.log("error on rendering success page :" +error)
+  }
+}
+
+exports.offer=async(req,res)=>{
+  try{
+      const id=req.params.id;
+      const userCart= await cartCollection.findOne({
+        customer:req.session.userID
+      });
+      const cartPrice= userCart.totalPrice;
+
+      const offer=await couponCollection.findById(id);
+      if(offer){
+
+             discountPercentage = offer.discount;
+              discountPrice = (discountPercentage / 100) * cartPrice;
+              discountPrice = Math.floor(discountPrice)
+              finalPrice = cartPrice - discountPrice;
+
+        res.json({
+          data: {
+            discountPrice,
+            discountPercentage,
+            finalPrice,
+          },
+        });
+
+      }else{
+
+        res.json({
+          data: {
+            discountPrice: 0,
+            discountPercentage: 0,
+            finalPrice: userCart.totalPrice,
+          },
+        });
+
+      }
+
+  }catch(error){
+      console.log("eeror on chekcing offer :"+error)
   }
 }

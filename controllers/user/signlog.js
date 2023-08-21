@@ -143,7 +143,6 @@ exports.verifyOTP = async (req, res) => {
 
   } catch (error) {
     console.log("Error verifying OTP or saving user:", error);
-    // An error occurred during OTP verification or saving user to the database, render the OTP verification page with an error message
     return res.redirect("/verifyOTP")
   }
 };

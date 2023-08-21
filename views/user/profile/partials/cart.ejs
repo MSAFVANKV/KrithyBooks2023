@@ -1,6 +1,6 @@
 
 <%- include('../layouts/_header') %>
-
+<!-- border: 1px solid #beb2c0;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important; -->
 <%- include('../layouts/profileSearchBar') %>
           <div class="pt-2">
             <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
@@ -14,16 +14,16 @@
           <hr>
     
               
-              <div class="col-12"> 
+              <div class="col-11 mx-auto "> 
                   <% if(userCart != null && userCart.products.length != 0) { %> 
                       <% userCart.products.forEach((product, i) => { %>
-                          <div class="row d-flex bg-black rounded my-2 p-3 bg-info cartbox" style="border: 1px solid #beb2c0;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important;">
+                          <div class="row d-flex rounded my-2 p-3 bg-white cartbox border border-1 border-black" style="">
                               <div class="col-4 col-md-2 prod-img text-center " style="">
                                   <img src="/img/books/<%=product.name.thumbnail%>" class="img-fluid" alt=""  />
                               </div>
                               <div class="col-lg-8 prod-details flex-grow-1 flex-column justify-content-between">
-                                  <h5><a href="/products/<%= product.name._id %>" style="color: rgb(255, 255, 255) !important;"><%= product.name.name %></a></h5>
-                                  <h6 class="text-white"><%= product.name.author.name %></h6>
+                                  <h5><a href="/products/<%= product.name._id %>" style="color: rgb(14, 13, 13) !important;"><%= product.name.name %></a></h5>
+                                  <h6 class="text-black"><%= product.name.author.name %></h6>
                                   <div class="d-flex gap-3">
                                     <span style="text-transform: none; font-size: 0.85rem; font-weight: 700">Price:
                                     <span class="text-success fs-5"> ₹<%= product.name.price %></span>
@@ -34,8 +34,12 @@
                                   </div>
                                   <% if(product.name.stock == '0') { %> 
                                       <p class="text-danger" style="font-weight: bold;margin-top: 10px;">OUT OF STOCK</p>
-                                      <p id="stockCheck" ><%= product.name.stock %></p>
-                                  <% } %>
+                                      <p id="stockCheck" hidden><%= product.name.stock %></p>
+                                  <% }else{ %>
+                                    
+                                    <p id="" ><span class="fw-bold">Stock:</span>&nbsp;<%= product.name.stock %></p>
+
+                                    <% } %>
                                   <div class="d-flex justify-content-end mt-2">
                                       <div class="counter d-flex p-1 align-items-center rounded mx-4">
                                           <button class="btn btn-sm btn-light button-div" id="minusBtn<%= i %>" style="background-color: transparent" onclick='changeCount("<%= product.name._id %>","<%= i %>",-1)'>
@@ -58,7 +62,7 @@
                   
               </div>
             <div class="d-flex justify-content-center position-sticky sticky-bottom">
-            <div class="col-9 my-3 sticky-checkout  "> 
+            <div class="col-12 my-3 sticky-checkout  "> 
                 <div class="order-summary rounded-top-2 p-3 d-flex flex-column text-white" style="border: 1px solid #2b152e; font-size: 0.9rem;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important;">
                     <div class="d-flex justify-content-between p-1 text-white">
                           <span>Total items:</span>

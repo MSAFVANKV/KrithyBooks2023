@@ -66,14 +66,38 @@ function editConfirmation(e,itemName) {
     })
   }
     
-  
-    $(document).ready(function() {
-        $('#dataTable').DataTable({
-            responsive: true,
-            rowReorder: {
-                selector: "td:nth-child(2)"
-            },
-            "bDestroy": true,
-        });
+  // Customers
+function changeAccess(id, access) {
+    $.ajax({
+      url: "/admin/customers",
+      type: "patch",
+      data: {
+        userID: id,
+        currentAccess: access,
+      },
+      success: (res) => {
+        $("#" + id).load(location.href + " #" + id);
+      },
     });
+  }
+  
+    // $(document).ready(function() {
+    //     $('#dataTable').DataTable({
+    //         responsive: true,
+    //         rowReorder: {
+    //             selector: "td:nth-child(2)"
+    //         },
+    //         "bDestroy": true,
+    //     });
+    // });
 
+    $(function () {
+        var table=  $("#dataTable").DataTable({
+            rowReorder: {
+              selector: "td:nth-child(2)",
+            },
+            responsive: true,
+            "bDestroy": true,
+          });
+          // new $.fn.dataTable.FixedHeader( table );
+        });

@@ -6,105 +6,49 @@
       <%-include('../layouts/addNewPrd')%>
       <!-- Modal -->
 
-  <style>
-    /* #dataTable {
-      border-collapse: collapse;
-    }
-    #dataTable td, #dataTable th {
-      border: 1px solid #000;
-    } */
-    html {
-        scroll-behavior: smooth;
-      }
-      #dataTable_paginate,
-      #dataTable_info,
-      #dataTable_length,
-      #dataTable_filter {
-        font-size: 0.75em;
-        margin: 10px 0;
-      }
-      #dataTable > thead {
-        background-color: rgb(13, 4, 94);
-        color: #ece3e3;
-        font-weight: lighter;
-      }
-      #dataTable {
-        width: 100%;
-      }
-      table.dt-rowReorder-float {
-        opacity: 0.8;
-      }
-      div.dt-rowReorder-float-parent {
-        table-layout: fixed;
-        outline: 2px solid #8f8e8e;
-        outline-offset: -2px;
-        z-index: 2001;
-        position: absolute !important;
-        overflow: hidden;
-      }
-      tr.dt-rowReorder-moving {
-        outline: 2px solid #555;
-        outline-offset: -2px;
-      }
-      body.dt-rowReorder-noOverflow {
-        overflow-x: hidden;
-      }
-      table.dataTable td.reorder {
-        text-align: center;
-        cursor: move;
-      }
-      .table-hover>tbody>tr:hover>* {
-    color: #8888a3;
-}
 
-.dataTables_wrapper .dataTables_length select {  
-    background-color: #c0bcbc;
-}
-
-  </style>
-<br>
-
-  <div class="card-body container ">
-    <table id="dataTable" class="table table-hover cell-border fw-light dt-responsive nowrap">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Category</th>
-          <th>Publisher</th>
-          <th>Authors</th>
-          <th>Price ₹</th>
-          <th>Stock</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <% if(products !=null){ %>
-      <tbody>
-        <% products.forEach(function(item,i){ %>
-        <tr>
-            <td><%= item.name %></td>
-            <td class="text-center"><img src="/img/books/<%= item.thumbnail %>" alt=""  height="80px"></td>
-            <td><%= item.category.name %></td>
-            <td><%= item.publisher %></td>
-            <td><%= item.author.name %></td>
-            <td><%= item.price %></td>
-            <td><%= item.stock %></td>
-            <td > 
-              <div class="text-center d-flex flex-column">
-                <a href="/admin/products/edit?id=<%= item._id %>" onclick="editProduct(event,'<%= item.name %>')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
-              <% if(item.listed==true){ %> 
-              <a href="/admin/products/changeListing?id=<%= item._id %>" onclick="changeListing(event,'<%= item.name %>')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
-            <% }else{ %>
-              <a href="/admin/products/changeListing?id=<%= item._id %>" onclick="changeListing(event,'<%= item.name %>')" class="btn btn-success text-white btn-sm my-1">List</a>
-              <% } %>
-              </div>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-        <% } %>
-    </table>
-  </div>
+      <!-- Responsive data table -->
+      <div class="card-body container">
+        <table id="dataTable" class=" table-hover cell-border fw-light ">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Category</th>
+              <th>Publisher</th>
+              <th>Authors</th>
+              <th>Price ₹</th>
+              <th>Stock</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <% if(products !=null){ %>
+          <tbody>
+            <% products.forEach(function(item,i){ %>
+            <tr>
+              <td><%= item.name %></td>
+              <td class="text-center"><img src="/img/books/<%= item.thumbnail %>" alt=""  height="80px"></td>
+              <td><%= item.category.name %></td>
+              <td><%= item.publisher %></td>
+              <td><%= item.author.name %></td>
+              <td><%= item.price %></td>
+              <td><%= item.stock %></td>
+              <td > 
+                <div class="text-center d-flex flex-column">
+                  <a href="/admin/products/edit?id=<%= item._id %>" onclick="editProduct(event,'<%= item.name %>')" class="btn btn-dark text-white btn-sm my-1">Edit</a>
+                <% if(item.listed==true){ %> 
+                <a href="/admin/products/changeListing?id=<%= item._id %>" onclick="changeListing(event,'<%= item.name %>')" class="btn btn-danger text-white btn-sm  my-1">Unlist</a>
+              <% }else{ %>
+                <a href="/admin/products/changeListing?id=<%= item._id %>" onclick="changeListing(event,'<%= item.name %>')" class="btn btn-success text-white btn-sm my-1">List</a>
+                <% } %>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+          <% } %>
+        </table>
+      </div>
 
 
   <!-- scripts -->

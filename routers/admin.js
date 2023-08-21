@@ -9,7 +9,9 @@ const productsPage = require('../controllers/admin/products')
 const upload = require('../utilities/imageUpload')
 const categories = require('../controllers/admin/category')
 // const create = require('../controllers/admin/signin')
-const authors = require('../controllers/admin/author')
+const authors = require('../controllers/admin/author');
+const customers=require("../controllers/admin/customer");
+const coupons = require("../controllers/admin/coupon");
 const router = express.Router();
 
 
@@ -86,8 +88,16 @@ router
    .get(sessionCheck,authors.editAthorPage)
    .post(sessionCheck,authors.editauthor)
 
-// router.
-//        route("/products",sessionCheck)
+   router
+   .route("/customers")
+   .get(sessionCheck,customers.viewAll)
+   .patch(sessionCheck,customers.changeAccess)
+
+   router
+   .route("/coupons")
+   .get(sessionCheck,coupons.viewPage)
+   .post(sessionCheck,coupons.addNew);
+   router.get("/coupons/changeActivity",coupons.changeActivity);
 
 
         // create user for admin
