@@ -59,7 +59,7 @@ exports.editCategoryPage= async(req,res)=>{
         const categoryId = req.query.id;
         const currentCategory= await categoryDetails.findOne({_id:categoryId});
         req.session.currentCategory = currentCategory;
-        res.render("admin/partial/category",{
+        res.render("admin/partial/editCategory",{
             session:req.session.admin,
             category: currentCategory,
         })

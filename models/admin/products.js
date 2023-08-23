@@ -48,6 +48,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     require,
   },
+filters: [{
+  type: mongoose.Types.ObjectId,
+  ref: 'Category',
+}],
   images: [String],
   offer:Number,
   stock: Number,

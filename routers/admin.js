@@ -38,7 +38,7 @@ router
         .post("/products/add_product",sessionCheck, upload.fields([
                 { name: "bookTitle", maxCount: 1 },
                 { name: "thumbnail", maxCount: 1 },
-                { name: "images", maxCount: 3 },
+                { name: "images", maxCount: 2 },
               ]),productsPage.addProducts)
 
 router.get("/products/edit",sessionCheck,productsPage.editPage);
@@ -77,7 +77,9 @@ router
 router
    .route("/authors")
    .get(sessionCheck,authors.list)
-   .post(sessionCheck, authors.addAuthor);
+   .post(sessionCheck, upload.fields([
+      { name: "authorImg", maxCount: 1 },
+    ]),authors.addAuthor);
 
 router
    .route("/authors/delete_author")
@@ -86,7 +88,9 @@ router
 router
    .route("/authors/edit")
    .get(sessionCheck,authors.editAthorPage)
-   .post(sessionCheck,authors.editauthor)
+   .post(sessionCheck,upload.fields([
+      { name: "authorImg", maxCount: 1 },
+    ]),authors.editauthor);
 
    router
    .route("/customers")

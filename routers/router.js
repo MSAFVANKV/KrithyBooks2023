@@ -57,7 +57,15 @@ router.post("/changePassword",forgotPassword.updatePassword);
 
 router.get("/categories", newproduct.categories)
 
-router.get("/categoriesBy", homePage.categoryPage)
+router.get("/newRelease", newproduct.categories)
+
+
+// category pages 
+router.get("/categoriesBy", homePage.categoryPage);
+
+// filter
+router.post('/updateFilter', newproduct.updateFilter);
+
 
 
 router

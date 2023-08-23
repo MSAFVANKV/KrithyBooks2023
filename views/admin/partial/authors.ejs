@@ -29,7 +29,7 @@
           <tr>
             <td><%= i+1 %></td>
             <td><%= item.name %></td>
-            <td></td>
+            <td><img src="/img/authors/<%= item.authorImg %>" alt=""  height="50px"></td>
          
             <td class="text-center list-unstyled">
               <a
@@ -63,7 +63,7 @@
           <%= locals.errorMessage %>
         </p>
       </span>
-      <form action="/admin/authors" method="post">
+      <form action="/admin/authors" method="post" id="uploadForm" enctype="multipart/form-data">
         <div class="d-flex justify-content-center mb-3">
           <input
             type="string"
@@ -74,6 +74,18 @@
             style="text-transform: none"
           />
         </div>
+        <div class="mb-3">
+          <label for="authorImg" class="px-1" style="font-size: 0.75rem;">Upload Author image</label>
+          <img class=" border" src="" width="150px"  alt="" id="output2">
+        <input
+          class="form-control"
+          id="authorImg"
+          name="authorImg"
+          style="margin-top: 10px;"
+          onchange="loadFile2(event)"
+          type="file"
+        />
+      </div>
     <!-- images -->
     <!-- <div class="mb-3">
       <label for="authorImg" class="form-label">Author Img</label>
@@ -98,26 +110,18 @@
 </div>
 
 
-<!-- <script>
+<script>
   document.getElementById('uploadForm').addEventListener('submit', function(event) {
   var fileInput = document.getElementById('images');
   var selectedFiles = fileInput.files;
   
      });
-      
-     let loadFile1 = function(event) {
-              var image = document.getElementById('output1');
-              image.src=URL.createObjectURL(event.target.files[0]);          
-          };  
+   
       let loadFile2 = function(event) {
               var image = document.getElementById('output2');
               image.src=URL.createObjectURL(event.target.files[0]);          
           }; 
-      let loadFile3 = function(event) {
-        for(i=0;i<3;i++){
-              var image = document.getElementById(`output${i+3}`);
-              image.src=URL.createObjectURL(event.target.files[i]);   }       
-          };
-</script> -->
+
+</script>
 
 <%-include('../layouts/_footer')%>

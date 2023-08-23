@@ -72,26 +72,17 @@
   
           <!-- Navbar Collapse -->
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          
-                  <!-- Category Dropdown -->
-                  <!-- <ul class="navbar-nav" id="categoryToggle">
-                      <li class="nav-item dropdown ">
-                          <a class="drpdown nav-link dropdown-toggle border border-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Category
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <li><a class="dropdown-item" href="#">Fiction</a></li>
-                              <li><a class="dropdown-item" href="#">Non-Fiction</a></li>
-                          </ul>
-                      </li>
-                  </ul> -->
-  
                   <!-- Search Bar -->
                   <!-- <form class="d-flex ms-3 justify-content-center">
                       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onkeyup="search()">
                       <button class="btn btn-outline-primary" type="submit">Search</button>
                   </form> -->
-                  <div class="container" >
+                  <!-- <div class="container">
+                    <div class="input-group flex-nowrap my-2" style="width: 250px">
+                      <input type="text" class="form-control" placeholder="Search" id="searchInput" onkeyup="executeSearch()"/>
+                    </div>
+                  </div> -->
+                  <div class="container d-flex justify-content-end" >
                     <div class="input-group flex-nowrap my-2 " style="width: 250px">
                         <input type="text" class="form-control " placeholder="Search" id="searchInput" />
                         <button type="button" class="btn btn-primary" style="height: fit-content;" id="searchButton">
@@ -99,8 +90,7 @@
                         </button>
                     </div>
                 </div>
-                
-             
+                  
               <ul class="navbar-nav m-auto hamurgerToggle">
                 <!--  -->
                           <!-- logout button -->
@@ -116,7 +106,7 @@
               <a class="nav-link" href="/users/profile/cartItems">
                   <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
                   <span id="cartCount" class="badge bg-danger"></span>
-                   <span id="badge"><%=locals.userCart.totalQuantity%></span>  <!-- This will show the cart count -->
+                   <span id="badge"><%=userCart.products.length%></span>  <!-- This will show the cart count -->
               </a>
           </li>
           
@@ -225,7 +215,7 @@
       <div class="row d-flex " >     
         <!-- edit -->
         <% newArrivals.forEach((product,i)=>{%>
-        <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-1">
+        <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
           <div class="card shadow-lg prod_card" style="width: 17rem; ">
               <div class="card card_img">
                 <a href="/products/<%=product._id%>">
@@ -259,9 +249,10 @@
     <!-- view All button -->
     <div class="container d-flex justify-content-center">
       <div class="viewAll text-center d-flex justify-content-center border border-2 border-black rounded-3 align-items-center bg-danger">
-        <a href="/categories?category=newReleases" class=" text-black  text-decoration-none fw-bold">VIEW ALL</a>
+        <a href="/newRelease" class=" text-black  text-decoration-none fw-bold">VIEW ALL</a>
       </div>
-     
+      <!-- /categories?category=newReleases this was befor--> 
+  
      </div>
      <%}%>
      <!-- view All button end -->
@@ -354,7 +345,7 @@
                                             <img src="/img/books/<%=authors[j].bookTitle%>" class="card-img-top img-fluid" alt="Book Image">
                                         </div> -->
                                         <div class="card card_img">
-                                          <div class="image-wrapper" style="background-image: url('/img/books/<%=authors[j].bookTitle%>')" ></div>              
+                                          <div class="image-wrapper" style="background-image: url('/img/authors/<%=authors[j].author.authorImg%>')" ></div>              
                                       </div>
                                         <div class="card-body">
                                             <h5 class="card-title text-center text-uppercase fs-6"><%=authors[j].author.name%></h5>

@@ -28,9 +28,9 @@
             <tr>
               <td><%= item.name %></td>
               <td class="text-center"><img src="/img/books/<%= item.thumbnail %>" alt=""  height="80px"></td>
-              <td><%= item.category.name %></td>
+              <td><%=item.category ? item.category.name : 'N/A'%></td>
               <td><%= item.publisher %></td>
-              <td><%= item.author.name %></td>
+              <td><%=item.author.name ? item.author.name : 'N/A'%></td>
               <td><%= item.price %></td>
               <td><%= item.stock %></td>
               <td > 
@@ -56,10 +56,14 @@
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
     var fileInput = document.getElementById('images');
     var selectedFiles = fileInput.files;
+    let imageUploadError = document.getElementById("imageuploaderror")
     
-    if (selectedFiles.length !== 3) {
+    if (selectedFiles.length !== 2) {
       event.preventDefault(); // Prevent form submission
-      document.getElementById("imageuploaderror").innerHTML="Upload 3 images"
+      imageUploadError.innerHTML="Upload 2 images!!!"
+      imageUploadError.style.fontSize = "15px";
+      imageUploadError.style.fontWeight = "bold"
+      
     }
        });
         

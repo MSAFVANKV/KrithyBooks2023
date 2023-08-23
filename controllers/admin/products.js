@@ -3,6 +3,7 @@ const productCollection = require('../../models/admin/products');
 const categoryDetails =require('../../models/admin/category')
 const authorsDetails =require('../../models/admin/author')
 const sharp = require('sharp')
+const moment = require('moment');
 
 exports.viewProduts = async (req, res) => {
 
@@ -17,6 +18,7 @@ exports.viewProduts = async (req, res) => {
             products: allProducts,
             authors: allAuthors,
             sessionadmin: req.session.admin,
+            moment
           })
     }
     catch(error){
@@ -40,7 +42,7 @@ exports.addProducts = async (req, res) => {
           .toFile(`assets/img/books/${thumbnail}`);
         req.body.thumbnail = thumbnail;
         const imageArray=[];
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 2; i++) {
             imageName = `${req.body.name}_image${i}_${Date.now()}.png`;
             sharp(req.files.images[i].buffer)
               .toFormat("png")
@@ -77,6 +79,7 @@ exports.editPage=async(req,res)=>{
           product: currentProduct,
           authors:authors,
           categories: categories,
+          moment
         });
 
   }
@@ -107,7 +110,7 @@ exports.edit = async (req, res) => {
       }
       if (req.files.images) {
         const newArray = [];
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 2; i++) {
           imageName = `${req.body.name}_image${i}_${Date.now()}.png`;
           sharp(req.files.images[i].buffer)
             .toFormat("png")

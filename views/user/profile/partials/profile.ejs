@@ -10,7 +10,8 @@
               <form action="" method="post" enctype="multipart/form-data" class="col-1 float-end">
                 <div class="">
                   <div class="profilePage border rounded-3  d-flex justify-content-center align-items-center"
-                    id="profile-pic" style="background-image: url('/img/users/<%=currentUser.photo%>');">
+                    id="profile-pic" style="background-image: url('/img/users/<%=currentUser.photo%>');"
+                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Profile">
                   </div>
                   <input type="file" id="upload" style="display: none;" placeholder="photo" name="photo">
                   <button id="crop" style="display: none;">Crop</button>
@@ -107,6 +108,7 @@
                       data-bs-target="#staticBackdrop">
                       Update Profile
                     </button>
+                    
                   </div>
                   <!-- Button trigger modal -->
 
@@ -158,5 +160,7 @@
     </div>
     <%}%>
   </div>
+
+
 
   <%- include('../layouts/_footer') %>

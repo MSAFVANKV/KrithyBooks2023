@@ -1,6 +1,8 @@
 const userCollection = require('../../models/user')
 const productCollection =require('../../models/admin/products')
-const wishlistCollection = require('../../models/wishlist')
+const wishlistCollection = require('../../models/wishlist');
+const cartCollection = require('../../models/cart')
+const moment = require("moment")
 
 // exports.productView = async (req, res) => {
 //     try {
@@ -19,6 +21,10 @@ exports.view=async(req,res)=>{
         const productDetails=await productCollection.findById(req.params.id).populate("author").populate("category");
         let productsInWishlist=null;
         let percentageOffer=null;
+        let userCart;
+
+        userCart= await cartCollection.findOne({customer:req.session.userID})
+
         if(productDetails.initialPrice){
           percentageOffer=Math.ceil((productDetails.initialPrice-productDetails.price)*100/productDetails.initialPrice);
         }
@@ -37,7 +43,9 @@ exports.view=async(req,res)=>{
             currentUser,
             listing:similarProducts,
             percentageOffer,
-            productsInWishlist
+            productsInWishlist,
+            moment,
+            userCart
 
           });
 

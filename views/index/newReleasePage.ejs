@@ -29,6 +29,13 @@
 .shado:hover{
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
 }
+.d{
+  cursor: pointer;
+}
+.selected {
+    background-color: blue;
+    color: white;
+}
 
   </style>
 
@@ -66,38 +73,23 @@
                               <i class="fas fa-search"></i>
                           </button>
                       </div>
+                      <!--  -->
+                       <!-- <div class="container d-flex justify-content-end" >
+                    <div class="input-group flex-nowrap my-2 " style="width: 250px">
+                        <input type="text" class="form-control " placeholder="Search" id="searchInput" />
+                        <button type="button" class="btn btn-primary" style="height: fit-content;" id="searchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div> -->
 
                   </div>
-                    
-                    
-                    
                     
                 </div>
                 <ul class="navbar-nav ms-auto hamurgerToggle">
        
     
                     <!-- Cart Icon -->
-                    <li class="nav-item me-2">
-                      <a class="nav-link" href="/users/profile/cartItems">
-                          <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
-                      </a>
-                  </li>
-  
-                  <!-- Wishlist/Heart Icon -->
-                  <li class="nav-item me-2">
-                      <a class="nav-link" href="/users/profile/wishlist">
-                          <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
-                      </a>
-                  </li>
-  
-                  <!-- User/Contact Icon -->
-                  <li class="nav-item me-2">
-                      <a class="nav-link" href="/users/profile">
-                          <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
-                      </a>
-                  </li>
-
-                                                    <!-- logout button -->
           <% if (session) { %>
             <li class="nav-item">
               <div class="logout">
@@ -106,17 +98,57 @@
                 </button>
               </div>
             </li>
-        <% }else{%>
-            <!-- login button -->
-          <li class="nav-item">
-            <form action="/login" method="post">
-              <div class="login ">
-                <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="login" class="text-decoration-none text-white">LOGIN</a>
-                </button>
-              </div>
-          </form>
+            <li class="nav-item me-2">
+              <a class="nav-link" href="/users/profile/cartItems">
+                  <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                  <span id="cartCount" class="badge bg-danger"></span>
+                   <span id="badge"><%=userCart.products.length%></span>  <!-- This will show the cart count -->
+              </a>
           </li>
+          
+
+            <!-- Wishlist/Heart Icon -->
+            <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/wishlist">
+                    <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+                </a>
+            </li>
+
+            <!-- User/Contact Icon -->
+            <li class="nav-item me-2">
+              <% if (locals.currentUser.photo) { %>
+                <!-- If photo exists, show the photo -->
+                <div class="profile" style="background-image: url('/img/users/<%=locals.currentUser.photo%>');">
+                  <a class="nav-link" href="/users/profile"></a>
+                </div>
+              <% } else { %>
+                <!-- If photo doesn't exist, show the icon -->
+                <a class="nav-link" href="/users/profile">
+                  <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
+                </a>
+              <% } %>
+            </li>
+
+        <% }else{%> 
+            <!-- login button -->
+          <li class="nav-item m-auto">
+                  <a href="login" class="text-decoration-none color-1">LOGIN</a>
+          </li>
+          <li class="nav-item me-2">
+            <a class="nav-link" href="/users/profile/cartItems">
+                <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                <span id="cartCount" class="badge bg-danger"></span>
+            </a>
+        </li>
+        
+
+          <!-- Wishlist/Heart Icon -->
+          <li class="nav-item me-2">
+              <a class="nav-link" href="/users/profile/wishlist">
+                  <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+              </a>
+          </li>
+
           <%}%>
 <!-- login button -->
                 </ul>
@@ -125,24 +157,11 @@
     </nav>
         <!-- nav bar / header == ending -->
 
-        <!-- Filter -->
-        
-          
-          <% if(listingName != null){%>
-          <div>
-            <h3 class="text-center mt-4 d-lg-none">
-              <u class="color-G">
-                <span class="text-black text-uppercase">
-                  <%=listingName%>
-                </span>
-              </u>
-            </h3>  
-          </div>
-          <%}%>
-
+        <!-- Filter -->   
+<!-- 
         <div class="mx-5 mt-5">
             <div class="row">
-               <!-- Filter dropdown -->
+               Filter dropdown
                     <div class="dropdown col-6">
                       <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           Filter
@@ -154,84 +173,129 @@
                       </ul>
                     </div>
 
-
-                <div class="dropdown col-6 d-flex justify-content-end">
-                    <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      Sorted By
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-               
-                <a href=" /categories?category=newReleases" class="text-decoration-none">
-                        <li>
-                          <span class="dropdown-item" 
-                            >New releases</span
-                          >
-                        </li>
-                      </a>
-                      <!--  -->
-                      <a href=" /categories?category=ascending" class="text-decoration-none">
-                        <li>
-                          <span class="dropdown-item" 
-                            >Price: Low to High</span
-                          >
-                        </li>
-                      </a>
-                      <!--  -->
-                      <a href="/categories?category=descending" class="text-decoration-none">
-                        <li>
-                          <span class="dropdown-item" 
-                            >Price: High to low</span
-                          >
-                        </li>
-                      </a>
-                     
-                    </ul>
-                </div>
             </div>
-        </div>
-
-        <!-- new release -->
-        <div>
-            <h3 class="text-center mt-4 d-lg-block d-none">
-              <u class="color-G">
-                <span class="text-black text-uppercase">
-                  New Releases
-                </span>
-              </u>
-            </h3>  
-          </div>
+        </div> -->
 
           <% if(listing != null){ %>
-            <div class="container ">
-                <div class="row mt-3" id="productListContainer">
-                    <% listing.forEach((product, i) => { %>
-                        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-4">
-                          <a href="/products/<%=product._id%>" class="text-decoration-none">
-                            <div class="card shado zoom " style="width: 16rem;">
-                              <div class="">
-                                <img style="max-height: 270px; " class="card-img-top img-fluid" src="/img/books/<%= product.thumbnail %>" alt="Book image">
-                              </div>
-                                <div class="card-body">
-                                  <div class="text-center">
-                                    <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 200px;"><%=product.name%></span>
-                                  </div>
-                                    <div class="d-flex">
-                                      <div class="m-auto gap-3">
-                                        <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
-                                        <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
-                                        <span class="card-text text-info"><%= product.discount %>%off</span>
-                                    </div>
-                                    </div>
-                                    <p class="text-center">Rating: </p>
-                                </div>
-                            </div>
-                          </a>
+            <div class="container-fluid">
+                <div class="row ">
+                    <!-- filter sidebar -->
+                    <div class="col-md-2 col-sm-1 bg-light">
+                      <!--  -->
+                      <% if(listingName != null){%>
+                        <div class="justify-content-center d-flex">
+                          <h5 class=" mt-3">
+                            <u class="color-G">
+                              <span class="text-black text-uppercase text-center ">
+                                <%=listingName%>
+                              </span>
+                            </u>
+                          </h5>  
                         </div>
-                    <% }) %>
+                        <%}%>
+                        <!--  -->
+                        <div class="bg-light p-2 row d-flex justify-content-between align-items-center">
+                          <h6 class="text-uppercase mb-3">Filter</h6>
+                          <% let displayedCategories = 0; %>
+                          <% categories.forEach(category => { %>
+                              <% if(displayedCategories < 4) { %>
+                                  <div class="mb-1 border border-1 border-black col-5 text-center rounded-5" data-category="<%= category.name %>" onclick="toggleFilter(this, '<%= category.name %>')">
+                                      <small class="filter" for="check-<%= category.name %>">
+                                          <%= category.name %>
+                                      </small>
+                                  </div>
+                                  <% displayedCategories++; %>
+                              <% } %>
+                          <% }); %>
+                      
+                          <% if(categories.length > 4) { %>
+                              <!-- Create a Bootstrap dropdown for 'More' -->
+                              <div class="dropdown d-flex justify-content-end">
+                                  <a class=" btn-secondary dropdown-toggle" type="button" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                      More
+                                  </a>
+                                  <ul class="dropdown-menu" aria-labelledby="moreDropdown">
+                                      <% categories.slice(4).forEach(category => { %>
+                                          <li>
+                                              <a class="dropdown-item" href="#" onclick="toggleFilter(this, '<%= category.name %>')"><small><%= category.name %></small></a>
+                                          </li>
+                                      <% }) %>
+                                  </ul>
+                              </div>
+                          <% } %>
+                      </div>
+
+                        <!-- sort start -->
+                        <div class="dropdown col-6 d-flex ">
+                          <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sorted By
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                     
+                      <a href=" /categories?category=newReleases" class="text-decoration-none">
+                              <li>
+                                <span class="dropdown-item" 
+                                  >New releases</span
+                                >
+                              </li>
+                            </a>
+                            <!--  -->
+                            <a href=" /categories?category=ascending" class="text-decoration-none">
+                              <li>
+                                <span class="dropdown-item" 
+                                  >Price: Low to High</span
+                                >
+                              </li>
+                            </a>
+                            <!--  -->
+                            <a href="/categories?category=descending" class="text-decoration-none">
+                              <li>
+                                <span class="dropdown-item" 
+                                  >Price: High to low</span
+                                >
+                              </li>
+                            </a>
+                           
+                          </ul>
+                      </div>
+                        <!-- sort end -->
+
+                    </div>
+        
+                    <!-- product listing -->
+                    <div class="col-md-10 col-sm-8 mt-4">
+                        <div class="row" id="productListContainer">
+                            <% listing.forEach((product, i) => { %>
+                                <div class="col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-5" ><!-- < inside// data-category="<%=product.categoryName %>" -->
+                                    <a href="/products/<%=product._id%>" class="text-decoration-none">
+                                        <div class="card shado zoom" style="width: 16rem;">
+                                            <div class="">
+                                                <img style="max-height: 270px;" class="card-img-top img-fluid" src="/img/books/<%= product.thumbnail %>" alt="Book image">
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 200px;"><%=product.name%></span>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <div class="m-auto gap-3">
+                                                        <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
+                                                        <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                                                        <span class="card-text text-info"><%= product.discount %>%off</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-center">Rating: </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--  -->
+                            <% }) %>
+                        </div>
+                    </div>
                 </div>
             </div>
         <% } %>
-            <!-- pagination -->
+                    <!-- pagination -->
             <!-- your existing html code ... -->
             <div class="d-flex justify-content-center mb-2">
               <% if (page > 1) { %>
@@ -255,7 +319,7 @@
 
 
 
-          <footer class="container-fluid bg-dark">
+          <footer class="container-fluid bg-dark ">
             <div class="row pt-5">
                 <div class="col-4 d-flex justify-content-center">
                     <div class="container col-8">
@@ -287,16 +351,88 @@
             </div>
           </footer>
         
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+          integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <!-- <script>
+ $(document).ready(function() {
+    $('.category-filter').change(function() {
+        let checkedCategories = [];
+
+        // Loop through all checkboxes to find which are checked
+        $('.category-filter:checked').each(function() {
+            checkedCategories.push($(this).data('category'));
+        });
+
+        if (checkedCategories.length === 0) {
+            window.location.href = "/categories?category=newReleases";
+        } else {
+            // Redirect with all checked categories as a comma-separated list
+            window.location.href = "/categories?category=" + checkedCategories.join(',');
+        }
+    });
+
+    // When page loads, set the checkboxes based on the URL
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const categoriesFromURL = urlSearchParams.get('category').split(',');
+    
+    categoriesFromURL.forEach(function(category) {
+        $(`#check-${category}`).prop('checked', true);
+    });
+});
 
 
+            </script> -->
+            
+<script>
+let selectedCategories = [];
+
+function toggleFilter(element, categoryName) {
+    // Toggle the background color and modify the selectedCategories array
+    if (element.style.backgroundColor === "blue") {
+        element.style.backgroundColor = "";
+        element.style.color = "";
+
+        const index = selectedCategories.indexOf(categoryName);
+        if (index > -1) {
+            selectedCategories.splice(index, 1);
+        }
+    } else {
+        element.style.backgroundColor = "blue";
+        element.style.color = "white";
+        selectedCategories.push(categoryName);
+    }
+    element.style.cursor = "pointer";
+
+    // Update the URL based on selected categories
+    if (selectedCategories.length === 0) {
+        window.location.href = "/newRelease";
+    } else {
+        window.location.href = "/categories?category=" + selectedCategories.join(',');
+    }
+}
+
+// Function to restore category states based on URL parameters
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categories = urlParams.get('category').split(',');
+
+    categories.forEach(category => {
+        const filterElement = document.querySelector(`[data-category='${category}']`);
+        if (filterElement) {
+            filterElement.style.backgroundColor = "blue";
+            filterElement.style.color = "white";
+        }
+    });
+});
+
+</script>
     
        <!-- boostrap-5 -->
        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
        <!-- boostrap-5 -->
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-       integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
        <script src="/js/search.js"></script>
 </body>
 </html>

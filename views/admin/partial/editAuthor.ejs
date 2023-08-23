@@ -9,7 +9,7 @@
 
     </p>
     <div class="col-lg-5 mx-auto ">        
-      <form action="" method="post" class="d-flex align-items-center flex-column ">
+      <form action="" method="post" class="d-flex align-items-center flex-column "id="uploadForm" enctype="multipart/form-data">
         <div class="w-75">
           <input
             required
@@ -21,23 +21,30 @@
             style="text-transform: none;"
           />
         </div>
-        <div class="mb-3">
-          <label for="thumbnail" class="px-1" style="font-size: 0.75rem;">Upload thumbnail</label>
-        <input
-          class="form-control"
-          id="thumbnail"
-          name="thumbnail"
-          type="file"
-          onchange="loadFile1(event)"
-          value=""
-          required
-        />
-        <p ><img id="output1" width="100" style="margin-top: 10px;"/></p>
-      </div>
+
+      <!--  -->
+      <div class="mb-3 col-lg-6 d-flex flex-column">
+        <label for="authorImg" class="px-1" style="font-size: 0.75rem;">Edit author image</label>
+        <img class=" border" src="/img/authors/<%=author.authorImg%>" width="150px"  alt="" id="output2">
+      <input
+        class="form-control"
+        id="authorImg"
+        name="authorImg"
+        style="margin-top: 10px;"
+        onchange="loadFile2(event)"
+        type="file"
+      />
+    </div>
         <input type="submit" class="text-center btn btn-primary w-25" value="Save" />
       </form>
     </div>
   </div>
 </div>
 <!--  -->
+<script>
+let loadFile2= function(event) {      
+              var image = document.getElementById("output2");
+              image.src=URL.createObjectURL(event.target.files[0]);   }   
+
+</script>
 <%- include('../layouts/_footer') %>

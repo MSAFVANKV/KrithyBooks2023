@@ -38,48 +38,67 @@
                 </div>
                 <ul class="navbar-nav ms-auto hamurgerToggle">
                                              <!-- logout button -->
-          <% if (session) { %>
-            <li class="nav-item">
-              <div class="logout">
-                <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
-                </button>
-              </div>
+                <% if (session) { %>
+                <li class="nav-item">
+                    <div class="logout">
+                    <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
+                        <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
+                    </button>
+                    </div>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link" href="/users/profile/cartItems">
+                        <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                        <span id="cartCount" class="badge bg-danger"></span>
+                        <span id="badge"><%=userCart.products.length%></span>  <!-- This will show the cart count -->
+                    </a>
+                </li>
+                
+    
+                <!-- Wishlist/Heart Icon -->
+                <li class="nav-item me-2">
+                    <a class="nav-link" href="/users/profile/wishlist">
+                        <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+                    </a>
+                </li>
+    
+                <!-- User/Contact Icon -->
+                <li class="nav-item me-2">
+                    <% if (locals.currentUser.photo) { %>
+                    <!-- If photo exists, show the photo -->
+                    <div class="profile" style="background-image: url('/img/users/<%=locals.currentUser.photo%>');">
+                        <a class="nav-link" href="/users/profile"></a>
+                    </div>
+                    <% } else { %>
+                    <!-- If photo doesn't exist, show the icon -->
+                    <a class="nav-link" href="/users/profile">
+                        <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
+                    </a>
+                    <% } %>
+                </li>
+    
+            <% }else{%> 
+                <!-- login button -->
+                <li class="nav-item m-auto">
+                        <a href="/login" class="text-decoration-none color-1">LOGIN</a>
+                </li>
+                <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/cartItems">
+                    <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                    <span id="cartCount" class="badge bg-danger"></span>
+                </a>
             </li>
-        <% }else{%> 
-            <!-- login button -->
-          <li class="nav-item">
-              <div class="login ">
-                <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
-                  <a href="/login" class="text-decoration-none text-white">LOGIN</a>
-                </button>
-              </div>
-          </li>
-          <%}%>
-<!-- login button -->
-
+            
     
-                    <!-- Cart Icon -->
-                    <li class="nav-item me-2">
-                        <a class="nav-link" href="/users/profile/cartItems">
-                            <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
-                        </a>
-                    </li>
+                <!-- Wishlist/Heart Icon -->
+                <li class="nav-item me-2">
+                    <a class="nav-link" href="/users/profile/wishlist">
+                        <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+                    </a>
+                </li>
     
-                    <!-- Wishlist/Heart Icon -->
-                    <li class="nav-item me-2">
-                        <a class="nav-link" href="/users/profile/wishlist">
-                            <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
-                        </a>
-                    </li>
-    
-                    <!-- User/Contact Icon -->
-                    <li class="nav-item me-2">
-                        <a class="nav-link" href="/users/profile">
-                            <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
-                        </a>
-                    </li>
-                </ul>
+                <%}%>
+                    </ul>
             </div>
         </div>
     </nav>
@@ -94,27 +113,22 @@
                     <div class="col-lg-6 d-flex justify-content-center align-items-center">
                         <div class="d-flex justify-content-center flex-column mx-3 bg-white mb-2 ">
                             <div class="col-12 col-sm-6 col-md-4 ">
-                                <a href="/img/books/<%=productDetails.thumbnail %>">
+                                <a href="/img/books/<%=productDetails.images[0] %>">
                                     <img class="img-fluid mt-2 scaled thumbimg thumbimgSize" src="/img/books/<%=productDetails.thumbnail %>">
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 ">
-                                <a href="/img/books/<%=productDetails.images[0] %>">
-                                    <img class="img-fluid mt-2 scaled thumbimg thumbimgSize" src="/img/books/<%=productDetails.images[0] %>">
+                                <a href="/img/books/<%=productDetails.images[1] %>">
+                                    <img class="img-fluid mt-2 scaled thumbimg thumbimgSize" src="/img/books/<%=productDetails.images[1] %>">
                                 </a>
                             </div>                    
                         </div>
                         <div class="mx-3 card mb-2 shadow zoom scaled-main" id="zoomC">
-                            <img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[0] %>" alt="" id="mainImg">
+                            <img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[1] %>" alt="" id="mainImg">
                         </div> 
                     </div>
                     <!-- You can put other elements for the remaining half of the screen on larger screens here -->
                 </div>
-                
-                
-                
-                  
-                
                         <hr>
                         <div class=" col-lg-11 col-md-10  bg-D9D9D9 border rounded-3">
                             <h5 class="text-center text-uppercase pt-1"><%=productDetails.name%></h5>
@@ -131,12 +145,12 @@
                                             <i class="fas fa-star"></i>
                                           </div>
                                           
-                                        <li><small><strong>BY:</strong> <a href=""><%=productDetails.author.name%></a></small></li>
+                                        <li><small><strong>BY:</strong> <a href=""><%=productDetails.author.name ? productDetails.author.name : 'N/A'%></a></small></li>
                                         <li><small><strong>Book :</strong> <%=productDetails.name%></small></li>
-                                        <li><small><strong>Author:</strong> <a href=""><%=productDetails.author.name%></a></small></li>
-                                        <li><small><strong>Category :</strong> <%=productDetails.category.name%></small></li>
-                                        <li><small><strong>ISBN :</strong> <%=productDetails.bookISBN%></small></li>
-                                        <li><small><strong>Publishing Date :</strong> <%=productDetails.Date%></small></li>
+                                        <li><small><strong>Author:</strong> <a href=""><%=productDetails.author.name ? productDetails.author.name : 'N/A'%></a></small></li>
+                                        <li><small><strong>Category :</strong> <%=productDetails.category ? productDetails.category.name : 'N/A'%></small></li>
+                                        <li><small><strong>ISBN :</strong> <%=productDetails.bookISBN ? productDetails.bookISBN : 'N/A'%></small></li>
+                                        <li><small><strong>Publishing Date :</strong><%= moment(productDetails.Publishingdate).format('ll')  %></small></li>
                                         <li><small><strong>Publisher :</strong> <%=productDetails.publisher%></small></li>
                                         <li><small><strong>Number of pages :</strong> <%=productDetails.numOfPages%></small></li>
                                         <li><small><strong>Language :</strong> <%=productDetails.language%></small></li>

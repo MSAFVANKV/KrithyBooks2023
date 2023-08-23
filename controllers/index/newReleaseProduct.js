@@ -3,6 +3,7 @@ const userDTLS = require('../../models/user')
 const productCollection = require('../../models/admin/products')
 const categoryCollection=require("../../models/admin/category");
 const authorCollection = require('../../models/admin/author')
+const cartCollection =require("../../models/cart")
 
 
 
@@ -51,12 +52,14 @@ exports.categories = async(req, res) => {
     let offset = (page - 1) * itemsPerPage;
     let listing;
     let currentUser = null;
-    let userCart = null;
+    let userCart 
     let currentCategory;
     let sortBy = {};
 
     // Fetch all categories
     let categories = await categoryCollection.find({});
+    userCart= await cartCollection.findOne({customer:req.session.userID})
+
 
     if(req.session.userID){
       currentUser = await userDTLS.findOne({_id:req.session.userID});
@@ -87,7 +90,7 @@ exports.categories = async(req, res) => {
       listing = await productCollection.find({ listed: true })
                                       .skip(offset)
                                       .limit(itemsPerPage)
-                                      .sort(sortBy);
+                                      .sort({_id:-1})
     }
 
     res.render("index/newReleasePage", {
@@ -134,8 +137,32 @@ exports.search = async (req, res) => {
     });
 
     res.json({ products });
+    // res.redirect('/categories')
   } catch(err) {
     console.log(err);
     res.status(500).json({ error: 'An error occurred while searching products' });
+  }
+};
+
+exports.updateFilter = async(req, res) => {
+  try {
+      const { categoryName, action } = req.body;
+      const category = await categoryCollection.findOne({ name: categoryName });
+
+      if (!category) {
+          return res.status(400).send("Category not found");
+      }
+
+      // Assuming user has filters field as an array of category ids
+      if (action === "add") {
+          await userDTLS.updateOne({ _id: req.session.userID }, { $addToSet: { filters: category._id } });
+      } else if (action === "remove") {
+          await userDTLS.updateOne({ _id: req.session.userID }, { $pull: { filters: category._id } });
+      }
+
+      res.send("Updated successfully");
+  } catch (error) {
+      res.status(500).send("An error occurred");
+      console.log("Error updating filter: ", error);
   }
 };
