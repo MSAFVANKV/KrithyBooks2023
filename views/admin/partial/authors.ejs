@@ -1,8 +1,11 @@
 <%-include('../layouts/_header')%><%-include('../layouts/head_links')%> 
 
+<div class="container line-break-top line-break text-center py-3">
+  <span class="shadow-heading fw-bold fs-3 text-uppercase">Authors / Categories</span>
+  <hr>
+</div>
 <div class="container">
   <div class="line-break text-center py-4">
-    <span class="shadow-heading text-uppercase fs-5 fw-bold">Authors</span>
     <div style="float:right;background-color: rgb(28, 109, 41);border-radius: 25px; width: 130px;">
       <a href="/admin/categories" style="font-size: smaller;" class="text-uppercase text-decoration-none
       text-white fw-bold">Categories</a>
@@ -54,7 +57,8 @@
       </tbody> 
       </table>
       <% } %>
-    <div class="w-25 mx-auto mt-4">
+
+    <div class=" mx-auto mt-4">
       <span
         class="text-center pb-3"
         style="font-size: 0.8rem; text-transform: none"
@@ -64,6 +68,7 @@
         </p>
       </span>
       <form action="/admin/authors" method="post" id="uploadForm" enctype="multipart/form-data">
+        <span id="error-message" class="text-danger mt-0 fw-bold text-uppercase"></span>
         <div class="d-flex justify-content-center mb-3">
           <input
             type="string"
@@ -100,7 +105,9 @@
     <!-- images end -->
         <div class="d-flex justify-content-center mb-3">
           <div class=" text-center">
-            <input type="submit" class="btn btn-primary text-uppercase" value="Add Author "/>
+            <!-- <input type="submit" class="btn btn-success text-uppercase" value=""/> -->
+            <input type="submit" class="btn btn-success w-100" value="Add Author " />
+
           </div>
         </div>
         
@@ -121,6 +128,21 @@
               var image = document.getElementById('output2');
               image.src=URL.createObjectURL(event.target.files[0]);          
           }; 
+
+// 
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    // Get the input values
+    var authorNameInput = document.getElementById('form-holder').value;
+    var authorImgInput = document.getElementById('authorImg').files.length;
+
+    // Check if they're empty
+    if (!authorNameInput.trim() || authorImgInput == 0) {
+        event.preventDefault(); // Prevent form submission
+        document.getElementById('error-message').textContent = "Please fill in all required fields!";
+    } else {
+        document.getElementById('error-message').textContent = ""; // Clear the error message
+    }
+});
 
 </script>
 

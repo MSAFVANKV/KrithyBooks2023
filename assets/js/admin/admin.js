@@ -89,6 +89,133 @@ function changeAccess(id, access) {
     //     });
     // });
 
+
+//orders =============================
+function deliverOrder(id, i) {
+  $.ajax({
+    url: "/admin/order",
+    type: "patch",
+    data: {
+      orderID: id,
+    },
+    success: (res) => {
+      if (res.data.delivered === 1) {
+        $("#deliver" + i).load(location.href + " #deliver" + i);
+      }
+    },
+  });
+}
+
+function cancelOrder(id){
+
+  Swal.fire({
+      icon: 'question',
+      title:"<h5 style=color='white'>"+ `Proceed to cancel order?`+"</h5>",
+      showCancelButton: true,
+      background:'#19191a',
+        iconColor:'blue',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+  }).then((result) => {
+      if (result.value) {
+          
+          $.ajax({
+              url:"/admin/order/"+id,
+              method:"patch",
+              success:(res)=>{
+                  if(res.success=== "cancelled"){
+                      $("#orderDetails").load(location.href + " #orderDetails");
+                      Swal.fire({
+                          toast: true,
+                          icon: "success",
+                          position: "top-right",
+                          showConfirmButton: false,
+                          timer: 1000,
+                          timerProgressBar: true,
+                          animation: true,
+                          title: "Order cancelled",
+                        });
+                        setTimeout(() => {
+                          location.reload();
+                      }, 2000);
+                  }
+              }
+          })
+      }
+  })
+ 
+}
+
+
+function returnOrder(id, i) {
+  $.ajax({
+    url: "/admin/order",
+    type: "put",
+    data: {
+      orderID: id,
+    },
+    success: (res) => {
+      if (res.data.returned === 1) {
+        $("#deliver" + i).load(location.href + " #deliver" + i);
+      }
+    },
+  });
+}
+
+function printInvoice(divName) {
+  var printContents = document.getElementById(divName).innerHTML;
+  var originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents;
+
+  window.print();
+
+  document.body.innerHTML = originalContents;
+}
+
+// product manager
+function changeManagerAccess(id, access) {
+  $.ajax({
+    url: "/admin/productManager_management",
+    type: "patch",
+    data: {
+      managerID: id,
+      currentAccess: access,
+    },
+    success: (res) => {
+      $("#" + id).load(location.href + " #" + id);
+    },
+  });
+}
+
+function deleteManager(id) {
+  Swal.fire({
+    icon: 'question',
+    title:"<h5 style=color='white'>"+ `Proceed to delete ?`+"</h5>",
+    showCancelButton: true,
+    background:'#19191a',
+      iconColor:'blue',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: "/admin/productManager_management/"+id,
+        type: "delete",
+        success: (res) => {
+          $("#managerTable").load(location.href + " #managerTable");
+        },
+      });
+    }
+  })
+
+}
+
+// =================================
+
+
     $(function () {
         var table=  $("#dataTable").DataTable({
             rowReorder: {
@@ -99,3 +226,5 @@ function changeAccess(id, access) {
           });
           // new $.fn.dataTable.FixedHeader( table );
         });
+
+

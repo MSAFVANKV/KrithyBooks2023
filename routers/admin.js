@@ -12,6 +12,7 @@ const categories = require('../controllers/admin/category')
 const authors = require('../controllers/admin/author');
 const customers=require("../controllers/admin/customer");
 const coupons = require("../controllers/admin/coupon");
+const salesReport = require("../controllers/admin/salesReport");
 const router = express.Router();
 
 
@@ -23,6 +24,14 @@ router.
 router.
    route('/dashboard')
         .get(sessionCheck,dashboard.viewAdmin)
+        .put(sessionCheck,dashboard.chartData)
+
+router
+        .route("/salesReport")
+        .post(sessionCheck,salesReport.download);
+     
+
+   router.get("/chart/:id",dashboard.customChartData)
         
 router.
    route('/logout')
@@ -30,7 +39,16 @@ router.
         
 router.
         route('/order')
-             .get(sessionCheck,orderViewAdmin.orderviewPage)
+            .get(sessionCheck,orderViewAdmin.orderviewPage)
+            .patch(sessionCheck, orderViewAdmin.deliver)
+            .put(sessionCheck, orderViewAdmin.return)
+
+            
+router
+.route("/order/:id")
+.get(sessionCheck,objectIdCheck, orderViewAdmin.detailsPage)
+.patch(sessionCheck, objectIdCheck, orderViewAdmin.cancel)
+
 
             //  product Page
 router

@@ -45,21 +45,20 @@
          <a class="navbar-brand logohome ps-3" href="/">
             <span class="k">K</span>rithy
         </a>
-        <div class="container">
+        <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
             <div class="input-group flex-nowrap my-2 " style="width: 250px">
-                <input type="text" class="form-control d-none d-lg-block" placeholder="Search" id="searchInput" />
-                <button type="button" class="btn btn-primary d-none d-lg-block" style="height: fit-content;"
-                    onclick="search()">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
+            <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
+            <button type="submit" class="btn btn-primary" style="height: fit-content;">
+                <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
         <ul class="navbar-nav ms-auto hamurgerToggle">
 
             <% if(currentUrl === "/users/directCheckout" || currentUrl === "/users/cart/checkout" || currentUrl === "/users/cart/checkout/${transactionID}"){ %>
             <!-- Cart Icon -->
             <li class="nav-item me-2">
-                <a class="nav-link" href="/users/profile/cartItems">
+                <a class="nav-link" href="/users/profile/cart">
                     <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
                 </a>
             </li>

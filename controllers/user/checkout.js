@@ -53,27 +53,31 @@ exports.viewPage=async(req,res)=>{
 }
 
 
-exports.defaultAddress=async(req,res)=>{
-    try{
+exports.defaultAddress = async(req, res) => {
+  try {
+      console.log("Inside defaultAddress function");
+      
+      const userID = req.session.userID;
+      const DefaultAddress = req.body.DefaultAddress;
+      console.log("UserID:", userID, "DefaultAddress:", DefaultAddress);
 
-        const userID = req.session.userID;
-    const DefaultAddress = req.body.DefaultAddress;
-    await userCollection.updateMany(
-      { _id: userID, "addresses.primary": true },
-      { $set: { "addresses.$.primary": false } }
-    );
-    await userCollection.updateOne(
-      { _id: userID, "addresses._id": DefaultAddress },
-      { $set: { "addresses.$.primary": true } }
-    );
-        res.redirect("/users/cart/checkout");
+      await userCollection.updateMany(
+          { _id: userID, "addresses.primary": true },
+          { $set: { "addresses.$.primary": false } }
+      );
+      await userCollection.updateOne(
+          { _id: userID, "addresses._id": DefaultAddress },
+          { $set: { "addresses.$.primary": true } }
+      );
 
-    }catch(error){
-        res.redirect("/users/cart/checkout");
-        console.log("error on changing to deafultaddress :"+error)
-
-    }
+      console.log("Address updated successfully");
+      res.redirect("/users/cart/checkout");
+  } catch (error) {
+      console.log("Error in defaultAddress:", error);
+      res.redirect("/users/cart/checkout");
+  }
 }
+
 
 exports.couponCheck=async(req,res)=>{
   try{
@@ -190,7 +194,7 @@ exports.checkout = async (req, res) => {
     // console.log(orderSummery)
 
     const userCart=  await cartCollection.findOne({customer:req.session.userID});
-    console.log(cartCollection)
+    // console.log(cartCollection)
 
     //creating order details
 
@@ -286,7 +290,8 @@ exports.result=async(req,res)=>{
       const orderDetails= new orderCollection(req.session.orderDetails)
       await orderDetails.save();
       let currentUser=await userCollection.findById(req.session.userID)
-      console.log(currentUser.email)
+      // console.log(currentUser.email)
+
       if(couponUsed){
         await userCollection.findByIdAndUpdate(req.session.userID,{
           $push:{

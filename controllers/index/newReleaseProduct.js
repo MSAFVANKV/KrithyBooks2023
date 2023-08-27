@@ -55,6 +55,7 @@ exports.categories = async(req, res) => {
     let userCart 
     let currentCategory;
     let sortBy = {};
+    let errorMessage = null;
 
     // Fetch all categories
     let categories = await categoryCollection.find({});
@@ -90,8 +91,13 @@ exports.categories = async(req, res) => {
       listing = await productCollection.find({ listed: true })
                                       .skip(offset)
                                       .limit(itemsPerPage)
-                                      .sort({_id:-1})
+                                      .sort(sortBy)
     }
+
+    if (listing.length === 0) {
+      errorMessage = 'No Products Available, Check the spelling!';
+    }
+
 
     res.render("index/newReleasePage", {
       listing: listing,
@@ -102,7 +108,8 @@ exports.categories = async(req, res) => {
       page,
       itemsPerPage,
       category,
-      categories  // Pass the categories to your view
+      categories, 
+      errorMessage:errorMessage
     });
   } catch(error) {
     res.redirect('/');
@@ -114,13 +121,29 @@ exports.categories = async(req, res) => {
 exports.search = async (req, res) => {
   const searchInput = req.query.searchInput;
   try {
+    
+    let page = parseInt(req.query.page) || 1;
+    let itemsPerPage = 12;
+    let errorMessage = null
+    let category = req.query.category;
+    let searchInput = req.query.searchInput;
+    let sortBy = {};
+    let currentUser = null;
+    let userCart = null;
     // Look for matching categories
+    let categories = await categoryCollection.find({});
     let categoryMatches = await categoryCollection.find({ 
       name: { $regex: new RegExp(searchInput, "i") } 
     });
 
     let categoryIds = categoryMatches.map(c => c._id);
-
+ 
+    
+    if(req.session.userID){
+      currentUser = await userDTLS.findOne({_id:req.session.userID});
+      userCart = await cartCollection.findOne({customer:req.session.userID});
+    }
+    
     // Look for matching authors
     let authorMatches = await authorCollection.find({
       name: { $regex: new RegExp(searchInput, "i") }
@@ -136,33 +159,26 @@ exports.search = async (req, res) => {
       ]
     });
 
-    res.json({ products });
-    // res.redirect('/categories')
+    if (products.length === 0) {
+      errorMessage = 'No Products Available, Check the spelling!';
+    }
+
+    // res.json({ products });
+     res.render("index/newReleasePage", {
+      listing: products,
+      listingName: "Search Results for: " + searchInput,
+      session: req.session.userID,
+      userCart,
+      currentUser,
+      page,
+      itemsPerPage,
+      category,
+      categories,
+      errorMessage: errorMessage
+    });
+
   } catch(err) {
     console.log(err);
     res.status(500).json({ error: 'An error occurred while searching products' });
-  }
-};
-
-exports.updateFilter = async(req, res) => {
-  try {
-      const { categoryName, action } = req.body;
-      const category = await categoryCollection.findOne({ name: categoryName });
-
-      if (!category) {
-          return res.status(400).send("Category not found");
-      }
-
-      // Assuming user has filters field as an array of category ids
-      if (action === "add") {
-          await userDTLS.updateOne({ _id: req.session.userID }, { $addToSet: { filters: category._id } });
-      } else if (action === "remove") {
-          await userDTLS.updateOne({ _id: req.session.userID }, { $pull: { filters: category._id } });
-      }
-
-      res.send("Updated successfully");
-  } catch (error) {
-      res.status(500).send("An error occurred");
-      console.log("Error updating filter: ", error);
   }
 };

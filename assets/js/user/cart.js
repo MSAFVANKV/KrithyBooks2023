@@ -1,7 +1,7 @@
 function removeFromCart(productID) {
     console.log(productID)
     $.ajax({
-        url:`/users/profile/cartItems?id=${productID}`,
+        url:`/users/profile/cart?id=${productID}`,
         method:"delete",
         success: (res) => {
             if (res.success === "removed") {
@@ -43,7 +43,7 @@ function removeFromCart(productID) {
     }).then(result=>{
       if(result.value){
         $.ajax({
-          url: "/users/profile/cartItems",
+          url: "/users/profile/cart",
           method: "put",
           data: { id: productID,count:count },
           success: (res) => {
@@ -65,7 +65,7 @@ function removeFromCart(productID) {
   
     }else{   
       $.ajax({
-        url: "/users/profile/cartItems",
+        url: "/users/profile/cart",
         method: "put",
         data: { id: productID,count:count },
         success: (res) => {

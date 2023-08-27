@@ -98,23 +98,32 @@
                 style="background-color: #c4c1c1;"
               />
             </div>
-            <div id="offer">
-            <% if(coupons!= null){ %>
-              <% coupons.forEach((coupon,i)=> {%>
-            <div class="d-flex" >
-              <input type="radio" id="<%= coupon._id %>" name="offer" onchange="offerCheck('<%= coupon._id %>')" value="<%= coupon.code %>">
-              <label for="<%= coupon._id %>" style="font-size: x-small;color: #d4beb7;margin-left: 10px;">Shoe zone <%= coupon.name %> offer <span style="color: #e20404;"><%= coupon.discount %>% </span> discount</label>
+            <div id="offer d-flex">
+              <% if(coupons!=null){ %>
+                <% coupons.forEach((coupon,i)=> {%>
+                  <div class=" align-items-center mb-2">
+                    <input class="offerInput" style="width: 5%;" type="radio" id="<%= coupon._id %>" name="offer"
+                      onchange="SingleOfferCheck('<%= coupon._id %>')" value="<%= coupon.code %>">
+                    <label for="<%= coupon._id %>">
+                      <span class="text-danger">Krithy Books <%= coupon.name %></span>
+                      <span class="text-success">
+                        <%= coupon.discount %>% off
+                      </span>
+                    </label>
+                  </div>
+  
+                  <%})%>
+                    <%}%>
             </div>
-            <%})%>
-          <%}%>
-        </div>
   
         <!-- #coupon div -->
-          <div class="d-flex align-items-center mt-3">
-            <button class=" btn btn-sm btn-primary"  onclick="checkCoupon(event)" style="width: 50px;height: 25px;font-size: small;">Apply</button>
-            <span id="couponMessage" class=" px-2 rounded m-2">
-            </span>
-          </div>
+        <div class="d-flex align-items-center mt-3">
+          <button class=" btn btn-sm btn-primary" onclick="singleCheckCoupon(event)"
+            style="width: 50px;height: 25px;font-size: small;">Apply</button>
+          <span id="couponMessage" class=" px-2 rounded m-2">
+          </span>
+        </div>
+        <!--  -->
         </div>
         <!-- place order div -->
         <div class="order-summary  p-3 rounded-top-3 d-flex flex-column bg-profile">
@@ -199,5 +208,25 @@
     <!-- Address Modal ending -->
 
   </div>
+
+  <script>
+
+    function SingleOfferCheck(id) {
+      $.ajax({
+        url: "/users/directCheckout/offer/" + id,
+        method: "get",
+        success: (res) => {
+          $("#couponDiscount").html(res.data.discountPrice);
+          $("#inputCouponDiscount").val(res.data.discountPrice);
+          $("#finalPrice").html(res.data.finalPrice);
+          $("#inputFinalPrice").val(res.data.finalPrice);
+
+        }
+      })
+
+    }
+
+  </script>
+
 
   <%- include('../layouts/_footer') %>

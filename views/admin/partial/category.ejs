@@ -1,7 +1,8 @@
 <%-include('../layouts/_header')%> <%-include('../layouts/head_links')%> 
 <div class="container">
   <div class="line-break text-center py-4">
-    <span class="shadow-heading">Categories</span>
+    <span class="shadow-heading fs-4 text-uppercase fw-bold">Categories</span>
+    <hr>
   </div>
   <div class="d-flex flex-column justify-content-center mb-5 pt-4 w-75 mx-auto">
       <% if(locals.details !=null) { %>
@@ -45,7 +46,9 @@
       </tbody>
       </table>
       <% } %>
-    <div class="w-25 mx-auto mt-4">
+      <span id="error-message" class="text-danger text-center mt-0 fw-bold text-uppercase"></span>
+
+    <div class="m-auto mt-4">
       <span
         class="text-center pb-3"
         style="font-size: 0.8rem; text-transform: none"
@@ -54,7 +57,8 @@
           <%= locals.errorMessage %>
         </p>
       </span>
-      <form action="/admin/categories" method="post">
+
+      <form action="/admin/categories" id="uploadForm" method="post">
         <div class="mb-3">
           <input
             type="string"
@@ -70,5 +74,20 @@
     </div>
   </div>
 </div>
+
+<script>
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    // Get the input values
+    var categoryNameInput = document.getElementById('form-holder').value;
+
+    // Check if it's empty
+    if (!categoryNameInput.trim()) { // Here you should just check for truthy value
+        event.preventDefault(); // Prevent form submission
+        document.getElementById('error-message').textContent = "Please fill in the category name!";
+    } else {
+        document.getElementById('error-message').textContent = ""; // Clear the error message
+    }
+});
+</script>
 
 <%-include('../layouts/_footer')%>

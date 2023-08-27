@@ -66,22 +66,22 @@
                     </form> -->
                     <div class="container " >
 
-                      <div class="input-group flex-nowrap my-2 " style="width: 250px">
+                      <!-- <div class="input-group flex-nowrap my-2 " style="width: 250px">
                           <input type="text" class="form-control" placeholder="Search" id="searchInput" />
                           <button type="button" class="btn btn-primary" style="height: fit-content;"
                               onclick="search()">
                               <i class="fas fa-search"></i>
                           </button>
-                      </div>
+                      </div> -->
                       <!--  -->
-                       <!-- <div class="container d-flex justify-content-end" >
-                    <div class="input-group flex-nowrap my-2 " style="width: 250px">
-                        <input type="text" class="form-control " placeholder="Search" id="searchInput" />
-                        <button type="button" class="btn btn-primary" style="height: fit-content;" id="searchButton">
+                      <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
+                        <div class="input-group flex-nowrap my-2 " style="width: 250px">
+                        <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
+                        <button type="submit" class="btn btn-primary" style="height: fit-content;">
                             <i class="fas fa-search"></i>
                         </button>
-                    </div>
-                </div> -->
+                      </div>
+                    </form>
 
                   </div>
                     
@@ -99,7 +99,7 @@
               </div>
             </li>
             <li class="nav-item me-2">
-              <a class="nav-link" href="/users/profile/cartItems">
+              <a class="nav-link" href="/users/profile/cart">
                   <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
                   <span id="cartCount" class="badge bg-danger"></span>
                    <span id="badge"><%=userCart.products.length%></span>  <!-- This will show the cart count -->
@@ -135,7 +135,7 @@
                   <a href="login" class="text-decoration-none color-1">LOGIN</a>
           </li>
           <li class="nav-item me-2">
-            <a class="nav-link" href="/users/profile/cartItems">
+            <a class="nav-link" href="/users/profile/cart">
                 <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
                 <span id="cartCount" class="badge bg-danger"></span>
             </a>
@@ -193,6 +193,7 @@
                           </h5>  
                         </div>
                         <%}%>
+                        
                         <!--  -->
                         <div class="bg-light p-2 row d-flex justify-content-between align-items-center">
                           <h6 class="text-uppercase mb-3">Filter</h6>
@@ -265,6 +266,13 @@
                     <!-- product listing -->
                     <div class="col-md-10 col-sm-8 mt-4">
                         <div class="row" id="productListContainer">
+                          <!-- search error -->
+                          <% if (errorMessage) { %>
+                            <div class="alert alert-danger text-center mt-5">
+                              <%= errorMessage %>
+                            </div>
+                          <% } %>
+                          <!--  -->
                             <% listing.forEach((product, i) => { %>
                                 <div class="col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-5" ><!-- < inside// data-category="<%=product.categoryName %>" -->
                                     <a href="/products/<%=product._id%>" class="text-decoration-none">
@@ -406,7 +414,7 @@ function toggleFilter(element, categoryName) {
 
     // Update the URL based on selected categories
     if (selectedCategories.length === 0) {
-        window.location.href = "/newRelease";
+        window.location.href = "/categories?category=newReleases";
     } else {
         window.location.href = "/categories?category=" + selectedCategories.join(',');
     }

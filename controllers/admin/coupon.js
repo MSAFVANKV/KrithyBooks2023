@@ -9,7 +9,7 @@ exports.viewPage=async(req,res)=>{
         const categories=await categoryCollection.find()
 
     res.render("admin/partial/coupon", {
-      session: req.session.admin,
+      sessionadmin: req.session.admin,
       documentTitle: "Coupon Management",
       coupons,
       moment,

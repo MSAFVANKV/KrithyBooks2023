@@ -47,9 +47,9 @@ function payment(e){
                         var options = {
                             "key": res.key, // Enter the Key ID generated from the Dashboard
                            
-                            "name": "SHOE ZONE", //your business name
+                            "name": "KRITHY BOOKS", //your business name
                             "description": "Complete Your Payment",
-                            "image": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=398&q=80",
+                            "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794",
                             "order_id":res.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                             "callback_url": `/users/cart/checkout/${res.transactionID}`,
                             "theme": {

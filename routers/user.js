@@ -68,7 +68,7 @@ router
 
     // Cart ====
     router
-    .route('/profile/cartItems')
+    .route('/profile/cart')
     .get(sessionCheck,cartPage.viewCart)
     .post(sessionCheck,cartPage.addToCart)
     .delete(sessionCheck,cartPage.removeProduct)
@@ -102,18 +102,27 @@ router
    .route("/profile/orders")
    .get(orders.viewPage)
  
-router.post("/cart/checkout/changeDefaultAddress",sessionCheck,checkOut.defaultAddress);
+
+   router
+   .route("/cart/checkout/changeDefaultAddress")
+   .post(sessionCheck, checkOut.defaultAddress)
+
 
   // offer
   router.get("/cart/checkout/offer/:id",checkOut.offer);
+// 
 
     router
     .route('/directCheckout')
-     .get(sessionCheck, singleCheckOut.directCheckout);
+     .get(sessionCheck, singleCheckOut.directCheckout)
+    .put(sessionCheck, singleCheckOut.applySingleProductCoupon);
+
 
 router
     .route("/directCheckout/changeDefaultAddress")
     .post(sessionCheck, singleCheckOut.defaultAddress)
+
+  router.get("/directCheckout/offer/:id",singleCheckOut.offer);
 
   
 

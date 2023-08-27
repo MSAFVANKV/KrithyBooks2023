@@ -27,7 +27,7 @@ function removeFromWishlist(id) {
 
   function addToCartFromWishlist(productID) {
     $.ajax({
-      url: "/users/profile/cartItems",
+      url: "/users/profile/cart",
       method: "post",
       data: {
         id: productID,

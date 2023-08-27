@@ -6,8 +6,8 @@ exports.list= async(req,res)=>{
     try {
         const categories = await categoryDetails.find({});
         res.render("admin/partial/category", {
-          session: req.session.admin,
-          details: categories,
+            sessionadmin: req.session.admin,
+            details: categories,
         });
       } catch (error) {
         console.log("Error rendering all catergories: " + error);
@@ -60,7 +60,7 @@ exports.editCategoryPage= async(req,res)=>{
         const currentCategory= await categoryDetails.findOne({_id:categoryId});
         req.session.currentCategory = currentCategory;
         res.render("admin/partial/editCategory",{
-            session:req.session.admin,
+            sessionadmin: req.session.admin,
             category: currentCategory,
         })
        

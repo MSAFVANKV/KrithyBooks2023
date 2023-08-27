@@ -42,7 +42,7 @@ function addToWishlist(productId){
   // cart
   function addToCart(productID) {
     $.ajax({
-      url: "/users/profile/cartItems",
+      url: "/users/profile/cart",
       method: "post",
       data: {
         id: productID,
@@ -91,6 +91,33 @@ function addToWishlist(productId){
       },
     });
   }
+
+  // --------
+  function singleCheckCoupon(e){
+    e.preventDefault();
+
+    $.ajax({
+        url: "/users/directCheckout",  // Change this URL
+        method: "put",
+        data: {
+            couponCode: $("#couponCode").val(),
+            productPrice: $("#productPrice").val()  // Assuming you have a hidden field or some element with id "productPrice" that holds the product's price
+        },
+        success: (res) => {
+            $("#couponMessage").html(res.data.couponCheck);
+            $("#couponDiscount").html(res.data.discountPrice);
+            $("#inputCouponDiscount").val(res.data.discountPrice);
+            $("#finalPrice").html(res.data.finalPrice);
+            $("#inputFinalPrice").val(res.data.finalPrice);
+            $("#offer").load(location.href + " #offer");
+        }
+    });
+}
+// ----------
+
+
+
+
   function cartLimit(){
     const stock= $('#cartLimitCheck').val()
     if(stock==0){

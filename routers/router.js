@@ -57,14 +57,14 @@ router.post("/changePassword",forgotPassword.updatePassword);
 
 router.get("/categories", newproduct.categories)
 
-router.get("/newRelease", newproduct.categories)
+// router.get("/newRelease", newproduct.categories)
 
 
 // category pages 
 router.get("/categoriesBy", homePage.categoryPage);
 
 // filter
-router.post('/updateFilter', newproduct.updateFilter);
+// router.post('/updateFilter', newproduct.updateFilter);
 
 
 
@@ -73,16 +73,10 @@ router
  .get(newproduct.search)  
 
 
-     
-
-
-
 router
       .route("/products/:id")
       .get(objectIdCheck,product.view)
   
-
-
 // router.
 //       route('/sendotp')
 //       .post(signIn.loginPage)
