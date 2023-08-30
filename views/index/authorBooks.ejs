@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prductlist.css">
+
+  <style>
+    .author-image {
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+    }
+  </style>
+</head>
+
+<!-- new product showing pages -->
+
+<!-- nav bar / header -->
+
+<nav class="navbar navbar-expand-lg d-flex shadow">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand logohome mx-auto" href="/">
+      <span class="k">K</span>rithy
+    </a>
+
+    <!-- Navbar Toggler -->
+    <button class="navbar-toggler shadow" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Collapse -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="container d-flex justify-content-center">
+
+        <!-- Search Bar -->
+        <!-- <form class="d-flex ms-3 justify-content-center" action="/search" method="get">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                      <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </form> -->
+        <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
+          <div class="input-group flex-nowrap my-2 " style="width: 250px">
+            <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
+            <button type="submit" class="btn btn-primary" style="height: fit-content;">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+
+
+
+
+      </div>
+      <ul class="navbar-nav ms-auto hamurgerToggle">
+        <!-- logout button -->
+        <% if (session) { %>
+          <li class="nav-item">
+            <div class="logout">
+              <button id="logoutButton" class="btn bgtheme border rounded-2 hover-btn">
+                <a href="/logout" class="text-decoration-none text-white ">LOGOUT</a>
+              </button>
+            </div>
+          </li>
+          <% }else{%>
+            <!-- login button -->
+            <li class="nav-item">
+              <form action="/login" method="post">
+                <div class="login ">
+                  <button id="loginButton" class="btn bgtheme border rounded-2 hover-btn">
+                    <a href="login" class="text-decoration-none text-white">LOGIN</a>
+                  </button>
+                </div>
+              </form>
+            </li>
+            <%}%>
+              <!-- login button -->
+
+              <!-- Cart Icon -->
+              <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/cart">
+                  <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                </a>
+              </li>
+
+              <!-- Wishlist/Heart Icon -->
+              <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/wishlist">
+                  <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+                </a>
+              </li>
+
+              <!-- User/Contact Icon -->
+              <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile">
+                  <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
+                </a>
+              </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- nav bar / header == ending -->
+
+<!-- ====  edit-->
+
+
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-md-2 col-sm-1 bg-light">
+      <% if(listingName !=null){%>
+        <div class="justify-content-center d-flex">
+          <h5 class=" mt-3">
+            <u class="color-G">
+              <span class="text-black text-uppercase text-center ">
+                <%=listingName%>
+              </span>
+            </u>
+          </h5>
+        </div>
+        <%}%>
+          <!--  -->
+          <div class="bg-light p-2 row d-flex justify-content-between align-items-center">
+            <h6 class="text-uppercase mb-3">Filter</h6>
+
+
+            <% allAuthors.forEach(author=> { %>
+              <a class="col-12" href="/authors?author=<%= author._id %>">
+                <div class="">
+                  <small class="filter" for="check-<%= author.name %>">
+                    <%= author.name %>
+                  </small>
+                </div>
+              </a>
+              <% }); %>
+
+
+          </div>
+
+          <!--  -->
+    </div>
+    <div class="col-md-10 col-sm-8 mt-4">
+      <div class="container">
+        <div class="col-2">
+          <div class="author-image " style="background-image: url('/img/authors/<%= selectedAuthor.authorImg %>');">
+          </div>
+        </div>
+
+        <h4 class="mt-3">
+          <%= selectedAuthor.name %>
+        </h4 class="mt-3">
+        <div class="col-10">
+          <% if (selectedAuthor && selectedAuthor.aboutAuthor) { %>
+              <span class="mb-0 text-capitalize" style="font-size: .9rem;">
+                  <%= selectedAuthor.aboutAuthor.substring(0, 200) %>
+                  <span class="collapse" id="moreText">
+                      <%= selectedAuthor.aboutAuthor.substring(200) %>
+                  </span>
+                  <a class="btn btn-link p-0 border-0" data-bs-toggle="collapse" href="#moreText" role="button"
+                      aria-expanded="false" aria-controls="moreText">
+                      Read More
+                  </a>
+              </span>
+          <% } %>
+      </div>
+      </div>
+      <!--  -->
+      <% if(products && products.length > 0) { %>
+        <div class=" mt-5 ">
+           <h3 class="text-capitalize fw-bold mb-5 ms-4"><u class="color-G">
+               <span class="text-black text-uppercase">Books of:</span></u> <small> <%= selectedAuthor.name %></small></h3>
+           <div class="row d-flex " >     
+             <!-- edit -->
+             <% products.forEach((product,i)=>{%>
+             <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
+               <div class="card prod_card" >
+                   <div class="card card_img">
+                     <a href="/products/<%=product._id%>">
+                       <div class="image-wrapper" style="background-image: url('/img/books/<%=product.thumbnail%>')"></div>
+                    </a>               
+                   </div>
+                   <div class="card-body">
+                       <div class="text-center">
+                         <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
+                       </div>
+                       <div class="d-flex">
+                         <div class="m-auto gap-3">
+                           <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
+                           <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                           <span class="card-text text-info"><%= product.discount %>% off</span>
+                       </div>
+                       </div>
+                   <p class="card-text text-center">Rating: </p>
+                 </div>
+               </div>
+             </div>
+             <%})%>
+             <!-- adding next card here -->
+           </div>   
+           <a href="/categories?category=newReleases"> Explore..</a>
+  
+         </div>
+         <% }else{ %>
+           <div class="container">
+               <h3 class="text-capitalize fw-bold my-5 ms-4"><u class="color-G">
+                   <span class="text-black">Author Books:</span></u></h3>
+               <div class="text-center">
+                   <span class="text-center text-capitalize fs-4 text-danger">no Author Books...
+                       <a href="/categories?category=newReleases"> Explore</a>
+                   </span>
+               </div>
+               <hr>
+           </div>
+           <%}%>
+  
+      <!--  -->
+    </div>
+    <!--  -->
+
+    <!--  -->
+  </div>
+</div>
+
+
+
+<%- include('./layout/foot') %>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+
+  <!-- Custom Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const moreTextElement = document.querySelector('#moreText');
+      const toggleButton = document.querySelector('[data-bs-toggle="collapse"]');
+
+      moreTextElement.addEventListener('shown.bs.collapse', function () {
+        toggleButton.textContent = 'Read Less';
+      });
+
+      moreTextElement.addEventListener('hidden.bs.collapse', function () {
+        toggleButton.textContent = 'Read More';
+      });
+    });
+  </script>
+  <script src="/js/index.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/pageUpBtn.js"></script>
+  </body>
+
+</html>

@@ -241,3 +241,61 @@
        <script src="/js/search.js"></script>
 </body>
 </html>
+
+
+
+<script>
+  let selectedCategories = [];
+  
+  function toggleFilter(element, categoryName) {
+      // Toggle the background color and modify the selectedCategories array
+      if (element.style.backgroundColor === "blue") {
+          element.style.backgroundColor = "";
+          element.style.color = "";
+  
+          const index = selectedCategories.indexOf(categoryName);
+          if (index > -1) {
+              selectedCategories.splice(index, 1);
+          }
+      } else {
+          element.style.backgroundColor = "blue";
+          element.style.color = "white";
+          selectedCategories.push(categoryName);
+      }
+      element.style.cursor = "pointer";
+  
+      // Update the URL based on selected categories
+      if (selectedCategories.length === 0) {
+          window.location.href = "/categories?category=newReleases";
+      } else {
+          window.location.href = "/categories?category=" + selectedCategories.join('&');
+      }
+  }
+  
+  // Function to restore category states based on URL parameters
+  document.addEventListener("DOMContentLoaded", function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categories = urlParams.get('category').split('&');
+  
+      categories.forEach(category => {
+          const filterElement = document.querySelector(`[data-category='${category}']`);
+          if (filterElement) {
+              filterElement.style.backgroundColor = "blue";
+              filterElement.style.color = "white";
+          }
+      });
+  });
+  
+  </script>
+    <div class="bg-light p-2 row d-flex justify-content-between align-items-center">
+      <h6 class="text-uppercase mb-3">Filter</h6>
+      <% let displayedCategories = 0; %>
+      <% categories.forEach(category => { %>
+          <div class="mb-1 border border-1 border-black col-5 text-center rounded-5" data-category="<%= category.name %>" onclick="toggleFilter(this, '<%= category.name %>')">
+              <small class="filter" for="<%= category.name %>">
+                  <%= category.name %>
+              </small>
+          </div>
+          <% displayedCategories++; %>
+      <% }); %>
+    </div>

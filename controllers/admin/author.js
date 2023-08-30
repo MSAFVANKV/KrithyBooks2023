@@ -71,7 +71,8 @@ exports.addAuthor = async(req, res) => {
         } else {
             const newAuthor = new authorsDetails({
                 name: inputAuthor,
-                authorImg: authorImges
+                authorImg: authorImges,
+                aboutAuthor: req.body.aboutAuthor
             });
             await newAuthor.save();
             res.redirect("/admin/authors");
@@ -141,7 +142,9 @@ exports.editauthor = async(req, res) => {
 
         await authorsDetails.updateOne(
             { _id: currentauthor._id },
-            { $set: { name: newauthor, authorImg: authorImgPath } }
+            { $set: { name: newauthor, 
+                authorImg: authorImgPath,
+                aboutAuthor: req.body.aboutAuthor} }
         );
 
         res.redirect("/admin/authors");

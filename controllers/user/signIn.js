@@ -4,9 +4,13 @@ const bcrypt=require("bcrypt");
 const User=require("../../models/user")
 
 
+
 exports.loginPage = (req, res) => {
   try {
-    res.render("user/partials/login", { message: "" });
+    res.render("user/partials/login", { 
+      message: "",
+      redirectTo: req.query.redirectTo || "/",
+    });
   } catch (error) {
     console.log("Error rendering user signup page: " + error);
   }
@@ -45,6 +49,8 @@ exports.loginPage = (req, res) => {
       }else{
         req.session.userID=user._id
         res.redirect("/")
+      //   const redirectTo = req.body.redirectTo || '/'; // Get the redirectTo value from the form
+      // res.redirect(redirectTo);
       }
 
      

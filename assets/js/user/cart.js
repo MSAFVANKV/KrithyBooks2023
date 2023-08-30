@@ -16,9 +16,10 @@ function removeFromCart(productID) {
                 animation: true,
                 title: "Removed from cart",
               });
+          $("#removeCart").load(location.href + " #removeCart");
               setTimeout(() => {
                 location.reload();
-            }, 1);
+            }, 1000);
             }
           },
     })

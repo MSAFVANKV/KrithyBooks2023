@@ -34,7 +34,16 @@ exports.view=async(req,res)=>{
                 products:req.params.id
             });
         }
-    const similarProducts= await  productCollection.find({}).sort({_id:1}).limit(10)
+    // const similarProducts= await  productCollection.find({}).sort({_id:1}).limit(10)
+
+    const similarProducts = await productCollection.find({ 
+        $or: [
+           { category: productDetails.category._id },
+           { author: productDetails.author._id }
+        ],
+        _id: { $ne: req.params.id } 
+     }).limit(10);
+     
        
         res.render("index/productShowPage", {
             documentTitle: productDetails.name,
@@ -45,7 +54,8 @@ exports.view=async(req,res)=>{
             percentageOffer,
             productsInWishlist,
             moment,
-            userCart
+            userCart,
+            similarProducts
 
           });
 

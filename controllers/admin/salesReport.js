@@ -10,7 +10,7 @@ exports.download = async (req, res) => {
             { header: "S No.", key: "s_no" },
             { header: "Order ID", key: "_id", width: 30 },
             { header: "Ordered On", key: "date", width: 20 },
-            { header: "User", key: "user", width: 20 },
+            { header: "User", key: "username", width: 20 },
             { header: "Payment", key: "modeOfPayment" },
             { header: "Delivery", key: "orderStatus", width: 20 },
             { header: "Quantity", key: "item" },
@@ -26,7 +26,7 @@ exports.download = async (req, res) => {
               $gte:new Date(req.body.fromdate)
 
             }})
-            .populate({ path: "customer", select: "name" });
+            .populate({ path: "customer", select: "username" });
      salesdata.forEach((sale,i)=>{
         const date = moment(sale.orderedOn).format("lll");
         const orderID = sale._id.toString();

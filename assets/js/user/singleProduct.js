@@ -1,4 +1,5 @@
 function addToWishlist(productId){
+  console.log("addToWishlist function called with productId:", productId);
     $.ajax({
         url:"/users/profile/wishlist",
         method:"patch",
@@ -6,8 +7,11 @@ function addToWishlist(productId){
             id:productId
         },
         success:(res)=>{
+          // const targetButton = $(`.wishlistButton[data-product-id="${productId}"] i`);
             if (res.data.added === 0) {
-                $("#wishlistHeart").html('<i class="fa fs-5 fa-heart text-black">');
+              // targetButton.removeClass("text-danger").addClass("text-black");
+              $("#wishlistHeart").html('<i class="fa fs-4 fa-heart text-black">');
+                $(`#wishlistHeart${productId}`).html('<i class="fa fs-4 fa-heart text-black">');
                 Swal.fire({
                   toast: true,
                   icon: "error",
@@ -19,7 +23,9 @@ function addToWishlist(productId){
                   title: "Removed from wishlist",
                 });
               } else if (res.data.added === 1) {
+                // targetButton.removeClass("text-black").addClass("text-danger");
                 $("#wishlistHeart").html('<i class="fa fs-4 fa-heart text-danger">');
+                $(`#wishlistHeart${productId}`).html('<i class="fa fs-4 fa-heart text-danger">');
                 Swal.fire({
                   toast: true,
                   icon: "success",
@@ -30,8 +36,8 @@ function addToWishlist(productId){
                   animation: true,
                   title: "Added to wishlist",
                 });
-              } else {
-                window.location.href = "/login";
+              } else{
+               window.location.href = "/login";
               }
 
         }
@@ -48,7 +54,7 @@ function addToWishlist(productId){
         id: productID,
       },
       success: (res) => {
-       
+        console.log(res);
         if (res.success == "countAdded") {
           Swal.fire({
             toast: true,
@@ -72,6 +78,7 @@ function addToWishlist(productId){
             animation: true,
             title: "Added to cart",
           });
+          $("#badgeCount").load(location.href + " #badgeCount");
           $("#cartCount").load(location.href + " #cartCount");
         }else if(res.success === "outofstcok" ){
           Swal.fire({

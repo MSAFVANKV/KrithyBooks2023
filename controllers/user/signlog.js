@@ -12,7 +12,10 @@ const twilio = require('twilio')
 
 exports.signUpPage = (req, res) => {
   try {
-    res.render("user/partials/signUp", { message: "" });
+    const message = req.session.tempMessage;
+    delete req.session.tempMessage;
+
+    res.render("user/partials/signUp", { message: message || "" });
   } catch (error) {
     console.log("Error rendering user signup page: " + error);
   }
@@ -92,6 +95,7 @@ exports.verifyOTP = async (req, res) => {
   try {
     // Check if the email and OTP are defined
     if (!otp) {
+      req.session.tempMessage = 'Your error or success message here.';
       return res.redirect("/verifyOTP")
     }
     console.log("after otp")

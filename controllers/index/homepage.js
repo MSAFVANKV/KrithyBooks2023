@@ -1,33 +1,52 @@
-const userDTLS = require('../../models/user')
+const userCollection = require('../../models/user')
 const productCollection = require('../../models/admin/products')
 const authorsDetails = require('../../models/admin/author')
 const categoryDetails = require('../../models/admin/category');
 const cartCollection = require('../../models/cart')
-
+const wishlistCollection = require('../../models/wishlist')
 
 exports.viewAll = async (req, res) => {
     try {
-        let currentUser
+       
         let  userCart
+        let productsInWishlist = [];
 
-        if(req.session.userID){
-            currentUser=await userDTLS.findById(req.session.userID)
-            userCart= await cartCollection.findOne({customer:req.session.userID})
+        const currentUser=await userCollection.findById(req.session.userID)
+              userCart= await cartCollection.findOne({customer:req.session.userID})
 
+      
+        const productDetails=await productCollection.findById(req.params.id).populate("author").populate("category");
+  
+
+       if(currentUser){
+        const wishlistForUser = await wishlistCollection.findOne({customer: currentUser._id});
+        if (wishlistForUser) {
+            productsInWishlist = wishlistForUser.products;
         }
-        const allAuthors=await authorsDetails.find();
+      }
+      
+        //  if(currentUser){
+         
+        //     productsInWishlist= await wishlistCollection.find({
+        //         customer:currentUser._id,
+        //         products:req.params.id
+        //     });
+        //     console.log("vfsgrhtr",productsInWishlist)
+           
+        // }
+        const allAuthors=await authorsDetails.find()
         // console.log(allAuthors,"check")
         const allProducts=await productCollection.find({listed:true})
                                              .populate("category")
                                              .populate("author").sort({_id:-1})
        let newArrivals = allProducts.slice(0,8)
-
+       let limitedAuthors = allAuthors.slice(0, 8);
       //  to get unique authors // remove same authors
       const uniqueAuthorsWithTitles = allAuthors.map(author => {
         const relatedProduct = allProducts.find(product => product.author._id.toString() === author._id.toString());
         return {
             author: author,
-            bookTitle: relatedProduct ? relatedProduct.bookTitle : "default_title"
+            authorImg: relatedProduct ? relatedProduct.authorImg : "default_title"
         };
     });
     
@@ -60,7 +79,10 @@ exports.viewAll = async (req, res) => {
           session:req.session.userID,
           userCart,
           authors: uniqueAuthorsWithTitles,
-          categories: uniqueCategoriesWithTitles
+          categories: uniqueCategoriesWithTitles,
+          productDetails,
+          productsInWishlist,
+          limitedAuthors
         });
       
       } catch (error) {

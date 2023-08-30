@@ -12,6 +12,10 @@ const  authorSchema= new mongoose.Schema({
         type: String,
         required: true,
       },
+      aboutAuthor:{
+        type: String,
+        required: true,
+      }
 })
 
 const authorsDetails=mongoose.model("Authors",authorSchema)

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css"></head>
+<body>
+    
+            
+        <div class="container bg-info d-flex justify-content-center">
+            <div class="col-5 bg-light">
+                <div class="logo d-flex justify-content-center align-items-center">
+                    <p id="logo" class="logostyle "><span class="kstyle">K</span>rithy</p>
+                </div>
+                <!-- logo -->
+                <h1 class="text-center fw-bold fs-4 mb">Sign Up</h1>
+
+                <div class="mb-3">
+                    <% if (message) { %>
+                        <div class="alert">
+                            <%= message %>
+                        </div>
+                    <% } %>
+                </div>
+                    <label for="username" class="form-label">Username</label>
+                    <input name="username" type="username" class="form-control" id="username" placeholder="Enter username" required>
+                
+                <!-- ============ -->
+                <div class="mb-3">
+                    <label for="number" class="form-label">Phone Number</label>
+                    <input name="number" 
+                    type="number"
+                    class="form-control" 
+                    id="inputNumber" 
+                    placeholder="Enter phone number"
+                    onkeyup="numberValidator()" 
+                    required>
+                    <span id="numberInvalid" class="rounded"
+                  style=" text-transform: none;color: rgb(201, 79, 79);"></span>
+                </div>
+                <!-- ==== -->
+                  <div class="mb-3">
+                      <label for="email" class="form-label">Email address</label>
+                      <input name="email" 
+                      type="email" 
+                      class="form-control" 
+                      id="emailInput" 
+                      placeholder="Enter email"
+                      onkeyup="mailValidator()" 
+                      required>
+                      <span id="mailInvalid" class=" rounded fs-3"
+                  style=" text-transform: none;color: rgb(201, 79, 79);"></span>
+                  </div>
+                  <!-- ========= -->
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input name="password" type="password" class="form-control" id="inputPassword"
+                       placeholder="Password" 
+                       required
+                       onkeyup="passwordValidator()"
+                       >
+                       <span id="passwordInvalid" class="rounded fs-6"
+                  style=" text-transform: none;color: rgb(201, 79, 79);"></span>
+                  </div>
+                  
+                  <div class="mt-4 col-12 text-center ">
+                      <button type="submit" class="btn btn-secondary w-50 logbtn" id="submitButton">Create Account</button>
+                  </div>
+              </form>
+              <div class="password fw-light col-12 text-center m"><p>Already have an account? <a href="/login" id="logforgot">Login</a> </p>
+              </div>
+    
+
+            </div>
+        </div>   
+   
+   
+   
+   <!-- boostrap-5 -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <!-- boostrap-5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/validate.js"></script>
+
+    <!--  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/pageUpBtn.js"></script>
+
+</body>
+</html>
+

@@ -54,6 +54,7 @@ exports.addOrRemove = async (req, res) => {
                 }, {
                     $pull: { products: req.body.id }
                 });
+                console.log("dffgg")
                 res.json({
                     data: {
                         added: 0,

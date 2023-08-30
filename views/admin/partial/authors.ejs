@@ -23,16 +23,17 @@
             <th>No.</th>
             <th>Name</th>
             <th>Images</th>
+            <th>About Author</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
         <% details.forEach(function(item,i){ %>
-       
           <tr>
             <td><%= i+1 %></td>
             <td><%= item.name %></td>
             <td><img src="/img/authors/<%= item.authorImg %>" alt=""  height="50px"></td>
+            <td><%= item.aboutAuthor %></td>
          
             <td class="text-center list-unstyled">
               <a
@@ -69,7 +70,8 @@
       </span>
       <form action="/admin/authors" method="post" id="uploadForm" enctype="multipart/form-data">
         <span id="error-message" class="text-danger mt-0 fw-bold text-uppercase"></span>
-        <div class="d-flex justify-content-center mb-3">
+        <div class="mb-3">
+        <label for="author" class="px-1 fw-bold">Author Name</label>
           <input
             type="string"
             class="form-control"
@@ -79,6 +81,11 @@
             style="text-transform: none"
           />
         </div>
+        <label for="aboutAuthor" class="px-1 fw-bold">About Author</label>
+        <div class=" mb-3">
+          <textarea name="aboutAuthor" id="" cols="40" rows=""></textarea>
+        </div>
+           <!-- images -->
         <div class="mb-3">
           <label for="authorImg" class="px-1" style="font-size: 0.75rem;">Upload Author image</label>
           <img class=" border" src="" width="150px"  alt="" id="output2">
@@ -91,17 +98,7 @@
           type="file"
         />
       </div>
-    <!-- images -->
-    <!-- <div class="mb-3">
-      <label for="authorImg" class="form-label">Author Img</label>
-      <input type="file"
-       class="form-control" 
-       id="authorImg" 
-       name="authorImg"
-       onchange="loadFile2(event)"
-       required
-       >
-    </div> -->
+ 
     <!-- images end -->
         <div class="d-flex justify-content-center mb-3">
           <div class=" text-center">
@@ -118,32 +115,20 @@
 
 
 <script>
-  document.getElementById('uploadForm').addEventListener('submit', function(event) {
-  var fileInput = document.getElementById('images');
-  var selectedFiles = fileInput.files;
-  
-     });
-   
-      let loadFile2 = function(event) {
-              var image = document.getElementById('output2');
-              image.src=URL.createObjectURL(event.target.files[0]);          
-          }; 
-
-// 
 document.getElementById('uploadForm').addEventListener('submit', function(event) {
     // Get the input values
     var authorNameInput = document.getElementById('form-holder').value;
     var authorImgInput = document.getElementById('authorImg').files.length;
+    var aboutAuthorInput = document.querySelector('textarea[name="aboutAuthor"]').value;
 
     // Check if they're empty
-    if (!authorNameInput.trim() || authorImgInput == 0) {
+    if (!authorNameInput.trim() || authorImgInput == 0 || !aboutAuthorInput.trim()) {
         event.preventDefault(); // Prevent form submission
         document.getElementById('error-message').textContent = "Please fill in all required fields!";
     } else {
         document.getElementById('error-message').textContent = ""; // Clear the error message
     }
 });
-
 </script>
 
 <%-include('../layouts/_footer')%>

@@ -11,12 +11,19 @@ const forgotPassword = require('../controllers/user/forgotPassword')
 const objectIdCheck = require('../middlewares/users/objectIdCheck')
 const product = require('../controllers/index/product')
 const categoriesByNovel = require('../controllers/index/category')
+const authorPage = require('../controllers/index/authors')
+
 // const logout = require('../controllers/user/logout')
 
 
 router.
       route('/')
       .get(homePage.viewAll)
+      
+
+      router.
+      route('/pageNotFound')
+      .get(homePage.errorPage)
       
 router.
       route('/signup')
@@ -59,9 +66,12 @@ router.get("/categories", newproduct.categories)
 
 // router.get("/newRelease", newproduct.categories)
 
-
 // category pages 
 router.get("/categoriesBy", homePage.categoryPage);
+
+router
+      .route('/authors')
+      .get(authorPage.authorView)
 
 // filter
 // router.post('/updateFilter', newproduct.updateFilter);

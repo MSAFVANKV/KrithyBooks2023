@@ -14,9 +14,9 @@
 /* nav */
 
 .whiashlike{
-    color: #ca1010;
-    top: 8px;
-    right: 8px;
+    /* color: #756a6a; */
+    bottom: -1px;
+    right: -10px;
     position: absolute;
     font-size: 25px;
 
