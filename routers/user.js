@@ -9,6 +9,7 @@ const wishlist = require('../controllers/user/whishlist')
 const checkOut = require('../controllers/user/checkout');
 const singleCheckOut = require('../controllers/user/singleCheckout');
 const orders = require('../controllers/user/order')
+const objectIdCheck = require('../middlewares/users/objectIdCheck')
 
 const multer = require('multer');
 
@@ -101,6 +102,12 @@ router.post("/cart/checkout/:id",async(req,res)=>{
 router
    .route("/profile/orders")
    .get(orders.viewPage)
+
+   router
+   .route("/orders/:id")
+   .get(sessionCheck, objectIdCheck, orders.details)
+   .patch(sessionCheck, objectIdCheck, orders.cancel)
+   .put(sessionCheck, objectIdCheck, orders.return)
  
 
    router

@@ -25,10 +25,39 @@
 
 <body>
 
+  <style>
+   .custom-link {
+    position: relative;
+    overflow: hidden;
+    color: black; /* or whatever color you want the text to be */
+    text-decoration: none; /* Removes the underline from the anchor tag */
+}
+
+.spani {
+    background-color: green;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    z-index: -1;
+    transition: width 0.3s;
+}
+
+.custom-link:hover .spani {
+    width: 100%;
+}
+
+/* This ensures the text remains visible and doesn't blend with the green background */
+.custom-link:hover {
+    color: white;
+}
+
+  </style>
     <div class="container">
         <div class="text-center mb-5 mt-4 d-flex flex-column justify-content-center">
         <h4 class="text-uppercase fs-3 mb-5">Your Order has been placed successfully <i class="fa fa-check"></i></h4>
-        <span class="mb-3 fw-light mt-1"> Order ID: <%=orderID%> </span>
+        <span class="mb-3 fw-light mt-1"> Order ID: 45666555 </span>
         <div class="text-center my-4">
           <span class="navbar-brand text-center" >
             <!-- logo -->
@@ -41,7 +70,11 @@
           </span>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <a href="" class="btn text-capitalize btn-success fs-5">view orerdetails</a>
+          <a href="#" class="custom-link btn text-capitalize border border-2 border-success fs-5">
+            <span class="spani"></span>
+            View order details
+        </a>
+        
             <a href="" class="btn text-capitalize btn-dark text-white fw-bold fs-5 ms-3">countinue shopping ></a>
         </div>
       </div>

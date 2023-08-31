@@ -299,3 +299,83 @@
           <% displayedCategories++; %>
       <% }); %>
     </div>
+    <!--  -->
+                            <!-- <div class="bg-light p-2 row d-flex justify-content-between align-items-center">
+                          <h6 class="text-uppercase mb-3">Filter</h6>
+                          <% let displayedCategories = 0; %>
+                          <% categories.forEach(category => { %>
+                              <% if(displayedCategories < 4) { %>
+                                  <div class="mb-1 border border-1 border-black col-5 text-center rounded-5" data-category="<%= category.name %>" onclick="toggleFilter(this, '<%= category.name %>')">
+                                      <small class="filter" for="<%= category.name %>">
+                                          <%= category.name %>
+                                      </small>
+                                  </div>
+                                  <% displayedCategories++; %>
+                              <% } %>
+                          <% }); %>
+                      
+                          <% if(categories.length > 4) { %>
+                             
+                              <div class="dropdown d-flex justify-content-end">
+                                  <a class=" btn-secondary dropdown-toggle" type="button" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                      More
+                                  </a>
+                                  <ul class="dropdown-menu" aria-labelledby="moreDropdown">
+                                      <% categories.slice(4).forEach(category => { %>
+                                          <li>
+                                              <a class="dropdown-item" href="#" onclick="toggleFilter(this, '<%= category.name %>')"><small><%= category.name %></small></a>
+                                          </li>
+                                      <% }) %>
+                                  </ul>
+                              </div>
+                          <% } %>
+                      </div>
+                       -->
+                       <!-- <% if (category.name in categories) { %> checked <% } %> -->
+                       <!-- <% categories.forEach(category => { %>
+                        <div>
+                            <input type="checkbox" name="category" value="<%= category.name %>" id="<%= category.name %>"
+                                onchange="filter(this,'<%= category.name %>')" 
+                                >
+                            <label for="<%= category.name %>">
+                                <%= category.name %>
+                            </label>
+                        </div>
+                    <% }); %>
+-->
+
+<!-- sort -->
+                      
+                        <!-- sort start -->
+                        <!-- <div class="dropdown col-6 d-flex ">
+                          <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sorted By
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"> -->
+                     
+                      <!-- <a href=" /categories?category=newReleases" class="text-decoration-none"> -->
+                              <!-- <li>
+                                <span class="dropdown-item"  onclick="sortFilter('newReleases')"
+                                  >New releases</span
+                                >
+                              </li> -->
+                            <!-- </a> -->
+                            <!--  -->
+                            <!-- <a href=" /categories?category=ascending" class="text-decoration-none"> -->
+                              <!-- <li onclick="sortFilter('ascending')">
+                                <span class="dropdown-item" 
+                                  >Price: Low to High</span
+                                >
+                              </li> -->
+                            <!-- </a> -->
+                            <!--  -->
+                            <!-- <a href="/categories?category=descending" class="text-decoration-none"> -->
+                              <!-- <li onclick="sortFilter('descending')">
+                                <span class="dropdown-item" 
+                                  >Price: High to low</span
+                                >
+                              </li> -->
+                            <!-- </a> -->
+                           
+                          <!-- </ul>
+                      </div> -->

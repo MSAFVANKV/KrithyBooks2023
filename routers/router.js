@@ -62,7 +62,9 @@ router.post("/changePassword",forgotPassword.updatePassword);
 // ===================================
 
 
-router.get("/categories", newproduct.categories)
+// router.get("/categories", newproduct.categories)
+router.get("/allproducts", newproduct.categories)
+
 
 // router.get("/newRelease", newproduct.categories)
 

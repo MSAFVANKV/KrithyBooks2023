@@ -121,6 +121,104 @@ const cartCollection =require("../../models/cart")
 //     console.log("Error categorizing in products page: " + error);
 //   }
 // };
+// ======================
+// exports.categories = async(req, res) => {
+//   try {
+//     let category = req.query.category || [];
+//     // If the category is a string, make it an array
+//     if (typeof category === 'string') {
+//       category = [category];
+//     }
+//     console.log(category, 'category');
+    
+//     let page = parseInt(req.query.page) || 1;  
+//     let itemsPerPage = 12;
+//     let offset = (page - 1) * itemsPerPage;
+//     let listing;
+//     let currentUser = null;
+//     let userCart;
+//     let sortBy = {};
+//     let errorMessage = null;
+
+//     // Fetch all categories
+//     let categories = await categoryCollection.find({});
+//     userCart = await cartCollection.findOne({customer:req.session.userID});
+
+//     if(req.session.userID) {
+//       currentUser = await userDTLS.findOne({_id:req.session.userID});
+//     }
+
+//     // Check if the category exists in the DB.
+//     let categoryObjects = categories.filter(cat => category.includes(cat.name));
+//     let categoryIDs = categoryObjects.map(obj => obj._id); // get all matching category ids
+
+//     if(categoryIDs.length > 0) {
+//       // Category filtering
+//       listing = await productCollection.find({ category: { $in: categoryIDs }, listed: true })
+//                                       .skip(offset)
+//                                       .limit(itemsPerPage)
+//                                       .sort(sortBy);
+//     } else {
+//       let categoryString = Array.isArray(category) ? category.join(',') : category;
+//       console.log(category,categoryString,"zxnm,")
+
+//       switch(categoryString) {
+//         case "newReleases":
+//           sortBy = { _id: -1 };
+//           break;
+//         case "ascending":
+//           sortBy = { price: 1 };
+//           break;
+//         case "descending":
+//           sortBy = { price: -1 };
+//           break;
+//       }
+
+//       listing = await productCollection.find({ listed: true })
+//                                       .skip(offset)
+//                                       .limit(itemsPerPage)
+//                                       .sort(sortBy);
+//     }
+
+//     if (listing.length === 0) {
+//       errorMessage = 'No Products Available, Check the spelling!';
+//     }
+
+//     res.render("index/newReleasePage", {
+//       listing: listing,
+//       listingName: "New Releases",
+//       session: req.session.userID,
+//       userCart,
+//       currentUser,
+//       page,
+//       itemsPerPage,
+//       category,
+//       categories, 
+//       errorMessage: errorMessage
+//     });
+
+//   } catch(error) {
+//     res.redirect('/');
+//     console.log("Error categorizing in products page: " + error);
+//   }
+// };
+// exports.allProducts = async(req, res) => {
+//   try {
+
+//     let listing = await productCollection.find({
+//       listed: true 
+//     })
+//     .sort({_id:-1});
+//     res.render("index/newReleasePage",{
+//       listing: listing,
+//       session: req.session.userID,
+//     })
+//   } catch (error) {
+//     res.redirect('/');
+//     console.log("Error categorizing in products page: " + error);
+//   }
+// }
+
 exports.categories = async(req, res) => {
   try {
     let category = req.query.category || [];
@@ -128,8 +226,11 @@ exports.categories = async(req, res) => {
     if (typeof category === 'string') {
       category = [category];
     }
-    console.log(category, 'category');
-    
+
+    // Additions: Handle the price range
+    let minPrice = parseFloat(req.query.minPrice) || 0;  // Set a default minPrice if not provided
+    let maxPrice = parseFloat(req.query.maxPrice) || 10000;  // Set a default maxPrice if not provided
+
     let page = parseInt(req.query.page) || 1;  
     let itemsPerPage = 12;
     let offset = (page - 1) * itemsPerPage;
@@ -151,15 +252,9 @@ exports.categories = async(req, res) => {
     let categoryObjects = categories.filter(cat => category.includes(cat.name));
     let categoryIDs = categoryObjects.map(obj => obj._id); // get all matching category ids
 
-    if(categoryIDs.length > 0) {
-      // Category filtering
-      listing = await productCollection.find({ category: { $in: categoryIDs }, listed: true })
-                                      .skip(offset)
-                                      .limit(itemsPerPage)
-                                      .sort(sortBy);
-    } else {
-      let categoryString = Array.isArray(category) ? category.join(',') : category;
-      switch(categoryString) {
+    // Handle sort query
+    let sortQuery = req.query.sort || null;
+    switch(sortQuery) {
         case "newReleases":
           sortBy = { _id: -1 };
           break;
@@ -169,12 +264,28 @@ exports.categories = async(req, res) => {
         case "descending":
           sortBy = { price: -1 };
           break;
-      }
+          default:
+            sortBy = { _id: -1 }; 
+    }
 
-      listing = await productCollection.find({ listed: true })
-                                      .skip(offset)
-                                      .limit(itemsPerPage)
-                                      .sort(sortBy);
+    if(categoryIDs.length > 0) {
+      // Category filtering
+      listing = await productCollection.find({ 
+                    category: { $in: categoryIDs }, 
+                    price: { $gte: minPrice, $lte: maxPrice }, 
+                    listed: true 
+                  })
+                  .skip(offset)
+                  .limit(itemsPerPage)
+                  .sort(sortBy);
+    } else {
+      listing = await productCollection.find({ 
+                    listed: true,
+                    price: { $gte: minPrice, $lte: maxPrice }
+                  })
+                  .skip(offset)
+                  .limit(itemsPerPage)
+                  .sort(sortBy);
     }
 
     if (listing.length === 0) {
@@ -199,7 +310,6 @@ exports.categories = async(req, res) => {
     console.log("Error categorizing in products page: " + error);
   }
 };
-
 
 exports.search = async (req, res) => {
   const searchInput = req.query.searchInput;

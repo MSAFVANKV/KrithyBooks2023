@@ -1,95 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>productPage</title>
-    <!-- boostrap- 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-    <!-- stylles -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/prductlist.css">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>productPage</title>
+  <!-- boostrap- 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <!-- Include noUiSlider CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/nouislider@14.7.0/distribute/nouislider.min.css" rel="stylesheet">
+
+
+  <!-- stylles -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prductlist.css">
 </head>
+
 <body>
 
   <style>
     .zoom {
-    transition: transform .2s; /* Animation */
-}
+      transition: transform .2s;
+      /* Animation */
+    }
 
-.zoom:hover {
-    transform: scale(1.1); 
-}
-.shado{
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-.shado:hover{
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-}
-.d{
-  cursor: pointer;
-}
-.selected {
-    background-color: blue;
-    color: white;
-}
+    .zoom:hover {
+      transform: scale(1.1);
+    }
 
+    .shado {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .shado:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .d {
+      cursor: pointer;
+    }
+
+    .selected {
+      background-color: blue;
+      color: white;
+    }
+    .sortBy{
+      cursor: pointer;
+    }
   </style>
 
-    <!-- new product showing pages -->
+  <!-- new product showing pages -->
 
-    <!-- nav bar / header -->
+  <!-- nav bar / header -->
 
-    <nav class="navbar navbar-expand-lg d-flex shadow">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand logohome mx-auto" href="/">
-                <span class="k">K</span>rithy
-            </a>
-    
-            <!-- Navbar Toggler -->
-            <button class="navbar-toggler shadow" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <!-- Navbar Collapse -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="container d-flex justify-content-center">
-    
-                    <!-- Search Bar -->
-                    <!-- <form class="d-flex ms-3 justify-content-center" action="/search" method="get">
+  <nav class="navbar navbar-expand-lg d-flex shadow">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand logohome mx-auto" href="/">
+        <span class="k">K</span>rithy
+      </a>
+
+      <!-- Navbar Toggler -->
+      <button class="navbar-toggler shadow" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar Collapse -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="container d-flex justify-content-center">
+
+          <!-- Search Bar -->
+          <!-- <form class="d-flex ms-3 justify-content-center" action="/search" method="get">
                       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q">
                       <button class="btn btn-outline-primary" type="submit">Search</button>
                     </form> -->
-                    <div class="container " >
+          <div class="container ">
 
-                      <!-- <div class="input-group flex-nowrap my-2 " style="width: 250px">
+            <!-- <div class="input-group flex-nowrap my-2 " style="width: 250px">
                           <input type="text" class="form-control" placeholder="Search" id="searchInput" />
                           <button type="button" class="btn btn-primary" style="height: fit-content;"
                               onclick="search()">
                               <i class="fas fa-search"></i>
                           </button>
                       </div> -->
-                      <!--  -->
-                      <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
-                        <div class="input-group flex-nowrap my-2 " style="width: 250px">
-                        <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
-                        <button type="submit" class="btn btn-primary" style="height: fit-content;">
-                            <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </form>
+            <!--  -->
+            <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
+              <div class="input-group flex-nowrap my-2 " style="width: 250px">
+                <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
+                <button type="submit" class="btn btn-primary" style="height: fit-content;">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </form>
 
-                  </div>
-                    
-                </div>
-                <ul class="navbar-nav ms-auto hamurgerToggle">
-       
-    
-                    <!-- Cart Icon -->
+          </div>
+
+        </div>
+        <ul class="navbar-nav ms-auto hamurgerToggle">
+
+
+          <!-- Cart Icon -->
           <% if (session) { %>
             <li class="nav-item">
               <div class="logout">
@@ -100,18 +117,20 @@
             </li>
             <li class="nav-item me-2">
               <a class="nav-link" href="/users/profile/cart">
-                  <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
-                  <span id="cartCount" class="badge bg-danger"></span>
-                   <span id="badge"><%=userCart.products.length%></span>  <!-- This will show the cart count -->
+                <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                <span id="cartCount" class="badge bg-danger"></span>
+                <span id="badge">
+                  <%=userCart.products.length%>
+                </span> <!-- This will show the cart count -->
               </a>
-          </li>
-          
+            </li>
+
 
             <!-- Wishlist/Heart Icon -->
             <li class="nav-item me-2">
-                <a class="nav-link" href="/users/profile/wishlist">
-                    <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
-                </a>
+              <a class="nav-link" href="/users/profile/wishlist">
+                <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
+              </a>
             </li>
 
             <!-- User/Contact Icon -->
@@ -121,44 +140,44 @@
                 <div class="profile" style="background-image: url('/img/users/<%=locals.currentUser.photo%>');">
                   <a class="nav-link" href="/users/profile"></a>
                 </div>
-              <% } else { %>
-                <!-- If photo doesn't exist, show the icon -->
-                <a class="nav-link" href="/users/profile">
-                  <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
-                </a>
-              <% } %>
+                <% } else { %>
+                  <!-- If photo doesn't exist, show the icon -->
+                  <a class="nav-link" href="/users/profile">
+                    <i class="fa-regular fa-user fa-lg" style="color: #0c0c0c;"></i>
+                  </a>
+                  <% } %>
             </li>
 
-        <% }else{%> 
-            <!-- login button -->
-          <li class="nav-item m-auto">
-                  <a href="login" class="text-decoration-none color-1">LOGIN</a>
-          </li>
-          <li class="nav-item me-2">
-            <a class="nav-link" href="/users/profile/cart">
-                <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
-                <span id="cartCount" class="badge bg-danger"></span>
-            </a>
-        </li>
-        
+            <% }else{%>
+              <!-- login button -->
+              <li class="nav-item m-auto">
+                <a href="login" class="text-decoration-none color-1">LOGIN</a>
+              </li>
+              <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/cart">
+                  <i class="fas fa-shopping-cart fa-lg" style="color: #050505;"></i>
+                  <span id="cartCount" class="badge bg-danger"></span>
+                </a>
+              </li>
 
-          <!-- Wishlist/Heart Icon -->
-          <li class="nav-item me-2">
-              <a class="nav-link" href="/users/profile/wishlist">
+
+              <!-- Wishlist/Heart Icon -->
+              <li class="nav-item me-2">
+                <a class="nav-link" href="/users/profile/wishlist">
                   <i class="fa-regular fa-heart fa-lg" style="color: #080808;"></i>
-              </a>
-          </li>
+                </a>
+              </li>
 
-          <%}%>
-<!-- login button -->
-                </ul>
-            </div>
-        </div>
-    </nav>
-        <!-- nav bar / header == ending -->
+              <%}%>
+                <!-- login button -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- nav bar / header == ending -->
 
-        <!-- Filter -->   
-<!-- 
+  <!-- Filter -->
+  <!-- 
         <div class="mx-5 mt-5">
             <div class="row">
                Filter dropdown
@@ -176,217 +195,207 @@
             </div>
         </div> -->
 
-          <% if(listing != null){ %>
-            <div class="container-fluid">
-                <div class="row ">
-                    <!-- filter sidebar -->
-                    <div class="col-md-2 col-sm-1 bg-light">
+  <% if(listing !=null){ %>
+    <div class="container-fluid">
+      <div class="row ">
+        <!-- filter sidebar -->
+        <div class="col-md-2 col-sm-1 bg-light">
+          <!--  -->
+          <% if(listingName !=null){%>
+            <div class="justify-content-center d-flex">
+              <h5 class=" mt-3">
+                <u class="color-G">
+                  <span class="text-black text-uppercase text-center ">
+                    <%=listingName%>
+                  </span>
+                </u>
+              </h5>
+            </div>
+            <%}%>
+
+              <!--  -->
+
+
+              <% categories.forEach(category=> { %>
+                <div>
+                  <input type="checkbox" name="category" value="<%= category.name %>" id="<%= category.name %>"
+                    onchange="filter(this, '<%= category.name %>')">
+                  <label for="<%= category.name %>">
+                    <%= category.name %>
+                  </label>
+                </div>
+                <% }); %>
+                  <!-- price range -->
+                  <!-- price range -->
+                  <div class="my-4">
+                    <h5 class="my-3">Price Range:</h5>
+                    <div class="d-flex justify-content-center">
+                      <div id="price-range" class="w-75"></div>
+                    </div>
+                    <!--  -->
+
+                    <!-- Input fields to display selected range -->
+                    <div class="my-2 d-flex justify-content-between">
+                      <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Min</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                          aria-describedby="inputGroup-sizing-sm" id="input-lower" readonly>
+                      </div>
                       <!--  -->
-                      <% if(listingName != null){%>
-                        <div class="justify-content-center d-flex">
-                          <h5 class=" mt-3">
-                            <u class="color-G">
-                              <span class="text-black text-uppercase text-center ">
-                                <%=listingName%>
+                      <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Max</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input"
+                          aria-describedby="inputGroup-sizing-sm" id="input-upper" readonly>
+                      </div>
+                    </div>
+
+                    <!-- The Clear Filter button -->
+                    <!-- <div class="my-2">
+                        <button id="clearFilterButton" class="btn btn-secondary" style="display: none;">Clear Filter</button>
+                    </div> -->
+                  </div>
+                  <p>
+                    <!-- sort start -->
+                  <p class="d-flex justify-content-center ">
+                    <a class="btn btn-success w-100 shadow" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                      aria-expanded="false" aria-controls="collapseExample">
+                      Sorted By
+                    </a>
+                  </p>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      <ul class="list-unstyled">
+                        <li class="bg-light text-center border">
+                          <span class="fw-bold sortBy" onclick="sortFilter('newReleases')">New releases</span>
+                        </li>
+
+                        <li onclick="sortFilter('ascending')" class="bg-light text-center border">
+                          <span class="fw-bold sortBy">Price: Low to High</span>
+                        </li>
+
+                        <li onclick="sortFilter('descending')" class="bg-light text-center border">
+                          <span class="fw-bold sortBy">Price: High to low</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- sort colaps end -->
+                  <!-- sort end -->
+
+        </div>
+
+        <!-- product listing -->
+        <div class="col-md-10 col-sm-8 mt-4">
+          <div class="row" id="productListContainer">
+            <!-- search error -->
+            <% if (errorMessage) { %>
+              <div class="alert alert-danger text-center mt-5">
+                <%= errorMessage %>
+              </div>
+              <% } %>
+                <!--  -->
+                <% listing.forEach((product, i)=> { %>
+                  <div class="col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-5">
+                    <!-- < inside// data-category="<%=product.categoryName %>" -->
+                    <a href="/products/<%=product._id%>" class="text-decoration-none">
+                      <div class="card shado zoom" style="width: 16rem;">
+                        <div class="">
+                          <img style="max-height: 270px;" class="card-img-top img-fluid"
+                            src="/img/books/<%= product.thumbnail %>" alt="Book image">
+                        </div>
+                        <div class="card-body">
+                          <div class="text-center">
+                            <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block"
+                              style="max-width: 200px;">
+                              <%=product.name%>
+                            </span>
+                          </div>
+                          <div class="d-flex">
+                            <div class="m-auto gap-3">
+                              <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
+                              <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %>
+                                    </del></span>
+                              <span class="card-text text-info">
+                                <%= product.discount %>%off
                               </span>
-                            </u>
-                          </h5>  
-                        </div>
-                        <%}%>
-                        
-                        <!--  -->
-                        <!-- <div class="bg-light p-2 row d-flex justify-content-between align-items-center">
-                          <h6 class="text-uppercase mb-3">Filter</h6>
-                          <% let displayedCategories = 0; %>
-                          <% categories.forEach(category => { %>
-                              <% if(displayedCategories < 4) { %>
-                                  <div class="mb-1 border border-1 border-black col-5 text-center rounded-5" data-category="<%= category.name %>" onclick="toggleFilter(this, '<%= category.name %>')">
-                                      <small class="filter" for="<%= category.name %>">
-                                          <%= category.name %>
-                                      </small>
-                                  </div>
-                                  <% displayedCategories++; %>
-                              <% } %>
-                          <% }); %>
-                      
-                          <% if(categories.length > 4) { %>
-                             
-                              <div class="dropdown d-flex justify-content-end">
-                                  <a class=" btn-secondary dropdown-toggle" type="button" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                      More
-                                  </a>
-                                  <ul class="dropdown-menu" aria-labelledby="moreDropdown">
-                                      <% categories.slice(4).forEach(category => { %>
-                                          <li>
-                                              <a class="dropdown-item" href="#" onclick="toggleFilter(this, '<%= category.name %>')"><small><%= category.name %></small></a>
-                                          </li>
-                                      <% }) %>
-                                  </ul>
-                              </div>
-                          <% } %>
-                      </div>
-                       -->
-                       <!-- <% if (category.name in categories) { %> checked <% } %> -->
-                       <!-- <% categories.forEach(category => { %>
-                        <div>
-                            <input type="checkbox" name="category" value="<%= category.name %>" id="<%= category.name %>"
-                                onchange="filter(this,'<%= category.name %>')" 
-                                >
-                            <label for="<%= category.name %>">
-                                <%= category.name %>
-                            </label>
-                        </div>
-                    <% }); %>
-                     -->
-                     <% categories.forEach(category => { %>
-                      <div>
-                          <input type="checkbox" name="category" value="<%= category.name %>" id="<%= category.name %>"
-                              onchange="filter(this, '<%= category.name %>')"
-                          >
-                          <label for="<%= category.name %>">
-                              <%= category.name %>
-                          </label>
-                      </div>
-                  <% }); %>
-                  
-                      
-                        <!-- sort start -->
-                        <div class="dropdown col-6 d-flex ">
-                          <button class="btn text-uppercase btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Sorted By
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                     
-                      <a href=" /categories?category=newReleases" class="text-decoration-none">
-                              <li>
-                                <span class="dropdown-item" 
-                                  >New releases</span
-                                >
-                              </li>
-                            </a>
-                            <!--  -->
-                            <a href=" /categories?category=ascending" class="text-decoration-none">
-                              <li>
-                                <span class="dropdown-item" 
-                                  >Price: Low to High</span
-                                >
-                              </li>
-                            </a>
-                            <!--  -->
-                            <a href="/categories?category=descending" class="text-decoration-none">
-                              <li>
-                                <span class="dropdown-item" 
-                                  >Price: High to low</span
-                                >
-                              </li>
-                            </a>
-                           
-                          </ul>
-                      </div>
-                        <!-- sort end -->
-
-                    </div>
-        
-                    <!-- product listing -->
-                    <div class="col-md-10 col-sm-8 mt-4">
-                        <div class="row" id="productListContainer">
-                          <!-- search error -->
-                          <% if (errorMessage) { %>
-                            <div class="alert alert-danger text-center mt-5">
-                              <%= errorMessage %>
                             </div>
-                          <% } %>
-                          <!--  -->
-                            <% listing.forEach((product, i) => { %>
-                                <div class="col-lg-3 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-5" ><!-- < inside// data-category="<%=product.categoryName %>" -->
-                                    <a href="/products/<%=product._id%>" class="text-decoration-none">
-                                        <div class="card shado zoom" style="width: 16rem;">
-                                            <div class="">
-                                                <img style="max-height: 270px;" class="card-img-top img-fluid" src="/img/books/<%= product.thumbnail %>" alt="Book image">
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 200px;"><%=product.name%></span>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <div class="m-auto gap-3">
-                                                        <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
-                                                        <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
-                                                        <span class="card-text text-info"><%= product.discount %>%off</span>
-                                                    </div>
-                                                </div>
-                                                <p class="text-center">Rating: </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <!--  -->
-                            <% }) %>
+                          </div>
+                          <p class="text-center">Rating: </p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        <% } %>
-                    <!-- pagination -->
-            <!-- your existing html code ... -->
-            <div class="d-flex justify-content-center mb-2">
-              <% if (page > 1) { %>
-                <label onclick="location.href='/categories?category=<%=category%>&page=<%= page - 1 %>'" style="cursor: pointer;">
-                  <i class="bi bi-arrow-left-circle"></i>
-                </label>
+                      </div>
+                    </a>
+                  </div>
+                  <!--  -->
+                  <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+      <!-- pagination -->
+      <!-- your existing html code ... -->
+      <div class="d-flex justify-content-center mb-2">
+        <% if (page> 1) { %>
+          <label onclick="location.href='/allproducts?category=<%=category%>&page=<%= page - 1 %>'"
+            style="cursor: pointer;">
+            <i class="bi bi-arrow-left-circle"></i>
+          </label>
+          <% } %>
+            <span class="mx-3 shadow fw-bold">Page <%= page %></span>
+            <% if (listing.length===itemsPerPage) { %>
+              <label onclick="location.href='/allproducts?category=<%=category%>&page=<%= page + 1 %>'"
+                style="cursor: pointer;">
+                <i class="bi bi-arrow-right-circle"></i>
+              </label>
               <% } %>
-              <span class="mx-3 shadow fw-bold">Page <%= page %></span>
-              <% if (listing.length === itemsPerPage) { %>
-                <label onclick="location.href='/categories?category=<%=category%>&page=<%= page + 1 %>'" style="cursor: pointer;">
-                   <i class="bi bi-arrow-right-circle"></i>
-                </label>
-              <% } %>
+      </div>
+
+
+
+
+
+      <!-- your existing html code ... -->
+
+
+
+      <footer class="container-fluid bg-dark ">
+        <div class="row pt-5">
+          <div class="col-4 d-flex justify-content-center">
+            <div class="container col-8">
+              <span class="color-main fw-bold ">ABOUT KRITHY</span>
+              <p class="text-center text-lg-start text-white">KRITHY Books started in 2023 by Muhammed Safvan kv
+                [popularly known as KRITHY,
+                publishing in India]</p>
             </div>
-            
-            
-
-
-
-<!-- your existing html code ... -->
-
-
-
-          <footer class="container-fluid bg-dark ">
-            <div class="row pt-5">
-                <div class="col-4 d-flex justify-content-center">
-                    <div class="container col-8">
-                        <span class="color-main fw-bold ">ABOUT KRITHY</span>
-                        <p class="text-center text-lg-start text-white">KRITHY Books started in 2023 by Muhammed Safvan kv [popularly known as KRITHY, 
-                          publishing in India]</p>
-                    </div>
-                </div>
-                <div class="col-4 d-flex justify-content-center">
-                    <div class="container col-8 justify-content-center ">
-                        <span class="color-main fw-bold text-uppercase">links</span>
-                        <div class="col-lg-3 col">
-                            <a href="" class="">Authors</a>
-                            <a href="">Wishlist</a>
-                            <a href="">Cart</a>
-                            <a href="">Shopping</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="container col-8">
-                        <span class="color-main fw-bold text-uppercase">follow us</span>
-                        <p class="text-center text-lg-start">KRITHY Books started in 2023 by Muhammed Safvan kv [popularly known as KRITHY, 
-                          publishing in India]</p>
-                    </div>
-                </div>
-                <p class="mt-5 text-center text-light fst-italic">&copy; 2023 Krithy books. All rights reserved.</p>
-
+          </div>
+          <div class="col-4 d-flex justify-content-center">
+            <div class="container col-8 justify-content-center ">
+              <span class="color-main fw-bold text-uppercase">links</span>
+              <div class="col-lg-3 col">
+                <a href="" class="">Authors</a>
+                <a href="">Wishlist</a>
+                <a href="">Cart</a>
+                <a href="">Shopping</a>
+              </div>
             </div>
-          </footer>
-        
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-          integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-          <!-- <script>
+          </div>
+          <div class="col-4">
+            <div class="container col-8">
+              <span class="color-main fw-bold text-uppercase">follow us</span>
+              <p class="text-center text-lg-start">KRITHY Books started in 2023 by Muhammed Safvan kv [popularly known
+                as KRITHY,
+                publishing in India]</p>
+            </div>
+          </div>
+          <p class="mt-5 text-center text-light fst-italic">&copy; 2023 Krithy books. All rights reserved.</p>
+
+        </div>
+      </footer>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <!-- <script>
  $(document).ready(function() {
     $('.category-filter').change(function() {
         let checkedCategories = [];
@@ -415,13 +424,20 @@
 
 
             </script> -->
-    
-       <!-- boostrap-5 -->
-       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-       <!-- boostrap-5 -->
- 
-       <script src="/js/search.js"></script>
-       <script src="/js/filter.js"></script>
+
+      <!-- boostrap-5 -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+      <!-- boostrap-5 -->
+      <!-- Include noUiSlider JavaScript -->
+      <script src="https://cdn.jsdelivr.net/npm/nouislider@14.7.0/distribute/nouislider.min.js"></script>
+
+      <script src="/js/search.js"></script>
+      <script src="/js/filter.js"></script>
 </body>
+
 </html>
