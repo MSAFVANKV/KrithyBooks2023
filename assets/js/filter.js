@@ -67,20 +67,7 @@
 //         window.location.href = newUrl;
 //     }
 // }
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Set checkboxes based on the categories in the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoriesInUrl = urlParams.getAll('category');
-    console.log(categoriesInUrl)
-    categoriesInUrl.forEach(categoryName => {
-        const checkbox = document.getElementById(categoryName);
-        if (checkbox) {
-            checkbox.checked = true;
-        }
-    });
-});
-
+// =========
 // function filter(checkbox, categoryName) {
 //     let currentUrl = window.location.href;
 //     let newUrl = "";
@@ -108,6 +95,29 @@ document.addEventListener("DOMContentLoaded", function() {
 // function sortFilter(sortBy) {
 //     window.location.href = window.location.href+sortBy
 // }
+
+// =======
+function isFilterApplied() {
+    let urlParams = new URLSearchParams(window.location.search);
+    return urlParams.has('minPrice') || urlParams.has('maxPrice');
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    if (isFilterApplied()) {
+        document.getElementById('clearFilterButton').style.display = 'block';
+    }
+    // Set checkboxes based on the categories in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoriesInUrl = urlParams.getAll('category');
+    console.log(categoriesInUrl)
+    categoriesInUrl.forEach(categoryName => {
+        const checkbox = document.getElementById(categoryName);
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+    });
+});
+
 
 function filter(checkbox, categoryName) {
     let currentUrl = new URL(window.location.href);
@@ -169,7 +179,7 @@ priceRange.noUiSlider.on('change', function(values, handle) {
     document.getElementById('input-upper').value = upperPrice;
 
     // Show the clear filter button
-    // document.getElementById('clearFilterButton').style.display = 'block';
+    document.getElementById('clearFilterButton').style.display = 'block';
     // Update the URL and trigger the backend to filter products based on the price range
     updatePriceInURL(lowerPrice, upperPrice);
 });
@@ -185,16 +195,13 @@ function updatePriceInURL(minPrice, maxPrice) {
     window.location.href = currentUrl.toString();
 }
 
-// function clearPriceFilter() {
-//     let currentUrl = new URL(window.location.href);
-//     let urlParams = new URLSearchParams(currentUrl.search);
+document.getElementById('clearFilterButton').addEventListener('click', function(event) {
+    event.preventDefault(); // prevent the default action
 
-//     urlParams.delete('minPrice');
-//     urlParams.delete('maxPrice');
+    // Reset the price range to its default
+    priceRange.noUiSlider.set([0, 1000]);
 
-//     currentUrl.search = urlParams.toString();
-//     window.location.href = currentUrl.toString();
-// }
+    // Redirect to /allproducts
+    window.location.href = '/allproducts';
+});
 
-// // Add a click event listener to the clear filter button
-// document.getElementById('clearFilterButton').addEventListener('click', clearPriceFilter);

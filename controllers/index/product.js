@@ -1,7 +1,12 @@
 const userCollection = require('../../models/user')
 const productCollection =require('../../models/admin/products')
 const wishlistCollection = require('../../models/wishlist');
-const cartCollection = require('../../models/cart')
+const cartCollection = require('../../models/cart');
+const reviewCollection = require("../../models/user/reviews");
+const orderCollection = require("../../models/order");
+const mongoose = require('mongoose');
+
+
 const moment = require("moment")
 
 // exports.productView = async (req, res) => {
@@ -43,8 +48,43 @@ exports.view=async(req,res)=>{
         ],
         _id: { $ne: req.params.id } 
      }).limit(10);
-     
-       
+
+    //  
+    let reviews = await reviewCollection.find({ product: productDetails._id })
+                .sort({
+                createdAt: -1,
+                })
+                .populate({
+                path: "customer",
+                select: "username photo",
+                });
+               
+
+   let allOrders = await orderCollection
+   .find({ customer: req.session.userID })
+//  console.log(allOrders)
+    
+let hasOrderedProduct = false;
+let orderWasCancelled = false;
+
+for (const order of allOrders) {
+    for (const product of order.summary) {
+        if (product.product.toString() === req.params.id) {
+            hasOrderedProduct = true;
+            if (order.status === 'Cancelled') {
+                orderWasCancelled = true;
+            }
+            break; // Exit the inner loop once a match is found
+        }
+    }
+
+    if (hasOrderedProduct) {
+        break; // Exit the outer loop once a match is found
+    }
+}
+
+
+   
         res.render("index/productShowPage", {
             documentTitle: productDetails.name,
             productDetails,
@@ -55,7 +95,12 @@ exports.view=async(req,res)=>{
             productsInWishlist,
             moment,
             userCart,
-            similarProducts
+            similarProducts,
+            allOrders,
+            hasOrderedProduct,
+            productID: req.params.id,
+            reviews,
+            orderWasCancelled
 
           });
 
@@ -65,3 +110,4 @@ exports.view=async(req,res)=>{
         console.log("error rendering product page:"+error)
     }
 }
+

@@ -10,7 +10,7 @@ const checkOut = require('../controllers/user/checkout');
 const singleCheckOut = require('../controllers/user/singleCheckout');
 const orders = require('../controllers/user/order')
 const objectIdCheck = require('../middlewares/users/objectIdCheck')
-
+const reviews = require('../controllers/user/reviews');
 const multer = require('multer');
 
 
@@ -131,8 +131,13 @@ router
 
   router.get("/directCheckout/offer/:id",singleCheckOut.offer);
 
-  
-
+  router
+        .route("/reviews")
+        .post(sessionCheck,reviews.addReview)
+        .put(sessionCheck,reviews.editReview)
+        .patch(reviews.helpful);
+        
+        
     // router
     // .route('/singleCheckout')
     // .get(sessionCheck, singleCheckOut.singleCheckout)

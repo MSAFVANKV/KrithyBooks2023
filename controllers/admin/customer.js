@@ -8,7 +8,7 @@ exports.viewAll = async (req, res) => {
       res.render("admin/partial/customers", {
         sessionadmin: req.session.admin,
         allCustomers,
-        documentTitle: "Customer Management | SHOE ZONE",
+        documentTitle: "Customer Management | Krihty",
       });
     } catch (error) {
       console.log("Error listing all users: " + error);

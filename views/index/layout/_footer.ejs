@@ -30,7 +30,7 @@
     </div>
   </footer>
 
-
+<!-- 
   <script>
     // Get the stars and form elements
     var stars = document.querySelectorAll('#rating i');
@@ -60,6 +60,7 @@
         var productName = document.querySelector('#productName').value;
         var reviewTitle = document.querySelector('#reviewTitle').value;
         var rating = document.querySelectorAll('#rating .fas').length;
+        document.querySelector('#hiddenRating').value = rating;  // Add this line
         var message = document.querySelector('#message').value;
         // Append a new review to the reviews list
         var review = document.createElement('div');
@@ -81,7 +82,7 @@
     });
 
 
-</script>
+</script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

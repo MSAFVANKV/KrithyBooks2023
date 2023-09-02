@@ -14,6 +14,11 @@
                 max-width: 16rem;
                 max-height: 22rem;
             }
+            .selected {
+                color: yellow;
+                
+            }
+
     </style>
     
     <nav class="navbar navbar-expand-lg d-flex shadow">
@@ -123,7 +128,7 @@
                         <div class="d-flex justify-content-center flex-column mx-3 bg-white mb-2 ">
                             <div class="col-12 col-sm-6 col-md-4 ">
                                 <a href="/img/books/<%=productDetails.images[0] %>">
-                                    <img class="img-fluid mt-2 scaled thumbimg thumbimgSize" src="/img/books/<%=productDetails.thumbnail %>">
+                                    <img class="img-fluid mt-2 scaled thumbimg thumbimgSize" src="/img/books/<%=productDetails.images[0] %>">
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-md-4 ">
@@ -266,53 +271,238 @@
          <!--  -->
 
         <!-- review page -->
-        <div class="container mt-5">
-            <div class="row">
-                <!-- Review form -->
-                <div class="col-md-6">
-                    <h3>Leave a review</h3>
-                    <form id="reviewForm">
-                        <div class="form-group">
-                            <label for="productName">Product Name</label>
-                            <input type="text" class="form-control" id="productName">
-                        </div>
-                        <div class="form-group">
-                            <label for="reviewTitle">Review Title</label>
-                            <input type="text" class="form-control" id="reviewTitle">
-                        </div>
-                        <div class="form-group">
-                            <label for="rating">Rating</label>
-                            <div id="rating" class="mb-3">
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
+        <% if(hasOrderedProduct && !orderWasCancelled){%>
+            <div class="container mt-5" id="reviewAdding">
+                <div class="row">
+                    <!-- Review form -->
+                    <div class="col-md-6">
+                        <h3>Leave a review</h3>
+                        <form action="/users/reviews?productID=<%=productDetails._id%>" method="post" id="reviewForm">
+                            <div class="form-group">
+                                <label for="productName">Product Name</label>
+                                <input type="text" class="form-control" id="productName" name="productName" value="<%=productDetails.name%>" readonly>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea class="form-control" id="message" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary d-flex justyfy">Submit</button>
-                    </form>
-                </div>
+                            <div class="form-group">
+                                <label for="reviewTitle">Review Title</label>
+                                <input type="text" class="form-control" id="reviewTitle" name="reviewTitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="rating">Rating</label>
+                                <div id="rating" class="mb-3" data-rating="0">
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
+                                </div>
+                                <input type="hidden" name="rating" id="hiddenRating">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Your Message</label>
+                                <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success my-3 d-flex justify-content-center">Submit</button>
+                        </form>
+                    </div>
+                <% } else { %>
+                    <p class="text-center fw-bold text-danger">Reviews are only allowed for ordered items. Please order the product!!</p>
+                <% } %>
                 
                 <!-- Submitted reviews -->
-                <div class="col-md-6">
-                    <h3>Submitted Reviews</h3>
-                    <div id="reviews">
-                        <!-- The submitted reviews will be appended here -->
-                    </div>
+                <div class="col-md-6 container border border-1 border-black shadow mb-5" style="height: 700px;">
+                    <h3 class="p-4">Submitted Reviews:</h3>
+                    <% if(reviews) { %>
+                        <% reviews.forEach(review => { %>
+                        <div class="my-4 bg-white">
+                            <div class="review-item p-2" style="border: 1px solid #ccc;">
+                                <div class="d-flex">
+                                    <img src="/img/users/<%= review.customer.photo %>" class="border border-2 border-black rounded-5" alt="<%= review.customer.name %> photo" width="50" height="50">
+                                    <div class="ps-3">
+                                        <span class="text-capitalize fw-bold"><%= review.customer.username %></span>
+                                        <div class="mb-3">
+                                            <% for (let i = 1; i <= 5; i++) { %>
+                                                <% if (i <= review.rating) { %>
+                                                    <i class="fas fa-star selected"></i>
+                                                <% } else { %>
+                                                    <i class="far fa-star"></i>
+                                                <% } %>
+                                            <% } %>
+                                            <span><%= moment(review.createdAt).format('MMMM Do YYYY, h:mm:ss a') %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ms-5">
+                                    <span class="col-12">Product Name:&nbsp;<span class="fw-bold"><%= review.productName %></span></span>
+                                    <span class="col-12 fw-bold"><%= review.reviewTitle %></span>
+                                    <span class="col-12"><%= review.review %></span>
+                                </div>
+                                <!-- edit reviews -->
+                                <% if (review.customer._id.toString() === session) { %>
+                                    <button type="button" class="btn btn-secondary edit-btn" data-bs-toggle="modal" data-review-id="<%= review._id %>" data-bs-target="#editReviewModal_<%= review._id %>">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+            
+                                    <div class="modal fade" id="editReviewModal_<%= review._id %>" tabindex="-1" aria-labelledby="editReviewLabel_<%= review._id %>" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editReviewLabel_<%= review._id %>">Edit Review</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/users/reviews?reviewId=<%= review._id %>" method="post" class="editReviewForm">
+                                                        <div class="form-group">
+                                                            <label for="reviewTitle">Review Title</label>
+                                                            <input type="text" class="form-control editReviewTitle" name="reviewTitle" value="<%= review.reviewTitle %>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="rating">Rating</label>
+                                                            <div class="mb-3 editRating" data-rating="<%= review.rating %>">
+                                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                                    <i class="<% if (i <= review.rating) { %>fas<% } else { %>far<% } %> fa-star" data-value="<%= i %>"></i>
+                                                                <% } %>
+                                                            </div>
+                                                            <input type="hidden" name="rating" class="hiddenEditRating" value="<%= review.rating %>">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input type="text" name="" id="" class="form-control" value="<%= review.reviewTitle %>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="message">Your Message</label>
+                                                            <textarea class="form-control editReviewText" rows="3"><%= review.review %></textarea>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No reviews submitted yet.</p>
+                    <% } %>
                 </div>
             </div>
-        </div>
-
-    
-
+            </div>
+            
+     
             
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="/js/imageZoom.js"></script>
+        <script>
+            $(document).ready(function() {
+            // Star rating
+            $('#rating i').click(function() {
+                        const ratingValue = $(this).data('value');
+                        $('#hiddenRating').val(ratingValue);  // Set hidden input value
+
+                        // Switch stars up to the one clicked to filled stars
+                        $('#rating i').slice(0, ratingValue).each(function() {
+                            $(this).removeClass('far').addClass('fas selected');
+                        });
+
+                        // Switch the others back to bordered stars
+                        $('#rating i').slice(ratingValue).each(function() {
+                            $(this).removeClass('fas selected').addClass('far');
+                        });  
+                    });
+
+
+        });
+        $("#reviewForm").submit(function(e) {
+            e.preventDefault();
+        
+            $.ajax({
+                type: 'POST',
+                url: '/users/reviews?productID=<%=productDetails._id%>',
+                data: $(this).serialize(),
+                success: (res) => {
+                    if(res.success = "reviewAdded"){
+                    Swal.fire({
+                            toast: true,
+                            icon: "success",
+                            position: "top-right",
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            animation: true,
+                            title: "Review added successfully!",
+                  });
+                        // alert('Review added successfully!');
+                    $("#reviewAdding").load(location.href + " #reviewAdding");
+                    }else{
+                    alert('Error adding review.');
+                    }
+                },
+                error: function(err) {
+                    alert('Error adding review.');
+                }
+            });
+        });
+        // ===
+        $(document).on('click', '.edit-btn', function() {
+    let reviewId = $(this).data('review-id');
+
+    // Populate the modal with current review details.
+    let reviewTitle = $(this).closest('.review-item').find('.fw-bold').text();
+    let reviewText = $(this).closest('.review-item').find('span:last-child').text();
+    let currentRating = $(this).closest('.review-item').find('.selected').length;
+
+    let modal = $('#editReviewModal_' + reviewId);
+    modal.find('input[name="reviewTitle"]').val(reviewTitle);
+    modal.find('textarea[name="review"]').val(reviewText);
+
+    adjustStars(modal.find('.rating-div'), currentRating);
+});
+
+function adjustStars(ratingDiv, currentRating) {
+    ratingDiv.children().each(function(index) {
+        if (index < currentRating) {
+            $(this).removeClass('far').addClass('fas');
+        } else {
+            $(this).removeClass('fas').addClass('far');
+        }
+    });
+}
+
+// Assuming every modal has its own review form with a unique ID
+$(document).on('submit', '.modal form', function(e) {
+    e.preventDefault();
+
+    let reviewId = $(this).closest('.modal').data('review-id');
+    let updatedReview = {
+        reviewTitle: $(this).find('input[name="reviewTitle"]').val(),
+        review: $(this).find('textarea[name="review"]').val(),
+        rating: $(this).find('.selected').length
+    };
+
+    // AJAX call to submit the edited review
+    $.ajax({
+        type: 'PUT',
+        url: '/users/reviews?reviewId=' + reviewId,
+        data: updatedReview,
+        success: function(response) {
+            if (response.success) {
+                // Refresh the page or update the review in the DOM as needed.
+                location.reload();
+            } else {
+                alert('Error updating review.');
+            }
+        },
+        error: function() {
+            alert('Error updating review.');
+        }
+    });
+});
+
+        </script>
+        
         <!-- <i id="wishlistButton" class="far fa-heart"></i> -->
         <%-include('./layout/_footer')%>
-        
+ 
