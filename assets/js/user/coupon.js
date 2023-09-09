@@ -3,7 +3,7 @@ function checkCoupon(e){
 
 
 $.ajax({
-    url: "/users/cart/checkout",
+    url: "/users/profile/cart/checkout",
     method: "put",
     data: {
         couponCode: $("#couponCode").val(),
@@ -14,7 +14,11 @@ $.ajax({
       $("#inputCouponDiscount").val(res.data.discountPrice);
       $("#finalPrice").html(res.data.finalPrice);
       $("#inputFinalPrice").val(res.data.finalPrice);
-      $("#offer").load(location.href + " #offer");
+    //   $("#offer").load(location.href + " #offer");
+     // Refreshing the #offer and #couponScratch elements
+     $("#offer").load(location.href + " #offer");
+     $("#couponScratch").load(location.href + " #couponScratch");
+
       }
 })
 
@@ -39,7 +43,7 @@ function payment(e){
         if(result.value){  
             if(chekcedVal=="RazorPay"){
                 $.ajax({
-                    url:"/users/cart/checkout",
+                    url:"/users/profile/cart/checkout",
                     method:"post",
                     data:formData,
                     success: (res)=>{
@@ -51,7 +55,7 @@ function payment(e){
                             "description": "Complete Your Payment",
                             "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794",
                             "order_id":res.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                            "callback_url": `/users/cart/checkout/${res.transactionID}`,
+                            "callback_url": `/users/profile/cart/checkout/${res.transactionID}`,
                             "theme": {
                                 "color": "#3399cc"
                             }

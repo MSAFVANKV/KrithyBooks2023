@@ -6,7 +6,8 @@ const productCollection = require('../../models/admin/products')
 const orderCollection = require('../../models/order')
 const nodemailer = require("nodemailer")
 const paypal=require("paypal-rest-sdk");
-const Razorpay=require("razorpay")
+const Razorpay=require("razorpay");
+const { PricingV2TrunkingCountryInstanceOriginatingCallPrices } = require("twilio/lib/rest/pricing/v2/country");
 // const stripe = require('stripe')(process.env.Secret_key);
 // const { Secret_key,Publishable_key } = process.env;
 
@@ -38,16 +39,16 @@ exports.viewPage=async(req,res)=>{
             userCart,
             allAddresses,
             coupons,
-            documentTitle: "Krithy Books ",
+            documentTitle: "Checkout | Krithy Books ",
             session:req.session.userID,
             currentUrl: req.originalUrl,
             // Publishable_key:process.env.Publishable_key
           });}else {
-            res.redirect("/users/cart");
+            res.redirect("/users/profile/cart");
           }
 
     }catch(error){
-        res.redirect("/users/cart");
+        res.redirect("/users/profile/cart");
          console.log('error on rendering checkoutpage :'+error)
     }
 }
@@ -71,21 +72,28 @@ exports.defaultAddress = async(req, res) => {
       );
 
       console.log("Address updated successfully");
-      res.redirect("/users/cart/checkout");
+      res.redirect("/users/profile/cart/checkout");
   } catch (error) {
       console.log("Error in defaultAddress:", error);
-      res.redirect("/users/cart/checkout");
+      res.redirect("/users/profile/cart/checkout");
   }
 }
 
 
 exports.couponCheck=async(req,res)=>{
+  
   try{
+   
     const couponCode=req.body.couponCode;
     const userCart= await cartCollection.findOne({
       customer:req.session.userID
     });
+   
+  // console.log('exports.couponCheck'+couponCode)
+
     const cartPrice= userCart.totalPrice;
+    // console.log('exports.couponCheck = cartPrice'+cartPrice)
+   
     if(couponCode==''){
 
       res.json({
@@ -95,12 +103,16 @@ exports.couponCheck=async(req,res)=>{
           discountPercentage: 0,
           finalPrice: userCart.totalPrice,
         },
+        
       });
+
     }else{
        const coupon=await couponCollection.findOne({code:couponCode});
        let discountPercentage = 0;
       let discountPrice = 0;
       let finalPrice = cartPrice;
+      // console.log('exports.couponCheck = finalPrice'+finalPrice)
+
       if(coupon){
         const alreadyUsedCoupon= await userCollection.findOne({
           _id: req.session.userID,
@@ -119,7 +131,7 @@ exports.couponCheck=async(req,res)=>{
 
                 couponCheck =
                   '<b>Coupon Applied <i class="fa fa-check text-success" aria-hidden="true"></i></b></br>' +
-                  coupon.name;
+                  coupon.name +'&nbsp'+ coupon.discount+'%off';
 
               }else{
                 couponCheck= "<b style='font-size:0.75rem; color: red'>Coupon expired<i class='fa fa-stopwatch'></i></b>";
@@ -142,12 +154,13 @@ exports.couponCheck=async(req,res)=>{
       }else{
         couponCheck = "<b style='font-size:0.75rem;color: red'>Coupon not found</b>";
       }
+      
       res.json({
         data: {
           couponCheck,
           discountPrice,
           discountPercentage,
-          finalPrice,
+          finalPrice
         },
       });
     }
@@ -162,7 +175,7 @@ exports.couponCheck=async(req,res)=>{
 
 exports.checkout = async (req, res) => {
   try {
-    // console.log("adhhsdcnakjahinjkczm");
+   
     let shippingAddress= await userCollection.aggregate([
       {
         $match:{_id: new mongoose.Types.ObjectId(req.session.userID)}
@@ -194,11 +207,10 @@ exports.checkout = async (req, res) => {
     // console.log(orderSummery)
 
     const userCart=  await cartCollection.findOne({customer:req.session.userID});
-    // console.log(cartCollection)
-
+    let orderDetails={}
+    if(req.body.couponDiscount){
     //creating order details
-
-    let orderDetails = {
+     orderDetails = {
       customer:req.session.userID,
       shippingAddress:{
         building: shippingAddress.building,
@@ -211,9 +223,28 @@ exports.checkout = async (req, res) => {
       summary:orderSummery,
       totalQuantity: userCart.totalQuantity,
       price: userCart.totalPrice,
-      finalPrice: finalPrice,
+      finalPrice: userCart.totalPrice-req.body.couponDiscount,
       discountPrice: req.body.couponDiscount,
     };
+  }
+  else{
+     orderDetails = {
+      customer:req.session.userID,
+      shippingAddress:{
+        building: shippingAddress.building,
+        address: shippingAddress.address,
+        pincode: shippingAddress.pincode,
+        country: shippingAddress.country,
+        contactNumber: shippingAddress.contactNumber,
+      },
+      modeOfPayment:req.body.paymentMethod,
+      summary:orderSummery,
+      totalQuantity: userCart.totalQuantity,
+      price: userCart.totalPrice,
+      finalPrice: userCart.totalPrice,
+      discountPrice: req.body.couponDiscount,
+    };
+  }
     console.log(orderDetails)
     
     req.session.orderDetails=orderDetails;
@@ -223,7 +254,7 @@ exports.checkout = async (req, res) => {
     req.session.transactionID=transactionID;
 
     if(req.body.paymentMethod==='COD'){
-      res.redirect("/users/cart/checkout/" + transactionID);
+      res.redirect("/users/profile/cart/checkout/" + transactionID);
     }
     else if(req.body.paymentMethod === "RazorPay"){
       console.log("here")
@@ -245,37 +276,6 @@ exports.checkout = async (req, res) => {
   })
     }
 
-  //   else if(req.body.paymentMethod === 'stripe') {
-  //     // Create a PaymentIntent 
-  //     stripe.customers.create({
-  //       email:req.body.stripeEmail,
-  //       source:req.body.stripeToken,
-  //       name:'Krithy Books ',
-  //       address:{
-  //         building: shippingAddress.building,
-  //         address: shippingAddress.address,
-  //         pincode: shippingAddress.pincode,
-  //         country: shippingAddress.country,
-  //         contactNumber: shippingAddress.contactNumber,
-  //       }
-
-  //     })
-  //     .then((customer) => {
-  //       return stripe.charges.create({
-  //         amount:orderDetails.finalPrice*100,
-  //         currency:'USD',
-  //         customer:customer.id
-  //       })
-  //     })
-  //     .then((charge) => {
-  //       console.log(charge)
-  //       res.json({ clientSecret: paymentIntent.client_secret }); 
-
-  //     }).catch((error) => {
-  //       console.log('Error creating srtipe PaymentIntent:', error);
-  //       res.status(500).send({ error: 'Failed to create PaymentIntent' });
-  //     });
-  // } 
 
   } catch (error) {
     console.log("checkout" + error)
@@ -287,7 +287,7 @@ exports.result=async(req,res)=>{
     if(req.session.transactionID){
       const couponUsed=req.session.couponUsed;
       req.session.transactionID=false;
-      const orderDetails= new orderCollection(req.session.orderDetails)
+      const orderDetails= new orderCollection(req.session.orderDetails).populate("Products")
       await orderDetails.save();
       let currentUser=await userCollection.findById(req.session.userID)
       // console.log(currentUser.email)
@@ -355,7 +355,7 @@ const mailOptions = {
       <ul>
       ${req.session.orderDetails.summary.map(product => `
           <li>
-              <strong>${product.product}</strong><br>
+          <strong>${product.product}</strong><br> 
               Quantity: ${product.quantity}<br>
               Price: $${product.totalPrice}
           </li>
@@ -392,7 +392,7 @@ const mailOptions = {
 
 
     }else {
-      res.redirect("/users/cart/checkout");
+      res.redirect("/users/profile/cart/checkout");
     }
 
   }catch(error){

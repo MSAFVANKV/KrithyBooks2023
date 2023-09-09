@@ -1,0 +1,38 @@
+<%-include('../layouts/_header')%> <%-include('../layouts/head_links')%> 
+<div class="container">
+  
+    <!--main logo -->
+    
+    <div class="row justify-content-center align-items-center vh-100">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <form action="/admin/manager" method="post">
+                <!--main logo -->
+
+                <!--main logo -->
+                <h1 class="text-center fw-bold fs-4 mb">Create new Admin</h1>
+               
+                <div class="mb-3">
+          
+                  <label for="username" class="form-label">Username</label>
+                  <input name="username" type="username" class="form-control" id="username" placeholder="Enter username" required>
+              </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input name="email" type="" class="form-control" id="email" placeholder="Enter email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                
+                <div class="mt-4 col-12 text-center ">
+                    <button type="submit" class="btn w-100 logbtn">Create Account</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  
+<%-include('../layouts/_footer')%> 

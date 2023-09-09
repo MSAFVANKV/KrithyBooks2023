@@ -42,13 +42,13 @@
                         <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-primary" type="submit">Search</button>
                     </form> -->
-                    <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
+                    <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm" onsubmit="return search();">
                         <div class="input-group flex-nowrap my-2 " style="width: 250px">
-                        <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
-                        <button type="submit" class="btn btn-primary" style="height: fit-content;">
-                            <i class="fas fa-search"></i>
-                        </button>
-                      </div>
+                            <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
+                            <button type="submit" class="btn btn-primary" style="height: fit-content;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <ul class="navbar-nav ms-auto hamurgerToggle">
@@ -149,7 +149,7 @@
                             <hr>
                             <div class="d-md-flex">
                                 <div class="col-md-6 col-sm-12 ">
-                                    <ul class="list-unstyled">
+                                    <ul class="list-unstyled p-4">
                                         <div class="text-capitalize">
                                             <strong>rating:</strong>
                                             <i class="fas fa-star"></i>
@@ -159,9 +159,9 @@
                                             <i class="fas fa-star"></i>
                                           </div>
                                           
-                                        <li><small><strong>BY:</strong> <a href=""><%=productDetails.author.name ? productDetails.author.name : 'N/A'%></a></small></li>
+                                        <li><small><strong>BY:</strong> <a href="/authors?author=<%= productDetails.author._id %>"><%=productDetails.author.name ? productDetails.author.name : 'N/A'%></a></small></li>
                                         <li><small><strong>Book :</strong> <%=productDetails.name%></small></li>
-                                        <li><small><strong>Author:</strong> <a href=""><%=productDetails.author.name ? productDetails.author.name : 'N/A'%></a></small></li>
+                                        <li><small><strong>Author:</strong> <a href="/authors?author=<%= productDetails.author._id %>"><%=productDetails.author.name ? productDetails.author.name : 'N/A'%></a></small></li>
                                         <li><small><strong>Category :</strong> <%=productDetails.category ? productDetails.category.name : 'N/A'%></small></li>
                                         <li><small><strong>ISBN :</strong> <%=productDetails.bookISBN ? productDetails.bookISBN : 'N/A'%></small></li>
                                         <li><small><strong>Publishing Date :</strong><%= moment(productDetails.Publishingdate).format('ll')  %></small></li>
@@ -173,8 +173,8 @@
                                 </div>
                                 <div class="col-md-6 col-sm-12 bg-white border rounded-3 my-3 shadow">
                                 <div class="mt-3">
-                                    <span class="card-text text-success fw-bolder  fs-3 ps-3">₹<%=productDetails.price%></span>
-                                    <span class="card-text text-warning fw-bold ps-2"><del>₹<%=productDetails.initialPrice%></del></span>
+                                    <span class="card-text text-success   fs-3 ps-3">₹<%=productDetails.price%></span>
+                                    <span class="card-text text-warning  ps-2"><del>₹<%=productDetails.initialPrice%></del></span>
                                     <span class="card-text ps-2"><%=productDetails.discount%>%off</span>
                                     <button class="bg-transparent border-0 float-end pe-3" id="wishlistHeart"
                                     onclick="addToWishlist('<%=productDetails._id%>')"><i
@@ -189,7 +189,7 @@
                                         <p class="text-danger" style="font-weight: bold;margin-top: 10px;">OUT OF STOCK</p>
                                         <p id="singleStockCheck" hidden><%= productDetails.stock %></p>
                                     <% }else{ %>
-                                      <p><span class="fw-bold">Stock</span>:<%= productDetails.stock %></p>
+                                      <p><span class="">Stock</span>:<%= productDetails.stock %></p>
                                       <% } %>
                                     
                                     <!-- <a href="" class="border-3 text-black border border-3 btn"><small>add to wishlist</small> </a> -->
@@ -204,8 +204,13 @@
                                         onclick="addToCart('<%=productDetails._id%>')">
                                         <span style="font-size: 0.8rem;">Add to cart</span>
                                       </div>
-                                        <a href="/users/directCheckout?stock=<%=productDetails.stock%>&&id=<%=productDetails._id%>"  class="btn color-bg-main text-white">buy now</a>
+                                        <!-- <a href="/users/directCheckout?stock=<%=productDetails.stock%>&&id=<%=productDetails._id%>"  class="btn color-bg-main text-white">buy now</a> main -->
                                         <!-- <a href="/users/directCheckout?stock=<%=productDetails.stock%>&id=<%=productDetails._id%>"  onclick="singlecheckOut()" type="submit" class="btn color-bg-main text-white" >Buy Now</a> -->
+                                        <div id="buyNow"
+                                        class="button-div btn color-bg-main text-white"
+                                        onclick="buyNow('<%=productDetails._id%>')">
+                                        <span style="font-size: 0.8rem;">Buy Now</span>
+                                      </div>
                                       </div>
                                   </div>
                                 
@@ -223,7 +228,7 @@
          <!--  -->
          <% if(similarProducts && similarProducts.length > 0) { %>
          <div class="container mt-5 ">
-            <h3 class="text-capitalize fw-bold mb-5 ms-4"><u class="color-G">
+            <h3 class="text-capitalize  mb-5 ms-4"><u class="color-G">
                 <span class="text-black">similar Products:</span></u></h3>
             <div class="row d-flex " >     
               <!-- edit -->
@@ -237,12 +242,12 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                          <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
+                          <span class="card-title text-center fs-6  text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
                         </div>
                         <div class="d-flex">
                           <div class="m-auto gap-3">
-                            <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
-                            <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                            <span class="card-text text-success  fs-3">₹<%= product.price%></span>
+                            <span class="card-text text-warning "><del>₹<%= product.initialPrice %></del></span>
                             <span class="card-text text-info"><%= product.discount %>% off</span>
                         </div>
                         </div>
@@ -258,7 +263,7 @@
           </div>
           <% }else{ %>
             <div class="container">
-                <h3 class="text-capitalize fw-bold my-5 ms-4"><u class="color-G">
+                <h3 class="text-capitalize  my-5 ms-4"><u class="color-G">
                     <span class="text-black">similar Products:</span></u></h3>
                 <div class="text-center">
                     <span class="text-center text-capitalize fs-4 text-danger">no similar Products...
@@ -270,8 +275,8 @@
             <%}%>
          <!--  -->
 
-        <!-- review page -->
-        <% if(hasOrderedProduct && !orderWasCancelled){%>
+        <!-- review page /= && !orderWasCancelled -->
+        <% if(hasOrderedProduct){%>
             <div class="container mt-5" id="reviewAdding">
                 <div class="row">
                     <!-- Review form -->
@@ -305,7 +310,7 @@
                         </form>
                     </div>
                 <% } else { %>
-                    <p class="text-center fw-bold text-danger">Reviews are only allowed for ordered items. Please order the product!!</p>
+                    <p class="text-center  text-success">Reviews are only allowed for ordered items. Please order the product!!</p>
                 <% } %>
                 
                 <!-- Submitted reviews -->
@@ -318,7 +323,7 @@
                                 <div class="d-flex">
                                     <img src="/img/users/<%= review.customer.photo %>" class="border border-2 border-black rounded-5" alt="<%= review.customer.name %> photo" width="50" height="50">
                                     <div class="ps-3">
-                                        <span class="text-capitalize fw-bold"><%= review.customer.username %></span>
+                                        <span class="text-capitalize reviwSubmit"><%= review.customer.username %></span>
                                         <div class="mb-3">
                                             <% for (let i = 1; i <= 5; i++) { %>
                                                 <% if (i <= review.rating) { %>
@@ -331,56 +336,13 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row ms-5">
-                                    <span class="col-12">Product Name:&nbsp;<span class="fw-bold"><%= review.productName %></span></span>
-                                    <span class="col-12 fw-bold"><%= review.reviewTitle %></span>
+                                    <span class="col-12">Product Name:&nbsp;<span class=""><%= review.productName %></span></span>
+                                    <span class="col-12 "><%= review.reviewTitle %></span>
                                     <span class="col-12"><%= review.review %></span>
                                 </div>
-                                <!-- edit reviews -->
-                                <% if (review.customer._id.toString() === session) { %>
-                                    <button type="button" class="btn btn-secondary edit-btn" data-bs-toggle="modal" data-review-id="<%= review._id %>" data-bs-target="#editReviewModal_<%= review._id %>">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-            
-                                    <div class="modal fade" id="editReviewModal_<%= review._id %>" tabindex="-1" aria-labelledby="editReviewLabel_<%= review._id %>" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editReviewLabel_<%= review._id %>">Edit Review</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="/users/reviews?reviewId=<%= review._id %>" method="post" class="editReviewForm">
-                                                        <div class="form-group">
-                                                            <label for="reviewTitle">Review Title</label>
-                                                            <input type="text" class="form-control editReviewTitle" name="reviewTitle" value="<%= review.reviewTitle %>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="rating">Rating</label>
-                                                            <div class="mb-3 editRating" data-rating="<%= review.rating %>">
-                                                                <% for (let i = 1; i <= 5; i++) { %>
-                                                                    <i class="<% if (i <= review.rating) { %>fas<% } else { %>far<% } %> fa-star" data-value="<%= i %>"></i>
-                                                                <% } %>
-                                                            </div>
-                                                            <input type="hidden" name="rating" class="hiddenEditRating" value="<%= review.rating %>">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <input type="text" name="" id="" class="form-control" value="<%= review.reviewTitle %>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="message">Your Message</label>
-                                                            <textarea class="form-control editReviewText" rows="3"><%= review.review %></textarea>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% } %>
+                             
                             </div>
                         </div>
                         <% }); %>
@@ -395,6 +357,39 @@
             
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="/js/imageZoom.js"></script>
+
+        <script>
+              function buyNow(productID) {
+    $.ajax({
+      url: "/users/profile/cart",
+      method: "post",
+      data: {
+        id: productID,
+      },
+      success: (res) => {
+        if (res.success === "addedToCart" || res.success === "countAdded") {
+          window.location.href = "/users/cart/checkout";
+        }
+        else if(res.success === "outofstcok" ){
+          Swal.fire({
+            toast: true,
+            icon: "error",
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            animation: true,
+            title: "Out Of Stock",
+          });
+        }
+         else {
+          window.location.href = "/login";
+        }
+      },
+    });
+  }
+        </script>
+
         <script>
             $(document).ready(function() {
             // Star rating
@@ -436,6 +431,8 @@
                   });
                         // alert('Review added successfully!');
                     $("#reviewAdding").load(location.href + " #reviewAdding");
+                    $("#reviewPage").load(location.href + " #reviewPage");
+
                     }else{
                     alert('Error adding review.');
                     }
@@ -450,7 +447,7 @@
     let reviewId = $(this).data('review-id');
 
     // Populate the modal with current review details.
-    let reviewTitle = $(this).closest('.review-item').find('.fw-bold').text();
+    let reviewTitle = $(this).closest('.review-item').find('.reviwSubmit').text();
     let reviewText = $(this).closest('.review-item').find('span:last-child').text();
     let currentRating = $(this).closest('.review-item').find('.selected').length;
 

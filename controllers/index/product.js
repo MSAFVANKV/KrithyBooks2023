@@ -41,13 +41,27 @@ exports.view=async(req,res)=>{
         }
     // const similarProducts= await  productCollection.find({}).sort({_id:1}).limit(10)
 
+    // const similarProducts = await productCollection.find({ 
+    //     $or: [
+
+    //        { category: productDetails.category._id },
+    //        { author: productDetails.author._id }
+    //     ],
+    //     _id: { $ne: req.params.id } 
+    //  }).limit(10);
     const similarProducts = await productCollection.find({ 
-        $or: [
-           { category: productDetails.category._id },
-           { author: productDetails.author._id }
-        ],
-        _id: { $ne: req.params.id } 
+        $and: [
+            { listed: true },  // This will filter for products where product is true
+            { 
+                $or: [
+                   { category: productDetails.category._id },
+                   { author: productDetails.author._id }
+                ]
+            },
+            { _id: { $ne: req.params.id } }
+        ]
      }).limit(10);
+
 
     //  
     let reviews = await reviewCollection.find({ product: productDetails._id })
@@ -82,7 +96,7 @@ for (const order of allOrders) {
         break; // Exit the outer loop once a match is found
     }
 }
-
+console.log(hasOrderedProduct)
 
    
         res.render("index/productShowPage", {

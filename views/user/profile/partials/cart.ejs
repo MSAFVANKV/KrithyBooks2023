@@ -2,15 +2,15 @@
 <%- include('../layouts/_header') %>
 <!-- border: 1px solid #beb2c0;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important; -->
 <%- include('../layouts/profileSearchBar') %>
-          <div class="pt-2">
-            <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
+          <div class="pt-2" >
+            <span class="text-black text-capitalize fs-4 ">My Profile</span>
               <!-- profile add -->
             <div class="float-end col-1">
              <div class="profilePage border rounded-3  no-cursor" style="background-image: url('/img/users/<%=currentUser.photo%>');">
              </div>     
             </div>
           </div>
-          <small class="fw-bold">Your Cart items will showup here</small>
+          <small class="">Your Cart items will showup here</small>
           <hr>
     
               
@@ -37,7 +37,7 @@
                                       <p id="stockCheck" hidden><%= product.name.stock %></p>
                                   <% }else{ %>
                                     
-                                    <p id="" ><span class="fw-bold">Stock:</span>&nbsp;<%= product.name.stock %></p>
+                                    <p id="" ><span class="">Stock:</span>&nbsp;<%= product.name.stock %></p>
 
                                     <% } %>
                                   <div class="d-flex justify-content-end mt-2">
@@ -45,7 +45,7 @@
                                           <button class="btn btn-sm btn-light button-div" id="minusBtn<%= i %>" style="background-color: transparent" onclick='changeCount("<%= product.name._id %>","<%= i %>",-1)'>
                                               <i class="fa fa-minus"></i>
                                           </button>
-                                          <span id="cartCount<%= i %>" class="fw-bold px-2"><%= product.quantity %></span>
+                                          <span id="cartCount<%= i %>" class=" px-2"><%= product.quantity %></span>
                                           <button class="btn btn-sm btn-light button-div" style="background-color: transparent" onclick='changeCount("<%= product.name._id %>","<%= i %>",1)'>
                                               <i class="fa fa-plus h-100"></i>
                                           </button>
@@ -59,36 +59,38 @@
                               </div>
                           </div>
                       <% }) %>
-                  
+                      <!-- ===== -->
+                      <div class="col-12 my-3 sticky-checkout  "> 
+                        <div class="order-summary p-3 d-flex flex-column border border-2 
+                        border-black bg-white" >
+                            <div class="d-flex justify-content-between p-1">
+                                  <span>Total items:</span>
+                                  <span id="totalItems"><%=userCart.totalQuantity%></span>
+                            </div>
+                            <div class="d-flex justify-content-between p-1">
+                                  <span>Products:</span>
+                                  <span id="totalProducts"><%=userCart.products.length%></span>
+                            </div>
+                            <div class="d-flex justify-content-between p-1">
+                                  <span>Price:</span>
+                                  <span id="totalPrice">₹ <%=userCart.totalPrice%></span>
+                            </div>
+                        </div>
+                        <div class="order-summary p-3 d-flex bg-white justify-content-center" style="border: 1px solid #2b152e; font-size: 0.9rem;">
+                              <a onclick="checkOut()" type="submit" class="text-white btn color-bg-main w-25 " id="checkoutButton" >Checkout</a>
+                        </div>
+                          <% } else { %>
+                        <h5 class="text-center my-4 fw-light">No products on your cart yet.</h5>
+                        <div class="text-center my-4 ">
+                            <a href="/allproducts?category=newReleases" class="fst-italic">Continue shopping <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                        <% } %>
+                    </div>
               </div>
-            <div class="d-flex justify-content-center position-sticky sticky-bottom">
-            <div class="col-12 my-3 sticky-checkout  "> 
-                <div class="order-summary rounded-top-2 p-3 d-flex flex-column text-white" style="border: 1px solid #2b152e; font-size: 0.9rem;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important;">
-                    <div class="d-flex justify-content-between p-1 text-white">
-                          <span>Total items:</span>
-                          <span id="totalItems"><%=userCart.totalQuantity%></span>
-                    </div>
-                    <div class="d-flex justify-content-between p-1">
-                          <span>Products:</span>
-                          <span id="totalProducts"><%=userCart.products.length%></span>
-                    </div>
-                    <div class="d-flex justify-content-between p-1">
-                          <span>Price:</span>
-                          <span id="totalPrice">₹ <%=userCart.totalPrice%></span>
-                    </div>
-                </div>
-                <div class="order-summary rounded-bottom-2 p-3 d-flex bg-white justify-content-center" style="border: 1px solid #2b152e; font-size: 0.9rem;">
-                      <a onclick="checkOut()" type="submit" class="text-white btn color-bg-main w-25 " id="checkoutButton" >Checkout</a>
-                </div>
-                  <% } else { %>
-                <h5 class="text-center my-4 fw-light">No products on your cart yet.</h5>
-                <div class="text-center my-4 fw-bold">
-                    <a href="/categories?category=newReleases" class="fst-italic">Continue shopping <i class="fa fa-arrow-right"></i></a>
-                </div>
-                <% } %>
-            </div>
-            </div>
-      
+            <!-- <div class="d-flex justify-content-center position-sticky sticky-bottom"> -->
+            
+            <!-- </div> -->
+      <!-- ====== -->
     </div>
 
   </div>

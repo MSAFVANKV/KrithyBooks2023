@@ -140,10 +140,10 @@ $.ajax({
         success:(res)=>{
 
           inTransit = res.data.inTransit;
-     cancelled = res.data.cancelled;
-     delivered = res.data.delivered;
-     returned = res.data.returned;
-     chart.data.datasets[0].data=[inTransit, delivered, cancelled , returned ];
+          cancelled = res.data.cancelled;
+          delivered = res.data.delivered;
+          returned = res.data.returned;
+          chart.data.datasets[0].data=[inTransit, delivered, cancelled , returned ];
 
           chart.update()
        

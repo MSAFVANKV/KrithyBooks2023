@@ -14,6 +14,8 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/prductlist.css">
+  <link rel="icon" href="/img/logo/title_logo.svg" type="image/svg" >
+
 
   <style>
     .author-image {
@@ -182,7 +184,7 @@
       <!--  -->
       <% if(products && products.length > 0) { %>
         <div class=" mt-5 ">
-           <h3 class="text-capitalize fw-bold mb-5 ms-4"><u class="color-G">
+           <h3 class="text-capitalize  mb-5 ms-4"><u class="color-G">
                <span class="text-black text-uppercase">Books of:</span></u> <small> <%= selectedAuthor.name %></small></h3>
            <div class="row d-flex " >     
              <!-- edit -->
@@ -196,12 +198,12 @@
                    </div>
                    <div class="card-body">
                        <div class="text-center">
-                         <span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
+                         <span class="card-title text-center fs-6  text-truncate d-inline-block" style="max-width: 170px;"><%=product.name%></span>
                        </div>
                        <div class="d-flex">
                          <div class="m-auto gap-3">
-                           <span class="card-text text-success fw-bolder fs-3">₹<%= product.price%></span>
-                           <span class="card-text text-warning fw-bold"><del>₹<%= product.initialPrice %></del></span>
+                           <span class="card-text text-success fs-3">₹<%= product.price%></span>
+                           <span class="card-text text-warning "><del>₹<%= product.initialPrice %></del></span>
                            <span class="card-text text-info"><%= product.discount %>% off</span>
                        </div>
                        </div>
@@ -217,7 +219,7 @@
          </div>
          <% }else{ %>
            <div class="container">
-               <h3 class="text-capitalize fw-bold my-5 ms-4"><u class="color-G">
+               <h3 class="text-capitalize  my-5 ms-4"><u class="color-G">
                    <span class="text-black">Author Books:</span></u></h3>
                <div class="text-center">
                    <span class="text-center text-capitalize fs-4 text-danger">no Author Books...

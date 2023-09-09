@@ -97,72 +97,104 @@
 //   }
   
 
+// function search() {
+// // search area for home page
+//   $(document).ready(function() {
+//     $('#searchButton').click(function() {
+//       var searchInput = $('#searchInput').val();
+//       if (searchInput === "") {
+//         alert("Please enter something to search for!");  // Show an error alert
+//         return;  // Exit the function
+//       }
+      
+//       $.ajax({
+//         url: '/search?searchInput=' + searchInput,
+//         type: 'GET',
+//         success: function(res) {
+//           $('#productListContainer').empty(); // Remove all current products
+
+//           if (res.success === false) {
+//             // No products found. Display error message.
+//             var errorMessage = '<span class="mt-5 mb-5 d-flex justify-content-center text-danger fs">' + res.message + '</span>';
+//             $('#productListContainer').append(errorMessage);
+//             return;
+//           }
+
+//           var products = res.products;
+//           if (products.length > 0) {
+//             for (var i = 0; i < products.length; i++) {
+//               // Create card for each product
+//               var card = '<div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">' +
+//                 '<div class="card shadow-lg prod_card" style="width: 17rem; ">' +
+//                   '<div class="card card_img">' +
+//                     '<a href="/products/' + products[i]._id + '">' +
+//                       '<img src="/img/books/' + products[i].thumbnail + '" class="card-img-top" alt="Book Image">' +
+//                     '</a>' +
+//                   '</div>' +
+//                   '<div class="card-body">' +
+//                     '<div class="text-center">' +
+//                       '<span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;">' + products[i].name + '</span>' +
+//                     '</div>' +
+//                     '<div class="d-flex">' +
+//                       '<div class="m-auto gap-3">' +
+//                         '<span class="card-text text-success fw-bolder fs-3">₹' + products[i].price + '</span>' +
+//                         '<span class="card-text text-warning fw-bold"><del>₹' + products[i].initialPrice + '</del></span>' +
+//                         '<span class="card-text text-info">' + products[i].discount + '% off</span>' +
+//                       '</div>' +
+//                     '</div>' +
+//                     '<p class="card-text text-center">Rating: </p>' +
+//                   '</div>' +
+//                 '</div>' +
+//               '</div>';
+
+//               $('#productListContainer').append(card);
+//             }
+//           } else {
+//             var productsList = '<span class="mt-5 mb-5 d-flex justify-content-center text-danger fs">No Products Available, Check the spell !!!</span>';
+//             $('#productListContainer').append(productsList);
+//         }
+//         },
+//         error: function(err) {
+//           // Handle error
+//           console.error(err);
+//         }
+//       });
+//     });
+//   });
+
+// }
+
+function search() {
+  var searchInput = $('#searchInput').val();
+
+  if (searchInput === "") {
+        // Show an error alert
+      return false;  // Exit the function
+  } else{
   
-// search area for home page
-  $(document).ready(function() {
-    $('#searchButton').click(function() {
-      var searchInput = $('#searchInput').val();
-      if (!searchInput.trim()) {
-        
-        return;  // Exit the function
-    }
-      $.ajax({
-        url: '/search?searchInput=' + searchInput,
-        type: 'GET',
-        success: function(res) {
+  $.ajax({
+      url: '/search?searchInput=' + searchInput,
+      type: 'GET',
+      success: function(res) {
           $('#productListContainer').empty(); // Remove all current products
 
           if (res.success === false) {
-            // No products found. Display error message.
-            var errorMessage = '<span class="mt-5 mb-5 d-flex justify-content-center text-danger fs">' + res.message + '</span>';
-            $('#productListContainer').append(errorMessage);
-            return;
+              // No products found. Display error message.
+              var errorMessage = '<span class="mt-5 mb-5 d-flex justify-content-center text-danger fs">' + res.message + '</span>';
+              $('#productListContainer').append(errorMessage);
+              return;
           }
 
-          var products = res.products;
-          if (products.length > 0) {
-            for (var i = 0; i < products.length; i++) {
-              // Create card for each product
-              var card = '<div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">' +
-                '<div class="card shadow-lg prod_card" style="width: 17rem; ">' +
-                  '<div class="card card_img">' +
-                    '<a href="/products/' + products[i]._id + '">' +
-                      '<img src="/img/books/' + products[i].thumbnail + '" class="card-img-top" alt="Book Image">' +
-                    '</a>' +
-                  '</div>' +
-                  '<div class="card-body">' +
-                    '<div class="text-center">' +
-                      '<span class="card-title text-center fs-6 fw-bold text-truncate d-inline-block" style="max-width: 170px;">' + products[i].name + '</span>' +
-                    '</div>' +
-                    '<div class="d-flex">' +
-                      '<div class="m-auto gap-3">' +
-                        '<span class="card-text text-success fw-bolder fs-3">₹' + products[i].price + '</span>' +
-                        '<span class="card-text text-warning fw-bold"><del>₹' + products[i].initialPrice + '</del></span>' +
-                        '<span class="card-text text-info">' + products[i].discount + '% off</span>' +
-                      '</div>' +
-                    '</div>' +
-                    '<p class="card-text text-center">Rating: </p>' +
-                  '</div>' +
-                '</div>' +
-              '</div>';
-
-              $('#productListContainer').append(card);
-            }
-          } else {
-            var productsList = '<span class="mt-5 mb-5 d-flex justify-content-center text-danger fs">No Products Available, Check the spell !!!</span>';
-            $('#productListContainer').append(productsList);
-        }
-        },
-        error: function(err) {
+      },
+      error: function(err) {
           // Handle error
           console.error(err);
-        }
-      });
-    });
+      }
+    
   });
-
-
-  
+  return true
+}
+}
 
 //   `<div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3 mb-4">
 //               <a href="/products/${products[i]._id}" class="text-decoration-none">

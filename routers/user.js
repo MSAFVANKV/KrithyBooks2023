@@ -11,6 +11,7 @@ const singleCheckOut = require('../controllers/user/singleCheckout');
 const orders = require('../controllers/user/order')
 const objectIdCheck = require('../middlewares/users/objectIdCheck')
 const reviews = require('../controllers/user/reviews');
+const changePass = require('../controllers/user/changePass')
 const multer = require('multer');
 
 
@@ -86,16 +87,16 @@ router
     // Checkout
 
     router
-    .route('/cart/checkout')
+    .route('/profile/cart/checkout')
     .get(sessionCheck,checkOut.viewPage)
     .put(sessionCheck,checkOut.couponCheck)
     .post(sessionCheck,checkOut.checkout)
 
-router.get("/cart/checkout/:id",  checkOut.result);
-router.post("/cart/checkout/:id",async(req,res)=>{
+router.get("/profile/cart/checkout/:id",  checkOut.result);
+router.post("/profile/cart/checkout/:id",async(req,res)=>{
     const transactionID=req.params.id;
     console.log(transactionID)
-    res.redirect(`/users/cart/checkout/${transactionID}`)
+    res.redirect(`/users/profile/cart/checkout/${transactionID}`)
 })
 
 //Order
@@ -111,32 +112,46 @@ router
  
 
    router
-   .route("/cart/checkout/changeDefaultAddress")
+   .route("/profile/cart/checkout/changeDefaultAddress")
    .post(sessionCheck, checkOut.defaultAddress)
 
 
   // offer
-  router.get("/cart/checkout/offer/:id",checkOut.offer);
+  router.get("/profile/cart/checkout/offer/:id",checkOut.offer);
+
+  router
+        .route('/profile/changePassword')
+        .get(sessionCheck, changePass.changePassword)
+        .post(sessionCheck, changePass.updatePassword);
+
 // 
+// =====================================
+    // router
+    // .route('/directCheckout')
+    //  .get(sessionCheck, singleCheckOut.directCheckout)
+    // .put(sessionCheck, singleCheckOut.applySingleProductCoupon);
 
-    router
-    .route('/directCheckout')
-     .get(sessionCheck, singleCheckOut.directCheckout)
-    .put(sessionCheck, singleCheckOut.applySingleProductCoupon);
+
+// router
+//     .route("/directCheckout/changeDefaultAddress")
+//     .post(sessionCheck, singleCheckOut.defaultAddress)
 
 
-router
-    .route("/directCheckout/changeDefaultAddress")
-    .post(sessionCheck, singleCheckOut.defaultAddress)
+//     router.get("/directCheckout/:id",  singleCheckOut.result);
+// router.post("/directCheckout/:id",async(req,res)=>{
+//     const transactionID=req.params.id;
+//     console.log(transactionID)
+//     res.redirect(`/users/directCheckout/${transactionID}`)
+// })
 
-  router.get("/directCheckout/offer/:id",singleCheckOut.offer);
-
+// ============================================
   router
         .route("/reviews")
         .post(sessionCheck,reviews.addReview)
         .put(sessionCheck,reviews.editReview)
         .patch(reviews.helpful);
         
+ 
         
     // router
     // .route('/singleCheckout')

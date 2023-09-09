@@ -1,0 +1,155 @@
+<%-include('../layouts/_header')%><%-include('../layouts/head_links')%> 
+
+      <div class="container line-break text-center py-3">
+        <span class="shadow-heading" style="text-transform: uppercase;">Coupons</span>
+      </div>
+      <!-- Button trigger modal -->
+      <div class="container d-flex justify-content-center my-3">
+        <button
+          type="button"
+          class="btn btn-primary text-center"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add New Offer
+        </button>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        data-bs-backdrop="static"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content" style="background-color: rgb(22, 21, 21);">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Add New Offer
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body" >
+                
+                <!-- -------------------- -->
+
+
+                <form action="offers" method="post">
+                    <div class="mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="form-holder"
+                        name="name"
+                        placeholder="Name"
+                        required
+                      />
+                    </div>
+                  
+                    <div class="mb-3">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="form-holder"
+                        placeholder="Discount in %"
+                        name="discount"
+                        required
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <select id="inputState" class="form-control" name="category"  required> 
+                        <option value="" style="color: rgb(66, 61, 61);">Choose category</option> 
+                        <%categories.forEach((data)=>{%> 
+                          <option value="<%=data._id%>" style="color: rgb(71, 68, 68);"><%=data.name%></option> 
+                        <%})%> 
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Starting Date"
+                          name="startingDate"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="form-holder"
+                          placeholder="Expiry Date"
+                          name="expiryDate"
+                          required
+                        />
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-success">
+                    Save changes
+                  </button>
+                  </form>
+
+
+<!-- ------------------- -->
+            
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsive data table -->
+      
+      <div class="card-body container">
+        <table id="dataTable" class="table table-hover cell-border fw-light nowrap">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Discount</th>
+              <th>Starting Date</th>
+              <th>Expiry Date</th>
+              <th>Activity</th>
+            </tr>
+          </thead>
+          <% if(offers !=null){ %>
+          <tbody>
+            <% offers.forEach(function(item,i){ %>
+            <tr>
+              <td><%= i+1 %></td>
+              <td><%= item.name %></td>
+              <td><%= item.category.name %></td>
+              <td><%= item.discount %>%</td>
+              <td><%= moment(item.startingDate).format('ll')  %></td>
+              <td><%= moment(item.expiryDate).format('ll') %></td>
+              <td class="text-center d-flex flex-column">
+                
+               
+             
+                <a href="/admin/offers/delete?id=<%= item._id %>" onclick="return confirm('Continue Deleting Offer')" class="btn btn-danger text-white btn-sm my-1">Delete</a>
+               </td>
+            </tr>
+            <% }) %>
+          </tbody>
+          <% } %>
+        </table>
+      </div>
+
+      <%-include('../layouts/_footer')%>

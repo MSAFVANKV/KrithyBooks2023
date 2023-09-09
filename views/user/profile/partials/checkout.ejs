@@ -1,18 +1,49 @@
 <%- include('../layouts/_header') %>
   <style>
+.cpnBtn {
+    border: 1px solid #7158fe;
+    background: #fff;
+    padding: 5px 10px; /* Adjust padding for aesthetics */
+    color: #7158fe;
+    cursor: pointer;
+     /* Add some spacing between the code and button */
+}
+.coupon-card{
+    background: linear-gradient(135deg, #7158fe, #9d4de6);
+    color: #fff;
+    /* text-align: center; */
+    /* padding: 40px 80px; */
+    border-radius: 15px;
+    box-shadow: 0 10px 10px 0 rgba(0,0,0,0.15);
+    /* position: relative; */
+
+}
+
+.cpnCode {
+    border: 1px dashed #a3a3a8;
+    padding: 5px 10px;
+    color: #7158fe; /* Adjust color to make it more visible */
+}
+
+.coupon-row {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the items horizontally */
+    /* margin: 15px auto; */
+}
 
   </style>
 
   <div class="">
 
-    <div class="container row mx-auto mb-5 checkotBg mt-5 rounded-3"><!-- main div  -->
+    <div class="container row mx-auto mb-5 bg-profile mt-5 rounded-3"><!-- main div  -->
       <div class=" text-center py-3 mb-3">
-        <span class="shadow-heading fw-bold fs-2" style="color: #F6EA41;">Order Summary</span>
+        <span class="shadow-heading fw-bold fs-2 text-italic k">Order Summary</span>
       </div>
       <div class="col-lg-8">
         <% let canOrder=true; %>
 
-          <div class="all-products rounded p-3 bg-profile">
+          <div class="all-products rounded p-3 bg-white">
             <h6 class=" pb-2">Products</h6>
             <% if(products !=null){ %>
               <%products.forEach((product,i)=> {%>
@@ -44,7 +75,7 @@
           </div>
 
           <!-- shipping Address -->
-          <div class="addresses rounded-top-3 p-3 mt-3 bg-profile">
+          <div class="addresses rounded-top-3 p-3 mt-3 bg-white">
             <h6 class=" pb-2">Shipping address</h6>
 
             <% if(defaultAddress !=0){%>
@@ -63,7 +94,7 @@
                   Change Address
                 </button>
               </div>
-              <form action="/users/cart/checkout" method="post" id="formID">
+              <form action="/users/profile/cart/checkout" method="post" id="formID">
                 <input type="text" name="addressID" value="<%=defaultAddress._id%>" hidden>
                 <%}else{%>
                   <h6 class="text-danger mt-3" style="text-transform: none;">You have not added any addresses.</h6>
@@ -74,7 +105,7 @@
                   <%}%>
           </div>
           <!-- payment method -->
-          <div class="addresses rounded-bottom-3 p-3 mb-3 bg-profile">
+          <div class="addresses rounded-bottom-3 p-3 mb-3 bg-white">
             <hr>
             <h6 class=" pb-2">Mode of Payment</h6>
             <!-- stripe gateway -->
@@ -85,7 +116,7 @@
               </label>
             </div>
             <div class="form-check d-flex align-items-center" style="font-size: 0.85rem;">
-              <input class="form-check-input" type="radio" name="paymentMethod" value="COD" id="flexRadioDefault1">
+              <input class="form-check-input" type="radio" name="paymentMethod" value="COD" id="flexRadioDefault1" checked>
               <label class="form-check-label mx-2 fw-bold" for="flexRadioDefault1">
                 Cash on delivery
               </label>
@@ -95,19 +126,30 @@
       </div>
       <!-- ======== -->
       <div class="col-lg-4">
-        <div class="order-summary rounded p-3 my-3 d-flex flex-column bg-profile">
+        <div class="order-summary rounded p-3 my-3 d-flex flex-column bg-white">
           <div class="mb-2">
             <input type="text" class="form-control" id="couponCode" placeholder="Coupon Code" name="couponCode"
               style="background-color: #c4c1c1;" />
           </div>
-          <div id="offer d-flex">
+          <!-- ======== edit here -->
+         <div id="offer d-flex" hidden>
             <% if(coupons!=null){ %>
               <% coupons.forEach((coupon,i)=> {%>
                 <div class=" align-items-center mb-2">
                   <input class="offerInput" style="width: 5%;" type="radio" id="<%= coupon._id %>" name="offer"
-                    onchange="offerCheck('<%= coupon._id %>')" value="<%= coupon.code %>">
+                    onchange="offerCheck('<%= coupon._id %>')" value="<%= coupon.code %>"> 
+                    
+                    <di class="coupon-row">
+                      <span class="cpnCode"><%= coupon.code %></span>
+                      <span class="text-success">
+                        <%= coupon.discount %>% off
+                      </span>
+                      <span class="cpnBtn">Copy</span>
+                  </di>
+                  
+                   
                   <label for="<%= coupon._id %>">
-                    <span class="text-danger">Krithy Books <%= coupon.name %></span>
+                    <span class="text-danger"><%= coupon.code %></span>
                     <span class="text-success">
                       <%= coupon.discount %>% off
                     </span>
@@ -117,17 +159,40 @@
                 <%})%>
                   <%}%>
           </div>
-
+          <!-- ===== -->
+          <div id="offer" class="d-flex flex-wrap coupon-card">
+            <% if(coupons!=null){ %>
+              <% coupons.forEach((coupon,i)=> {%>
+                <div class="col-lg-6 col-md-6 my-2" id="couponScratch">
+                  <!-- <input class="offerInput" style="width: 5%;" hidden id="<%= coupon._id %>" name="offer"
+                    onchange="offerCheck('<%= coupon._id %>')" value="<%= coupon.code %>">  -->
+                  <div class="">
+                    <div class="coupon-row" >
+                      <span class="cpnCode text-white"><%= coupon.code %></span>
+                      <span class="cpnBtn ">Copy</span>
+                    </div>
+                  </div>
+                </div>
+              <%})%>
+            <%}%>
+          </div>
+          
+          
           <!-- #coupon div -->
-          <div class="d-flex align-items-center mt-3">
-            <button class=" btn btn-sm btn-primary" onclick="checkCoupon(event)"
+          <!-- <div class="d-flex align-items-center mt-3">
+            <button class=" btn btn-sm btn-success text-center" onclick="checkCoupon(event)"
               style="width: 50px;height: 25px;font-size: small;">Apply</button>
             <span id="couponMessage" class=" px-2 rounded m-2">
             </span>
-          </div>
+          </div> -->
+          <div class="d-flex align-items-center mt-3">
+            <button class="btn btn-sm btn-success" onclick="checkCoupon(event)">Apply</button>
+            <span id="couponMessage" class="px-2 rounded m-2"></span>
+        </div>
+        
         </div>
         <!-- place order div -->
-        <div class="order-summary  p-3 rounded-top-3 d-flex flex-column bg-profile">
+        <div class="order-summary  p-3 rounded-top-3 d-flex flex-column bg-white">
           <div class="d-flex justify-content-between p-1">
             <span>Total items:</span>
             <span id="totalItems">
@@ -155,9 +220,9 @@
           </div>
           <input type="number" name="finalPrice" value="<%= userCart.totalPrice%>" id="inputFinalPrice" hidden>
         </div>
-        <div class="order-summary  rounded-bottom-3 p-3 d-flex flex-column bg-profile" style=" font-size: 0.9rem;">
+        <div class="order-summary mb-5 rounded-bottom-3 p-3 d-flex flex-column bg-white" style=" font-size: 0.9rem;">
           <button type="submit" onclick="return payment(event)" <% if(!canOrder || defaultAddress=="0" ){ %>disabled<% }
-              %> style="background-color: #FF4031;" class="text-white btn btn-sm">Place Order</button>
+              %> style="background-color: #FF4031;" class="text-white btn ">Place Order</button>
         </div>
         <!--  -->
         </form>
@@ -167,7 +232,7 @@
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content bg-profile" style="font-size: 0.9rem;">
+        <div class="modal-content bg-white" style="font-size: 0.9rem;">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">Change default Address</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -175,7 +240,7 @@
           <!--  -->
           <div class="modal-body">
             <%if(allAddresses!=null){%>
-              <form action="/users/cart/checkout/changeDefaultAddress" method="post">
+              <form action="/users/profile/cart/checkout/changeDefaultAddress" method="post">
                 <% allAddresses.forEach((address,i)=> { %>
                   <div class="form-check d-flex align-items-center rounded mb-2" style="border: 1px solid #dbdbdb;">
                     <input class="form-check-input mx-2" type="radio" name="DefaultAddress" id="radio<%=i+1%>"
@@ -218,7 +283,7 @@
 
     function offerCheck(id) {
       $.ajax({
-        url: "/users/cart/checkout/offer/" + id,
+        url: "/users/profile/cart/checkout/offer/" + id,
         method: "get",
         success: (res) => {
           $("#couponDiscount").html(res.data.discountPrice);
@@ -233,4 +298,32 @@
 
   </script>
 
+<script>
+ var cpnBtns = document.querySelectorAll(".cpnBtn");
+var cpnCodes = document.querySelectorAll(".cpnCode");
+
+cpnBtns.forEach((btn, index) => {
+  btn.addEventListener('click', function() {
+    navigator.clipboard.writeText(cpnCodes[index].innerHTML);
+    btn.innerHTML = "COPIED";
+    setTimeout(function() {
+      btn.innerHTML = "Copy";
+    }, 3000);
+  });
+});
+
+</script>
+<!-- <script>
+   var cpnBtn = document.getElementsByClassName("cpnBtn");
+            var cpnCode = document.getElementsByClassName("cpnCode");
+
+            cpnBtn.onclick = function(){
+                navigator.clipboard.writeText(cpnCode.innerHTML);
+                cpnBtn.innerHTML ="COPIED";
+                setTimeout(function(){
+                    cpnBtn.innerHTML="COPY CODE";
+                }, 3000);
+            }
+</script>
+ -->
   <%- include('../layouts/_footer') %>

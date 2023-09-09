@@ -1,0 +1,112 @@
+<%- include('../layouts/_header') %>
+<!-- border: 1px solid #beb2c0;background: linear-gradient(316deg, #a0949d 0%, #879092 74%) !important; -->
+<%- include('../layouts/profileSearchBar') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6">
+            <h3 class="text-center mb-4">Change Password</h3>
+            
+           <!-- <div class="mb-4">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input type="password" id="currentPassword" class="form-control" placeholder="Enter current password">
+            </div>
+            
+             <div class="mb-4">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input type="password"
+                 id="newPassword" 
+                 class="form-control" 
+                 placeholder="Enter new password"
+                 onChange="change()"
+                 >
+            </div>
+            
+            <div class="mb-4">
+                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                <input type="password"
+                 id="confirmPassword" 
+                 class="form-control" 
+                 placeholder="Re-enter new password"
+                 onChange="change()"
+                 >
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn color-bg-main text-white fw-bold mb-5">Change Password</button>
+            </div> -->
+            <form action="/users/profile/changePassword" method="post">
+                <% if (message && message.length > 0) { %>
+                    <div id="error-message" class="alert alert-danger">
+                        <%= message %>
+                    </div>
+                    <% if (showForgotPassword) { %>
+                    <br><br>
+                    <a href="/forgotPassword" class=" text-warning">Forgot Password?</a>
+                <% } %>
+                <% } %>
+                
+                
+                <div class="mb-4">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" id="currentPassword" class="form-control" name="currentPassword" placeholder="Enter current password">
+                </div>
+                <div class="mb-4">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" id="newPassword" class="form-control" name="newPassword" placeholder="Enter new password" onChange="change()">
+                </div>
+                <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" placeholder="Re-enter new password" onChange="change()">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn color-bg-main text-white mb-5">Change Password</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--  -->
+</div>
+
+</div>
+</div>
+
+<script>
+    function change() {
+    const password = document.querySelector('input[name=newPassword]');
+    const confirm = document.querySelector('input[name=confirmPassword]');
+    if (confirm.value === password.value) {
+      confirm.setCustomValidity('');
+    } else {
+  
+      confirm.setCustomValidity('Passwords do not match');
+    }
+  }
+  </script>
+<script>
+    setTimeout(function() {
+        const errorMessage = document.getElementById('error-message');
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+    }, 10000);
+</script>
+<script>
+    var cpnBtn = document.getElementById("cpnBtn");
+           var cpnCode = document.getElementById("cpnCode");
+
+           cpnBtn.onclick = function(){
+               navigator.clipboard.writeText(cpnCode.innerHTML);
+               cpnBtn.innerHTML ="COPIED";
+               setTimeout(function(){
+                   cpnBtn.innerHTML="COPY CODE";
+               }, 3000);
+           }
+</script>
+<%- include('../layouts/_footer') %>

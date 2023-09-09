@@ -9,10 +9,12 @@ const productsPage = require('../controllers/admin/products')
 const upload = require('../utilities/imageUpload')
 const categories = require('../controllers/admin/category')
 // const create = require('../controllers/admin/signin')
+const managers = require('../controllers/admin/managers')
 const authors = require('../controllers/admin/author');
 const customers=require("../controllers/admin/customer");
 const coupons = require("../controllers/admin/coupon");
 const salesReport = require("../controllers/admin/salesReport");
+const offer = require("../controllers/admin/offer")
 const router = express.Router();
 
 
@@ -121,12 +123,17 @@ router
    .post(sessionCheck,coupons.addNew);
    router.get("/coupons/changeActivity",coupons.changeActivity);
 
+   router
+    .route("/offers")
+    .get(sessionCheck,offer.viewPage)
+    .post(sessionCheck,offer.addNew)
+router.get("/offers/delete",offer.delete);
 
         // create user for admin
-// router.
-//    route('/signup')
-//    .get(create.Admin)
-//         .post(create.createAdmin)
+router.
+   route('/manager')
+   .get(managers.Admin)
+        .post(managers.createAdmin)
        
 
 

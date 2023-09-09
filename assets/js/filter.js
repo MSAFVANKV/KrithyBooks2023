@@ -97,8 +97,12 @@
 // }
 
 // =======
+
+// let currentUrl = new URL(window.location.href);
+// let urlParams = new URLSearchParams(currentUrl.search)
+
 function isFilterApplied() {
-    let urlParams = new URLSearchParams(window.location.search);
+     urlParams = new URLSearchParams(window.location.search);
     return urlParams.has('minPrice') || urlParams.has('maxPrice');
 }
 
@@ -205,3 +209,22 @@ document.getElementById('clearFilterButton').addEventListener('click', function(
     window.location.href = '/allproducts';
 });
 
+
+
+
+// function replaceSearchInputWithCategory() {
+//     let currentUrl = new URL(window.location.href);
+//     let urlParams = new URLSearchParams(currentUrl.search);
+
+//     // If the URL has searchInput, replace it with category
+//     if (urlParams.has('searchInput')) {
+//         const searchValue = urlParams.get('searchInput');
+//         urlParams.delete('searchInput');
+        
+//         // Append the new category with the value of searchInput
+//         urlParams.append('category', searchValue);
+        
+//         currentUrl.search = urlParams.toString();
+//         window.location.href = currentUrl.toString();
+//     }
+// }

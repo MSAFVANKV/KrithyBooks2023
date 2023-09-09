@@ -56,6 +56,18 @@ app.use("/admin", adminRouter);
 app.use("/users", userRouter);
 app.use('/',require('./routers/router'));
 
+const userCollection=require("./models/user")
+app.all("*", async (req, res) => {
+  const currentUser = await userCollection.findById(req.session.userID);
+  res.render("index/404", {
+    documentTitle: "404 | Page not found",
+    url: req.originalUrl,
+    session: req.session.userID,
+    currentUser,
+  });
+});
+
+
 
 // PORT setting
 app.listen(PORT,() => {(console.log(`Server is running on http://localhost:${PORT}`))});

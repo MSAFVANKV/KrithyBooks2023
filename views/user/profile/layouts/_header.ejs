@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/prductlist.css">
     <link rel="stylesheet" href="/css/hamburger.css">
+    <link rel="icon" href="/img/logo/title_logo.svg" type="image/svg" >
+
 
 </head>
 
@@ -45,13 +47,13 @@
          <a class="navbar-brand logohome ps-3" href="/">
             <span class="k">K</span>rithy
         </a>
-        <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm">
+        <form action="/search" class="container d-flex justify-content-end" method="get" id="searchForm" onsubmit="return search();">
             <div class="input-group flex-nowrap my-2 " style="width: 250px">
-            <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
-            <button type="submit" class="btn btn-primary" style="height: fit-content;">
-                <i class="fas fa-search"></i>
-            </button>
-          </div>
+                <input type="text" class="form-control" placeholder="Search" id="searchInput" name="searchInput" />
+                <button type="submit" class="btn btn-primary" style="height: fit-content;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </form>
         <ul class="navbar-nav ms-auto hamurgerToggle">
 

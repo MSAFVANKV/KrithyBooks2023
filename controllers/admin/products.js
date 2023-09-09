@@ -29,12 +29,12 @@ exports.viewProduts = async (req, res) => {
 
 exports.addProducts = async (req, res) => {
     try{
-        let bookTitle = `${req.body.name}_bookTitle_${Date.now()}.png`;
-        sharp(req.files.bookTitle[0].buffer)
-          .toFormat("png")
-          .png({quality:80})
-          .toFile(`assets/img/books/${bookTitle}`);
-        req.body.bookTitle=bookTitle;
+        // let bookTitle = `${req.body.name}_bookTitle_${Date.now()}.png`;
+        // sharp(req.files.bookTitle[0].buffer)
+        //   .toFormat("png")
+        //   .png({quality:80})
+        //   .toFile(`assets/img/books/${bookTitle}`);
+        // req.body.bookTitle=bookTitle;
         let thumbnail = `${req.body.name}_thumbnail_${Date.now()}.png`;
         sharp(req.files.thumbnail[0].buffer)
           .toFormat("png")

@@ -311,67 +311,146 @@ exports.categories = async(req, res) => {
   }
 };
 
-exports.search = async (req, res) => {
-  const searchInput = req.query.searchInput;
-  try {
+// exports.search = async (req, res) => {
+//   // const searchInput = req.query.searchInput;
+//   try {
     
-    let page = parseInt(req.query.page) || 1;
-    let itemsPerPage = 12;
-    let errorMessage = null
-    let category = req.query.category;
-    let searchInput = req.query.searchInput;
-    let sortBy = {};
-    let currentUser = null;
-    let userCart = null;
-    // Look for matching categories
-    let categories = await categoryCollection.find({});
-    let categoryMatches = await categoryCollection.find({ 
-      name: { $regex: new RegExp(searchInput, "i") } 
-    });
+//     let page = parseInt(req.query.page) || 1;
+//     let itemsPerPage = 12;
+//     let errorMessage = null
+//     let category = req.query.category;
+//     let searchInput = req.query.searchInput;
+//     let sortBy = {};
+//     let currentUser = null;
+//     let userCart = null;
+//     let orConditions;
+//     // Look for matching categories
+//     let categories = await categoryCollection.find({});
+//     let categoryMatches = await categoryCollection.find({ 
+//       name: { $regex: new RegExp(searchInput, "i") } 
+//     });
 
-    let categoryIds = categoryMatches.map(c => c._id);
+//     let categoryIds = categoryMatches.map(c => c._id);
  
+ 
+//     if(req.session.userID){
+//       currentUser = await userDTLS.findOne({_id:req.session.userID});
+//       userCart = await cartCollection.findOne({customer:req.session.userID});
+//     }
     
-    if(req.session.userID){
-      currentUser = await userDTLS.findOne({_id:req.session.userID});
-      userCart = await cartCollection.findOne({customer:req.session.userID});
+//     // Look for matching authors
+//     let authorMatches = await authorCollection.find({
+//       name: { $regex: new RegExp(searchInput, "i") }
+//     });
+
+//     let authorIds = authorMatches.map(a => a._id);
+
+//     let products = await productCollection.find({ 
+//       $or: [
+//         { name: { $regex: new RegExp(searchInput, "i") }, listed: true },
+//         { category: { $in: categoryIds }, listed: true },
+//         { author: { $in: authorIds }, listed: true }, // Add author search condition
+//         { language: { $regex: new RegExp(searchInput, "i") }, listed: true },
+ 
+//       ]
+//     });
+
+//     // Check if searchInput can be converted to a number
+// if (!isNaN(searchInput)) {
+//   orConditions.push({ bookISBN: Number(searchInput), listed: true });
+// }
+
+//  products = await productCollection.find({ $or: orConditions });
+    
+
+//     if (products.length === 0) {
+//       errorMessage = 'No Products Available, Check the spelling!';
+//     }
+
+//     // res.json({ products });
+//      res.render("index/newReleasePage", {
+//       listing: products,
+//       listingName: "Search Results for: " + searchInput,
+//       session: req.session.userID,
+//       userCart,
+//       currentUser,
+//       page,
+//       itemsPerPage,
+//       category,
+//       categories,
+//       errorMessage: errorMessage
+//     });
+
+//   } catch(err) {
+//     console.log("Error details:", err.message);
+
+//     res.status(500).json({ error: 'An error occurred while searching products' });
+//   }
+// };  
+
+exports.search = async (req, res) => {
+  try {
+      let page = parseInt(req.query.page) || 1;
+      let itemsPerPage = 12;
+      let errorMessage = null
+      let category = req.query.category;
+      let searchInput = req.query.searchInput;
+      let currentUser = null;
+      let userCart = null;
+
+      let categories = await categoryCollection.find({});
+      let categoryMatches = await categoryCollection.find({ 
+          name: { $regex: new RegExp(searchInput, "i") } 
+      });
+      let categoryIds = categoryMatches.map(c => c._id);
+
+      if(req.session.userID) {
+          currentUser = await userDTLS.findOne({_id:req.session.userID});
+          userCart = await cartCollection.findOne({customer:req.session.userID});
+      }
+
+      let authorMatches = await authorCollection.find({
+          name: { $regex: new RegExp(searchInput, "i") }
+      });
+      let authorIds = authorMatches.map(a => a._id);
+
+      let orConditions = [
+          { name: { $regex: new RegExp(searchInput, "i") }, listed: true },
+          { category: { $in: categoryIds }, listed: true },
+          { author: { $in: authorIds }, listed: true },
+          { language: { $regex: new RegExp(searchInput, "i") }, listed: true }
+      ];
+
+      if (!isNaN(searchInput)) {
+          orConditions.push({ bookISBN: Number(searchInput), listed: true });
+      }
+
+      let products = await productCollection.find({ $or: orConditions });
+
+      if (products.length === 0) {
+        errorMessage = '<div class="border  p-5 " style="text-align: center;">' + 
+                       '<span style="color: green;">No Products Available for "' + searchInput + '"</span><br>' + 
+                       '<span style="color: red;">Check the spelling or try another term!</span>' +
+                       '</div>';
     }
     
-    // Look for matching authors
-    let authorMatches = await authorCollection.find({
-      name: { $regex: new RegExp(searchInput, "i") }
-    });
+    
 
-    let authorIds = authorMatches.map(a => a._id);
-
-    let products = await productCollection.find({ 
-      $or: [
-        { name: { $regex: new RegExp(searchInput, "i") }, listed: true },
-        { category: { $in: categoryIds }, listed: true },
-        { author: { $in: authorIds }, listed: true } // Add author search condition
-      ]
-    });
-
-    if (products.length === 0) {
-      errorMessage = 'No Products Available, Check the spelling!';
-    }
-
-    // res.json({ products });
-     res.render("index/newReleasePage", {
-      listing: products,
-      listingName: "Search Results for: " + searchInput,
-      session: req.session.userID,
-      userCart,
-      currentUser,
-      page,
-      itemsPerPage,
-      category,
-      categories,
-      errorMessage: errorMessage
-    });
+      res.render("index/newReleasePage", {
+          listing: products,
+          listingName: "Search Results for: " + searchInput,
+          session: req.session.userID,
+          userCart,
+          currentUser,
+          page,
+          itemsPerPage,
+          category,
+          categories,
+          errorMessage: errorMessage
+      });
 
   } catch(err) {
-    console.log(err);
-    res.status(500).json({ error: 'An error occurred while searching products' });
+      console.log("Error details:", err.message);
+      res.status(500).json({ error: 'An error occurred while searching products' });
   }
 };

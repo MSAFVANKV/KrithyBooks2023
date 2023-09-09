@@ -184,6 +184,7 @@ exports.chartData = async (req, res) => {
 
 
 exports.customChartData=async(req,res)=>{
+
     try{
         const period=req.params.id 
         console.log(period)
@@ -196,7 +197,7 @@ exports.customChartData=async(req,res)=>{
                 $match:{$and:[{status: "returned" },{returnedOn:{$gte : new Date(new Date().getTime()-(30*24*60*60*1000))}}]}
             }]);
              returned=returned.length;
-    
+    console.log(orderCollection)
             let notDelivered = await orderCollection.aggregate([
                 { $match: {$and:[{delivered:false},{orderedOn:{$gte : new Date(new Date().getTime()-(30*24*60*60*1000))}}]} },
                 {

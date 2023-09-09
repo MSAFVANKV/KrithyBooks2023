@@ -5,7 +5,7 @@
         <!--  -->
           <% if(currentUser){%>
             <div class=" pt-2">
-              <span class="text-black text-capitalize fs-4 fw-bolder">My Profile</span>
+              <span class="text-black text-capitalize fs-4 ">My Profile</span>
               <!-- profile photo -->
               <form action="" method="post" enctype="multipart/form-data" class="col-1 float-end">
                 <div class="">
@@ -29,7 +29,7 @@
             </div>
             <!--  -->
 
-            <small><span class="fw-bold">Personal Information</span></small>
+            <small><span class="">Personal Information</span></small>
             <hr>
 
             <div class="mb-3">
@@ -99,12 +99,12 @@
                 </div>
               </div>
               <%}}); if(!hasPrimaryAddress) { %>
-                <a href="/users/profile/manageAddress" class="fw-bold text-danger text-decoration-none" style="text-transform: none;">You have not set any default address.</a href="/users/profile/manageAddress">
+                <a href="/users/profile/manageAddress" class="text-danger text-decoration-none" style="text-transform: none;">You have not set any default address.</a href="/users/profile/manageAddress">
                 <% } %>
 
 
                   <div class="d-flex mb-3 justify-content-center">
-                    <button type="submit" class="btn  logbtn fw-bold text-white" data-bs-toggle="modal"
+                    <button type="submit" class="btn  logbtn text-white" data-bs-toggle="modal"
                       data-bs-target="#staticBackdrop">
                       Update Profile
                     </button>
@@ -124,32 +124,65 @@
                         </div>
                         <div class="modal-body">
                           <form action="/users/profile" method="post">
-                            <div class="mb-3">
+                            <div class="form-floating mb-3">
                               <input type="text" class="form-control" id="username" placeholder="Full Name"
                                 name="username" value="<%= currentUser.username %>" />
+                              <label for="floatingInputGrid">username</label>
                             </div>
                             <!--  -->
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                               <input type="number" class="form-control" id="age" placeholder="Age" name="age"
                                 value="<%= currentUser.age %>" />
+                            </div> -->
+                            <div class="form-floating mb-3">
+                                <input type="number"
+                                       class="form-control"
+                                       id="age" 
+                                       placeholder="Age" 
+                                       name="age" 
+                                       pattern="^(1[01][0-9]|120|0?[1-9]?[0-9])$" 
+                                       maxlength="3" 
+                                       max="150"
+                                       min="10"
+                                       value="<%= currentUser.age %>" 
+                                       oninput="if(this.value.length > 3) this.value = this.value.slice(0,3);"
+                                       />
+                                <span id="ageInvalid"></span>
+                                <label for="floatingInputGrid">Age</label>
                             </div>
                             <!--  -->
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                               <input type="text" class="form-control" id="landMark" placeholder="landMark"
                                 name="landMark" value="<%= currentUser.landMark %>" />
+                            </div> -->
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="landMark" placeholder="landMark"
+                              name="landMark" value="<%= currentUser.landMark %>" />
+                              <label for="floatingInputGrid">landMark</label>
                             </div>
                             <!--  -->
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                               <input type="number" class="form-control" id="contactNumber" placeholder="contact Number"
-                                name="number" pattern="0*[1-9][0-9]{9}"
+                                name="number"
+                                pattern="0*[1-9][0-9]{9}"
                                 title="Please enter exactly 10 digits and should not start with 0"
                                 value="<%= currentUser.number %>" />
+                            </div> -->
+                            <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="contactNumber" placeholder="contact Number"
+                                name="number"
+                                pattern="^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,}$"
+                                title="Please enter exactly 10 digits and should not start with 0"
+                                value="<%= currentUser.number %>" onkeyup="numberValidator()" />
+                              <label for="floatingInputGrid">contact Number</label>
+                              <span id="numberInvalid"></span>
                             </div>
+                            
 
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn logbtn fw-bold text-white">Save</button>
+                          <button type="submit" id="submitButton" class="btn logbtn text-white">Save</button>
                           </form>
                         </div>
                       </div>
@@ -160,7 +193,61 @@
     </div>
     <%}%>
   </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+ $(document).ready(function() {
+    function numberValidator() {
+        const inputNumber = $("#contactNumber").val();
+        const numberReg = /^[0-9]{10}$/;
+        
+        if (numberReg.test(inputNumber)) {
+            $("#submitButton").prop("disabled", false);
+            $("#numberInvalid").empty();
+        } else {
+            $("#submitButton").prop("disabled", true);
+            $("#numberInvalid").html('<i class="fa fa-exclamation"></i> Invalid contact Number');
+        }
+    }
 
+    $("#contactNumber").on('keyup', numberValidator);
+});
 
+</script>
+<!-- <script>
+$(document).ready(function() {
+    function numberValidator() {
+        const inputNumber = $("#contactNumber").val();
+        const inputAge = $("#age").val();
+
+        const numberReg = /^[0-9]{10}$/;
+        const ageReg = /^(1[01][0-9]|120|0?[1-9]?[0-9])$/;
+        
+        let isValidNumber = numberReg.test(inputNumber);
+        let isValidAge = ageReg.test(inputAge);
+
+        if (isValidNumber) {
+            $("#numberInvalid").empty();
+        } else {
+            $("#numberInvalid").html('<i class="fa fa-exclamation"></i> Invalid contact Number');
+        }
+
+        if (isValidAge) {
+            $("#ageInvalid").empty();
+        } else {
+            $("#ageInvalid").html('<i class="fa fa-exclamation"></i> Invalid Age');
+        }
+
+        // If both age and number are valid, enable the submit button, otherwise disable it
+        if (isValidNumber && isValidAge) {
+            $("#submitButton").prop("disabled", false);
+        } else {
+            $("#submitButton").prop("disabled", true);
+        }
+    }
+
+    // Bind the validation function to both 'age' and 'contactNumber' input fields
+    $("#contactNumber, #age").on('keyup', numberValidator);
+});
+</script> -->
   <%- include('../layouts/_footer') %>

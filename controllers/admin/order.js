@@ -43,13 +43,14 @@ exports.detailsPage = async (req, res) => {
         const currentOrder = await orderCollection
             .findById(orderID)
             .populate("summary.product")
-            .populate("couponUsed");
+            .populate("couponUsed", "name")
+            .populate("discountPrice")
 
         res.render("admin/partial/orderDetails", {
             session: req.session.admin,
             currentOrder,
             moment,
-            documentTitle: "Order Details | SHOE ZONE",
+            documentTitle: "Order Details | Krithy Books",
         });
 
     } catch (error) {

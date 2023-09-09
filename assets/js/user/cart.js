@@ -17,9 +17,9 @@ function removeFromCart(productID) {
                 title: "Removed from cart",
               });
           $("#removeCart").load(location.href + " #removeCart");
-              setTimeout(() => {
-                location.reload();
-            }, 1000);
+            //   setTimeout(() => {
+            //     location.reload();
+            // }, 1000);
             }
           },
     })
@@ -111,23 +111,23 @@ function removeFromCart(productID) {
       })
   
     }else{
-      window.location= "/users/cart/checkout"
+      window.location= "/users/profile/cart/checkout"
     }
   }
 
-  function singlecheckOut(){
-    const stock= $('#singleStockCheck').val()
-    if(stock==0){
-      Swal.fire({  
-        icon: "error",     
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        animation: true,
-        title: "Cart Item is out of stockk",
-      })
+  // function singlecheckOut(){
+  //   const stock= $('#singleStockCheck').val()
+  //   if(stock==0){
+  //     Swal.fire({  
+  //       icon: "error",     
+  //       showConfirmButton: false,
+  //       timer: 2000,
+  //       timerProgressBar: true,
+  //       animation: true,
+  //       title: "Cart Item is out of stockk",
+  //     })
   
-    }else{
-      window.location= "/users/directCheckout"
-    }
-   }
+  //   }else{
+  //     window.location= "/users/directCheckout"
+  //   }
+  //  }
