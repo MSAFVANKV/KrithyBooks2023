@@ -15,7 +15,7 @@ exports.signUpPage = (req, res) => {
     const message = req.session.tempMessage;
     delete req.session.tempMessage;
 
-    res.render("user/partials/signUp", { message: message || "" });
+    res.render("user/partials/signup", { message: message || "" });
   } catch (error) {
     console.log("Error rendering user signup page: " + error);
   }
