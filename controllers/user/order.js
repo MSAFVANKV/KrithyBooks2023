@@ -12,7 +12,7 @@ exports.viewPage = async (req, res) => {
             .populate("customer")
             .populate("couponUsed")
         res.render("user/profile/partials/orders", {
-            documentTitle: "My Orders | SHOE ZONE",
+            documentTitle: "My Orders || KRITHY BOOKS",
             allOrders,
             moment,
             currentUrl: req.originalUrl,
@@ -31,6 +31,10 @@ exports.details=async(req,res)=>{
       .populate("summary.product")
       .populate("couponUsed")
       .sort("");
+      console.log("Coupon Used:", currentOrder.couponUsed);
+      console.log("summary.product:", currentOrder.summary.product);
+      // console.log("currentOrder", currentOrder);
+
 
     if (currentOrder) {
       res.render("user/profile/partials/orderDetails", {

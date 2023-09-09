@@ -17,7 +17,7 @@
                   <div class="row align-items-center mb-2 d-flex">
                       <div class="col-8">
                           <h4 class="d-flex align-items-center mb-0">
-                            <%=locals.orderCount%>
+                            <%= locals.orderCount ? locals.orderCount : 0 %>
                           </h4>
                       </div>
                   </div>
@@ -34,7 +34,7 @@
                   <div class="row align-items-center mb-2 d-flex">
                       <div class="col-8">
                           <h4 class="d-flex align-items-center mb-0">
-                            <%=locals.customerCount%>
+                            <%= locals.customerCount ? locals.customerCount : 0 %>
                           </h4>
                       </div>
                   </div>
@@ -51,7 +51,7 @@
                   <div class="row align-items-center mb-2 d-flex">
                       <div class="col-8">
                           <h4 class="d-flex align-items-center mb-0">
-                            <%=locals.productCount%>
+                            <%= locals.productCount ? locals.productCount : 0 %>
                           </h4>
                       </div>
                   </div>
@@ -68,7 +68,7 @@
                   <div class="row align-items-center mb-2 d-flex">
                       <div class="col-8">
                           <h4 class="d-flex align-items-center mb-0">
-                            <%=locals.totalRevenue%>
+                            <%= locals.totalRevenue ? locals.totalRevenue : 0 %>
                           </h4>
                       </div>
                   </div>
@@ -144,7 +144,7 @@
           <tr>
             <td><%=order._id%></td>
             <td><%= order.customer ? order.customer.email : 'N/A' %></td>
-            <td><%= order.finalPrice %></td>
+            <td><%= order.finalPrice ? order.finalPrice : 0 %></td>
             <td class="text-center" style="width: 20%">
               <div>
                 <%if(order.status === 'In-transit'){%>

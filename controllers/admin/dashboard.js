@@ -52,6 +52,53 @@ const moment = require('moment')
 //     }
 // }
 
+// exports.viewAdmin = async (req, res) => {
+//     try {
+//         const recentOrders = await orderCollection
+//             .find()
+//             .sort({ _id: -1 })
+//             .populate({ path: "customer", select: "email" });
+//         const orderCount = recentOrders.length;
+//         const productCount = await productCollection.count();
+//         const customerCount = await userCollection.count();
+//         let totalRevenue
+//         if (customerCount) {
+//             totalRevenue = await orderCollection.aggregate([{
+//                 $match: {
+//                     status: {
+//                         $nin: ["cancelled", "returned"]
+//                     }
+//                 }
+
+//             },
+//             {
+//                 $group: {
+//                     _id: 0,
+//                     totalRevenue: { $sum: "$finalPrice" }
+
+//                 }
+//             }
+//             ])
+//             totalRevenue = totalRevenue[0].totalRevenue;
+//         } else {
+//             totalRevenue = 0;
+//         }
+
+//         res.render("admin/partial/dashboard", {
+//             sessionadmin: req.session.admin,
+//             recentOrders,
+//             moment,
+//             orderCount,
+//             customerCount,
+//             productCount,
+//             totalRevenue,
+//             documentTitle: 'Admin Dashboard | SHOE ZONE'
+//         });
+//     } catch (error) {
+//         console.log("Error rendering dashboard: " + error);
+//     }
+
+// }
 exports.viewAdmin = async (req, res) => {
     try {
         const recentOrders = await orderCollection
@@ -61,7 +108,7 @@ exports.viewAdmin = async (req, res) => {
         const orderCount = recentOrders.length;
         const productCount = await productCollection.count();
         const customerCount = await userCollection.count();
-        let totalRevenue
+        let totalRevenue;
         if (customerCount) {
             totalRevenue = await orderCollection.aggregate([{
                 $match: {
@@ -69,17 +116,21 @@ exports.viewAdmin = async (req, res) => {
                         $nin: ["cancelled", "returned"]
                     }
                 }
-
             },
             {
                 $group: {
                     _id: 0,
                     totalRevenue: { $sum: "$finalPrice" }
-
                 }
             }
-            ])
-            totalRevenue = totalRevenue[0].totalRevenue;
+            ]);
+            
+            // Added check
+            if (totalRevenue && totalRevenue.length > 0) {
+                totalRevenue = totalRevenue[0].totalRevenue;
+            } else {
+                totalRevenue = 0;
+            }
         } else {
             totalRevenue = 0;
         }
@@ -92,12 +143,11 @@ exports.viewAdmin = async (req, res) => {
             customerCount,
             productCount,
             totalRevenue,
-            documentTitle: 'Admin Dashboard | SHOE ZONE'
+            documentTitle: 'Admin Dashboard | KrithyBooks'
         });
     } catch (error) {
         console.log("Error rendering dashboard: " + error);
     }
-
 }
 
 

@@ -187,7 +187,38 @@ exports.checkout = async (req, res) => {
     ]);
     shippingAddress = shippingAddress[0].addresses
     // console.log(shippingAddress)
-
+    couponUsed= await couponCollection.findOne({
+      code:req.body.couponCode,
+      active:true,
+    })
+    // console.log("codeUsed",code)
+    let offer=await couponCollection.findOne({
+      code:req.body.offer,
+      active:true,
+    })
+    if(offer){
+      couponUsed=offer
+    }
+    
+  if(couponUsed){
+    const currentTime= new Date().toJSON();
+    if(currentTime > couponUsed.startingDate.toJSON()){
+      if(currentTime < couponUsed.expiryDate.toJSON()){
+        couponUsed=couponUsed._id;
+      }else{
+        req.body.couponDiscount = 0;
+      }
+    }else{
+      req.body.couponDiscount = 0;
+    }
+  }else{
+    req.body.couponDiscount = 0;
+  }
+  if (!req.body.couponDiscount) {
+    req.body.couponDiscount = 0;
+    couponUsed = null;
+  };
+  req.session.couponUsed=couponUsed;
     // Coupon used 
 
     const orderSummery = await cartCollection.aggregate([
@@ -287,7 +318,7 @@ exports.result=async(req,res)=>{
     if(req.session.transactionID){
       const couponUsed=req.session.couponUsed;
       req.session.transactionID=false;
-      const orderDetails= new orderCollection(req.session.orderDetails).populate("Products")
+      const orderDetails= new orderCollection(req.session.orderDetails)
       await orderDetails.save();
       let currentUser=await userCollection.findById(req.session.userID)
       // console.log(currentUser.email)
