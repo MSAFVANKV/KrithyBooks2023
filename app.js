@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const detenv = require('dotenv')
+const logger =require( 'morgan');
+const cookieParser =require('cookie-parser');
 const bodyParser = require('body-parser');
 const adminRouter = require('./routers/admin')
 const userRouter = require('./routers/user');
@@ -10,6 +12,10 @@ const flash = require('connect-flash');
 
 
 const app = express();
+// Log http request status
+app.use(logger('dev'));
+app.use(cookieParser());
+
 detenv.config({path:'.env'})
 const PORT = process.env.PORT || 8080
 
@@ -21,11 +27,21 @@ app.set("views", path.join(__dirname, "views"));
 
 
 // session
-app.use(session({
-    secret: 'your-secret-key', 
+// app.use(session({
+//     secret: 'your-secret-key', 
+//     resave: false,
+//     saveUninitialized: true
+//   }));
+// Session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    name: "KRITHYBOOKS-session",
     resave: false,
-    saveUninitialized: true
-  }));
+    saveUninitialized: true,
+    cookie: { maxAge:86400000 },
+  })
+);
 
   // for flash messages
   app.use(flash());

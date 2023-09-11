@@ -35,7 +35,8 @@ exports.authorView = async(req, res) => {
             products: authorBooks,
             listingName: listingName,
             allAuthors,
-            selectedAuthor: authorObj
+            selectedAuthor: authorObj,
+            documentTitle : allAuthors.author.name
           });
 
     } catch (error) {
