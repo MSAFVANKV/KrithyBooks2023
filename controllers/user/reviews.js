@@ -1,34 +1,104 @@
 const reviewCollection = require("../../models/user/reviews");
 const userCollection = require("../../models/user");
+const { default: mongoose } = require("mongoose");
 
+
+// exports.addReview = async (req, res) => {
+//   try {
+//       const { productName, reviewTitle, rating, review } = req.body;
+//       const productID = req.query.productID;
+//       const customerID = req.session.userID;  // I assume you store user ID in session
+//       // console.log(productID)
+
+
+//       const newReview = new reviewCollection({
+//           customer: customerID,
+//           product: productID,
+//           reviewTitle,
+//           productName,
+//           rating,
+//           review
+//       });
+
+//       await newReview.save();
+//       res.json({
+//         success: "reviewAdded",
+//         message: "Review added successfully!",
+//       });
+
+//   } catch (error) {
+//       res.status(500).json({ success: false, message: "Error on adding new review:" + error });
+//   }
+// };
 
 exports.addReview = async (req, res) => {
   try {
       const { productName, reviewTitle, rating, review } = req.body;
       const productID = req.query.productID;
-      const customerID = req.session.userID;  // I assume you store user ID in session
-      // console.log(productID)
+      const customerID = req.session.userID; // Assuming you store user ID in session
 
+      // Find the existing review document for the user
+      const userReviewDoc = await reviewCollection.findOne({ customer: customerID });
 
-      const newReview = new reviewCollection({
-          customer: customerID,
+      // Check if the review document exists
+      if(!userReviewDoc) {
+          return res.status(400).json({ success: false, message: "No review document found for user." });
+      }
+
+      const newReview = {
           product: productID,
           reviewTitle,
           productName,
           rating,
-          review
-      });
+          review,
+          createdAt: Date.now()
+      };
 
-      await newReview.save();
+      userReviewDoc.reviews.push(newReview);
+      await userReviewDoc.save();
+
       res.json({
-        success: "reviewAdded",
-        message: "Review added successfully!",
+          success: "reviewAdded",
+          message: "Review added successfully!",
       });
 
   } catch (error) {
+    console.error("Server Error:", error);
       res.status(500).json({ success: false, message: "Error on adding new review:" + error });
   }
 };
+
+exports.deleteReview = async (req, res) => {
+  try {
+    const userId = req.session.userID;
+    const reviewId = req.query.id;
+console.log(reviewId)
+
+    const user = await userCollection.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+
+    // Remove the specific review from the user's review document
+    await reviewCollection.updateOne(
+      { "customer": new mongoose.Types.ObjectId(userId) },
+      { $pull: { reviews: { "_id": new mongoose.Types.ObjectId(reviewId) } } }
+    );
+    
+    // console.log(reviews)
+
+    res.json({
+      success: "removedreview",
+      message: "Review deleted successfully!",
+    });
+
+  } catch (error) {
+    console.error("Server Error:", error);
+    res.status(500).json({ success: false, message: "Error deleting review: " + error.message });
+  }
+};
+
+
 
 exports.editReview = async (req, res) => {
   try {

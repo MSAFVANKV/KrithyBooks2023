@@ -50,6 +50,11 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: "Wishlist",
       },
+      review: {
+        type: mongoose.Types.ObjectId,
+        ref: "Review",
+      },
+      
       orders: [
         {
           type: mongoose.Types.ObjectId,

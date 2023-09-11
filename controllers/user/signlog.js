@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer')
 const otpCollection = require('../../models/otp')
 const cartCollection = require('../../models/cart');
 const wishlistCollection = require('../../models/wishlist')
+const reviewCollection = require('../../models/user/reviews')
 const mongoose=require("mongoose");
 const twilio = require('twilio')
 
@@ -140,6 +141,15 @@ exports.verifyOTP = async (req, res) => {
     await newWishlist.save();
 
     console.log("User saved to the database:", newUser);
+    
+    // reviewCollection
+    const review = new reviewCollection({
+      customer:new mongoose.Types.ObjectId(userID),
+    });
+    await User.findByIdAndUpdate(userID, {
+      $set: { review:new mongoose.Types.ObjectId(review._id) },
+    });
+    await review.save();
 
     // Respond with a success message
      res.redirect('/login')

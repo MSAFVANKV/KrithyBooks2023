@@ -149,8 +149,13 @@ router
         .route("/reviews")
         .post(sessionCheck,reviews.addReview)
         .put(sessionCheck,reviews.editReview)
-        .patch(reviews.helpful);
-        
+        .patch(reviews.helpful)
+        .delete(reviews.deleteReview);
+
+        // router
+        // .route("/reviews/:id")
+        // .delete(sessionCheck, reviews.deleteReview);
+
  
         
     // router

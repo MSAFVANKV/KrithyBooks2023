@@ -138,7 +138,7 @@
                             </div>                    
                         </div>
                         <div class="mx-3 card mb-2 shadow zoom scaled-main" id="zoomC">
-                            <img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[1] %>" alt="" id="mainImg">
+                            <img class="img-fluid mt-2" src="/img/books/<%=productDetails.images[0] %>" alt="" id="mainImg">
                         </div> 
                     </div>
                     <!-- You can put other elements for the remaining half of the screen on larger screens here -->
@@ -233,7 +233,7 @@
             <div class="row d-flex " >     
               <!-- edit -->
               <% similarProducts.forEach((product,i)=>{%>
-              <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5">
+              <div class="d-flex justify-content-center col-lg-3 col-md-3 col-sm-6 mb-5" style="max-width: 15rem;">
                 <div class="card prod_card" >
                     <div class="card card_img">
                       <a href="/products/<%=product._id%>">
@@ -316,14 +316,25 @@
                 <!-- Submitted reviews -->
                 <div class="col-md-6 container border border-1 border-black shadow mb-5" style="height: 700px;">
                     <h3 class="p-4">Submitted Reviews:</h3>
-                    <% if(reviews) { %>
+                    <% if(reviews && reviews.length > 0) { %>
                         <% reviews.forEach(review => { %>
-                        <div class="my-4 bg-white">
+                        <div class="my-4 bg-white" id="review_<%= review._id %>">
                             <div class="review-item p-2" style="border: 1px solid #ccc;">
                                 <div class="d-flex">
-                                    <img src="/img/users/<%= review.customer.photo %>" class="border border-2 border-black rounded-5" alt="<%= review.customer.name %> photo" width="50" height="50">
+                                    <% if(review.customer) { %>
+                                        <img src="/img/users/<%= review.customer.photo %>" class="border border-2 border-black rounded-5" alt="<%= review.customer.username%> photo" style="font-family: 'Courier New', Courier, monospace;" width="50" height="50">
+                                    <% } else { %>
+                                        <!-- Default photo or some placeholder in case there's no customer data -->
+                                        <img src="/img/books/animations/no-image.jpg" class="border border-2 border-black rounded-5" alt="Default photo" width="50" height="50">
+                                    <% } %>
+                                    
                                     <div class="ps-3">
-                                        <span class="text-capitalize reviwSubmit"><%= review.customer.username %></span>
+                                        <% if(review.customer) { %>
+                                            <span class="text-capitalize reviwSubmit"><%= review.customer.username %></span>
+                                        <% } else { %>
+                                            <span class="text-capitalize reviwSubmit">Unknown</span>
+                                        <% } %>
+                                        
                                         <div class="mb-3">
                                             <% for (let i = 1; i <= 5; i++) { %>
                                                 <% if (i <= review.rating) { %>
@@ -342,7 +353,13 @@
                                     <span class="col-12 "><%= review.reviewTitle %></span>
                                     <span class="col-12"><%= review.review %></span>
                                 </div>
-                             
+                                <!-- ============ -->
+                                <% if(session && session.toString() === review.customer._id.toString()) { %> 
+                                    <button onclick="deleteReview('<%= review._id %>')" class="btn btn-danger"><i class="bi bi-file-earmark-x-fill"></i></button>
+                                <% } %>
+                                
+                                
+                                
                             </div>
                         </div>
                         <% }); %>
@@ -368,7 +385,7 @@
       },
       success: (res) => {
         if (res.success === "addedToCart" || res.success === "countAdded") {
-          window.location.href = "/users/cart/checkout";
+          window.location.href = "/users/profile/cart";
         }
         else if(res.success === "outofstcok" ){
           Swal.fire({
@@ -467,36 +484,97 @@ function adjustStars(ratingDiv, currentRating) {
         }
     });
 }
+// delete review
+function deleteReview(reviewId) {
+    // Ask user for confirmation before deleting
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If user confirmed, proceed with AJAX request
+            $.ajax({
+                url: `/users/reviews?id=${reviewId}`,
+                method: "DELETE",
+                success: function(response) {
+                    if (response.success === "removedreview") {
+                        Swal.fire({
+                            toast: true,
+                            icon: "success",
+                            position: "top-right",
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            animation: true,
+                            title: "Review deleted successfully!",
+                        });
 
-// Assuming every modal has its own review form with a unique ID
-$(document).on('submit', '.modal form', function(e) {
-    e.preventDefault();
-
-    let reviewId = $(this).closest('.modal').data('review-id');
-    let updatedReview = {
-        reviewTitle: $(this).find('input[name="reviewTitle"]').val(),
-        review: $(this).find('textarea[name="review"]').val(),
-        rating: $(this).find('.selected').length
-    };
-
-    // AJAX call to submit the edited review
-    $.ajax({
-        type: 'PUT',
-        url: '/users/reviews?reviewId=' + reviewId,
-        data: updatedReview,
-        success: function(response) {
-            if (response.success) {
-                // Refresh the page or update the review in the DOM as needed.
-                location.reload();
-            } else {
-                alert('Error updating review.');
-            }
-        },
-        error: function() {
-            alert('Error updating review.');
+                        // Remove the review from the UI
+                        $(`#review_${reviewId}`).remove();
+                    } else {
+                        Swal.fire({
+                            toast: true,
+                            icon: "error",
+                            position: "top-right",
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            animation: true,
+                            title: response.message || "Error occurred!",
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        toast: true,
+                        icon: "error",
+                        position: "top-right",
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        animation: true,
+                        title: "Error occurred while deleting review!",
+                    });
+                }
+            });
         }
     });
-});
+}
+
+// Assuming every modal has its own review form with a unique ID
+// $(document).on('submit', '.modal form', function(e) {
+//     e.preventDefault();
+
+//     let reviewId = $(this).closest('.modal').data('review-id');
+//     let updatedReview = {
+//         reviewTitle: $(this).find('input[name="reviewTitle"]').val(),
+//         review: $(this).find('textarea[name="review"]').val(),
+//         rating: $(this).find('.selected').length
+//     };
+
+//     // AJAX call to submit the edited review
+//     $.ajax({
+//         type: 'PUT',
+//         url: '/users/reviews?reviewId=' + reviewId,
+//         data: updatedReview,
+//         success: function(response) {
+//             if (response.success) {
+//                 // Refresh the page or update the review in the DOM as needed.
+//                 location.reload();
+//             } else {
+//                 alert('Error updating review.');
+//             }
+//         },
+//         error: function() {
+//             alert('Error updating review.');
+//         }
+//     });
+// });
 
         </script>
         

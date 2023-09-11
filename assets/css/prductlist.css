@@ -100,3 +100,37 @@
   /* wishlist -- end
   ====================
   ==================== */
+
+  .icon-link {
+    background-color: #f5f5f5; /* Light gray background */
+    border-radius: 50%;       /* Rounded background */
+    display: inline-flex;     /* Center the icon */
+    justify-content: center;
+    align-items: center;
+    width: 40px;              /* Adjust based on your design */
+    height: 40px;
+    margin-right: 10px;       /* Space between icons */
+    transition: all 0.3s ease; /* Smooth transitions */
+    cursor: pointer;
+}
+
+.icon-link:hover {
+    background-color: #e0e0e0; /* Darker gray on hover */
+}
+
+.icon-link i {
+    font-size: 24px;          /* Increased icon size */
+    color: #333;              /* Default icon color */
+}
+
+.icon-link:hover i.bi-linkedin {
+    color: #182b99;           /* LinkedIn blue on hover */
+}
+
+.icon-link:hover i.bi-whatsapp {
+    color: #25d366;           /* WhatsApp green on hover */
+}
+
+.icon-link:hover {
+    transform: scale(1.1);    /* Slightly scale up the icon link on hover */
+}

@@ -41,6 +41,7 @@ function removeFromCart(productID) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes'
+        
     }).then(result=>{
       if(result.value){
         $.ajax({
@@ -49,7 +50,7 @@ function removeFromCart(productID) {
           data: { id: productID,count:count },
           success: (res) => {
             if(res.data.currentProduct.quantity===0){
-                 $("#cart").load(location.href + " #cart");
+                 $("#removeCart").load(location.href + " #removeCart");
             }else{
              $(`#cartCount${i}`).html(res.data.currentProduct.quantity);
             $(`#totalItems`).html(res.data.userCart.totalQuantity);
