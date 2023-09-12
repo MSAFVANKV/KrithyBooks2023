@@ -112,8 +112,8 @@ router
  
 
    router
-   .route("/profile/cart/checkout/changeDefaultAddress")
-   .post(sessionCheck, checkOut.defaultAddress)
+   .route("/changeDefaultAddress")
+   .post(sessionCheck,checkOut.defaultAddress)
 
 
   // offer

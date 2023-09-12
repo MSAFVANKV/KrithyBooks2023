@@ -240,7 +240,7 @@
           <!--  -->
           <div class="modal-body">
             <%if(allAddresses!=null){%>
-              <form action="/users/profile/cart/checkout/changeDefaultAddress" method="post">
+              <form action="/users/changeDefaultAddress" method="post">
                 <% allAddresses.forEach((address,i)=> { %>
                   <div class="form-check d-flex align-items-center rounded mb-2" style="border: 1px solid #dbdbdb;">
                     <input class="form-check-input mx-2" type="radio" name="DefaultAddress" id="radio<%=i+1%>"
