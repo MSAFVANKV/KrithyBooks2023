@@ -36,7 +36,7 @@ exports.authorView = async(req, res) => {
             listingName: listingName,
             allAuthors,
             selectedAuthor: authorObj,
-            documentTitle : allAuthors.author.name
+            documentTitle : listingName
           });
 
     } catch (error) {

@@ -43,7 +43,7 @@
             <!-- -------------------- -->
 
 
-            <form action="coupons" method="post">
+            <form action="coupons" method="post" id="upToDate">
                 <div class="mb-3">
                   <input
                     type="text"
@@ -74,7 +74,7 @@
                     required
                   />
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                   <input
                   type="text"
                   class="form-control"
@@ -83,14 +83,15 @@
                   name="qty"
                   required
                 />
-                </div>
+                </div> -->
                 <div class="mb-3">
                     <input
                       type="date"
                       class="form-control"
-                      id="form-holder"
+                      id="fromdate"
                       placeholder="Starting Date"
                       name="startingDate"
+                      onchange="return ToDate()"
                       required
                     />
                   </div>
@@ -98,9 +99,10 @@
                     <input
                       type="date"
                       class="form-control"
-                      id="form-holder"
+                      id="todate"
                       placeholder="Expiry Date"
                       name="expiryDate"
+                      onchange="return ToDate()"
                       required
                     />
                   </div>
@@ -135,7 +137,7 @@
           <th>No.</th>
           <th>Name</th>
           <th>Code</th>
-          <th>Quantity</th>
+          <!-- <th>Quantity</th> -->
           <th>Discount</th>
           <th>Starting Date</th>
           <th>Expiry Date</th>
@@ -149,7 +151,7 @@
           <td><%= i+1 %></td>
           <td><%= item.name %></td>
           <td><%= item.code %></td>
-          <td><%= item.qty %></td>
+          <!-- <td><%= item.qty %></td> -->
           <td><%= item.discount %>%</td>
           <td><%= moment(item.startingDate).format('ll')  %></td>
           <td><%= moment(item.expiryDate).format('ll') %></td>
@@ -165,4 +167,49 @@
       <% } %>
     </table>
   </div>
+
+  <script>
+    function ToDate() {
+        // Getting values from input fields
+        var startingDate = new Date(document.querySelector("[name='startingDate']").value);
+        var expiryDate = new Date(document.querySelector("[name='expiryDate']").value);
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);  // Set the time to midnight (start of the day)
+
+        // Check if the starting date is before today's date
+        if (startingDate < today) {
+            alert("Starting Date cannot be before today's date!");
+            $("#upToDate").load(location.href + " #upToDate");
+            return false;
+        }
+        // Compare the two dates
+        if (expiryDate < startingDate) {
+            alert("Expiry Date cannot be before the Starting Date!");
+            $("#upToDate").load(location.href + " #upToDate");
+
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<script>
+  
+//   function TDate() {
+      
+//       var UserDate = document.getElementById("todate").value;
+//       var ToDate = new Date();
+//       console.log(new Date(UserDate).getTime() )
+//       console.log(ToDate.getTime())
+//       if (new Date(UserDate).getTime() > ToDate.getTime()) {
+//         console.log("hjfhj")
+//         $("#todate").val("")
+//             alert("The Date must be Bigger or Equal to today date");
+//             return false;
+//        }
+//       return true;
+  
+//   }
+// </script>
+
   <%-include('../layouts/_footer')%> 

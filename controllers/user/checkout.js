@@ -418,6 +418,7 @@ const mailOptions = {
       orderID: orderDetails._id,
       currentUrl: req.originalUrl,
       session:req.session.userID,
+      
 
     });
 

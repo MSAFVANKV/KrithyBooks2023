@@ -1,6 +1,6 @@
 // const mongoose = require('mongoose')
 
-// mongoose.connect("mongodb://127.0.0.1:27017/Krithybooks",{
+// mongoose.connect(process.env.MONGODB_URL_LOCAL,{
 //      useNewUrlParser: true,
 //     useUnifiedTopology: true,
 // })
@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URL,{
     useUnifiedTopology: true,
 })
 .then(()=>{
-    console.log("mongodb Connected");
+    console.log("mongodb Connected in atles");
 })
 .catch(()=>{
     console.log("connection failed !!");

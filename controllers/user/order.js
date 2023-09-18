@@ -38,7 +38,7 @@ exports.details=async(req,res)=>{
 
     if (currentOrder) {
       res.render("user/profile/partials/orderDetails", {
-        documentTitle: "Order Details | Krithy",
+        documentTitle: "Order Details | Krithy Books",
         currentOrder,
         moment,
         currentUrl: req.originalUrl,

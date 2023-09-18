@@ -132,8 +132,12 @@ router.get("/offers/delete",offer.delete);
         // create user for admin
 router.
    route('/manager')
-   .get(managers.Admin)
-        .post(managers.createAdmin)
+   .get(sessionCheck,managers.Admin)
+   .post(sessionCheck,managers.verification)
+
+   router
+   .route('/manager/confirm')
+   .post(sessionCheck,managers.createAdmin)
        
 
 

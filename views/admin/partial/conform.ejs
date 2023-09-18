@@ -1,0 +1,51 @@
+<title>manager page</title>
+<%-include('../layouts/_header')%> <%-include('../layouts/head_links')%> 
+
+<div class="container">
+  <!--main logo -->
+  <!-- <div class="logo d-flex justify-content-center align-items-center ">
+      <p id="logo" class="logostyle"><span class="kstyle">K</span>rithy</p>
+      
+  </div> -->
+  <!--main logo -->
+  
+  <div class="row justify-content-center align-items-center mt-5">
+    
+      <div class="col-lg-4 col-md-6 col-sm-8">
+
+          <form action="/admin/manager" method="post">
+
+             
+              <h1 class="text-center fw-bold fs-4 mb-5">Confirm it's You</h1>
+
+              <% if (message) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= message %>
+                </div>
+            <% } %>
+       
+              <div class="mb-3">
+                  <label for="email" class="form-label">Email address</label>
+                  <input name="email" type="" class="form-control" id="email" placeholder="Enter email" value="" required>
+              </div>
+              <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input name="password" type="password" class="form-control" id="password" placeholder="Password" value="" required>
+              </div>
+              
+              <div class="mt-4 col-12 text-center ">
+                  <button type="submit" class="btn w-100 logbtn text-white fw-bold">Confirm</button>
+              </div>
+          </form>
+          <!-- <div class="password fw-light col-12 text-center d-none "><p>Don't have an account? <a href="/admin/signup" id="logforgot">Signup</a> </p>
+            <div class="password"><p>Forgot password? <a href="change-password" id="logforgot">reset password</a> </p></div>
+          </div> -->
+          <small class="pb-5">* to create a new manager confirm it'you trying.....</small>
+
+      </div>
+  </div>
+</div>
+
+
+    
+<%-include('../layouts/_footer')%>

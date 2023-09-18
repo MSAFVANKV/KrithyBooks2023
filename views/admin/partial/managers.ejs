@@ -5,9 +5,14 @@
     
     <div class="row justify-content-center align-items-center vh-100">
         <div class="col-lg-4 col-md-6 col-sm-8">
-            <form action="/admin/manager" method="post">
+            <form action="/admin/manager/confirm" method="post">
                 <!--main logo -->
-
+                <% if (message) { %>
+                    <div class="alert alert-danger mb-3"
+                     style="font-family: 'Courier New', Courier, monospace; word-wrap: break-word; font-size: 12px;" role="alert">
+                        <%= message %>
+                    </div>
+                <% } %>
                 <!--main logo -->
                 <h1 class="text-center fw-bold fs-4 mb">Create new Admin</h1>
                

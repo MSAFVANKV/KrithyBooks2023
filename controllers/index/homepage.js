@@ -124,7 +124,9 @@ exports.viewAll = async (req, res) => {
               session: req.session.userID,
               products: products,
               listingName: listingName,
-              categories: allCategories
+              categories: allCategories,
+              documentTitle : listingName
+
               
           });
       } catch (error) {
